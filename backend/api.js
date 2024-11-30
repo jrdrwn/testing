@@ -5,6 +5,7 @@ const db = require('./database/models'); // Import database models
 
 const app = express();
 
+
 // Middleware
 app.use(bodyParser.json()); // Untuk memproses JSON
 app.use(bodyParser.urlencoded({ extended: true })); // Untuk memproses form-urlencoded
