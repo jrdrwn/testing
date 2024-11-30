@@ -128,15 +128,10 @@ router.post('/payment', (req,res,next)=>{
 // Define routes for Google OAuth
 router.get('/google-register', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/' }), 
-  function(req, res) {
-    res.redirect('/dashboard');
-  }
-);
+// Rute untuk autentikasi Google
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Define routes for Google OAuth
-router.get('/auth/google', googleController.googleAuth);
+// Rute untuk menangani callback Google
 router.get('/auth/google/callback', googleController.googleAuthCallback);
 
 // Handle SSL errors

@@ -1,17 +1,34 @@
 const dotenv = require('dotenv'); // Memuat variabel lingkungan dari file .env
+const session = require('express-session'); // Import express-session
+const passport = require('passport'); // Import passport
 const https = require('https');  // Membuat server HTTPS
 const fs = require('fs');        // Mengakses file sistem
 const path = require('path');    // Mengelola path file/direktori
 const { constants } = require('crypto'); // Menggunakan 'constants' untuk SSL/TLS konfigurasi
 const app = require('./app.js'); // Mengimpor aplikasi Express
-const bodyParser = require('body-parser'); // Add body-parser for parsing request bodies
 const { User } = require('./database/models'); // Import User model
-const passport = require('passport'); // Import passport
+const authenticateToken = require('./middleware/tokenAuthentication'); // Import token authentication middleware
 const GoogleStrategy = require('passport-google-oauth20').Strategy; // Import Google OAuth strategy
-const session = require('express-session'); // Import express-session
+
 
 // Memuat variabel dari file .env
 dotenv.config();
+
+
+// Configure session and cookie settings
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: true,
+  saveUninitialized: true,
+ 
+}));
+
+// Passport middleware setelah session
+app.use(passport.initialize());
+app.use(passport.session()); // Inisialisasi sesi passport
+
+// Middleware for JWT authentication
+app.use(authenticateToken);
 
 // Validasi variabel lingkungan penting
 const requiredEnvVars = ['APP_URL', 'HTTPS_PORT', 'SSL_KEY_PATH', 'SSL_CERT_PATH', 'JWT_SECRET', 'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET'];
@@ -34,17 +51,7 @@ const sslOptions = {
   secureOptions: constants.SSL_OP_NO_TLSv1 | constants.SSL_OP_NO_TLSv1_1, // Menonaktifkan TLSv1 dan TLSv1.1
 };
 
-app.use(bodyParser.json());
-app.use(session({
-  secret: process.env.JWT_SECRET,
-  resave: false,
-  saveUninitialized: false,
- 
-}));
 
-// Passport middleware setelah session
-app.use(passport.initialize());
-app.use(passport.session()); // Inisialisasi sesi passport
 
 // Passport configuration
 passport.use(new GoogleStrategy({
@@ -93,8 +100,6 @@ passport.use(new GoogleStrategy({
   }
 }));
 
-
-
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -105,44 +110,6 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
   } catch (error) {
     done(error, null);
-  }
-});
-
-// Membuat server HTTPS dan menyimpannya dalam variabel
-const server = https.createServer(sslOptions, app);
-
-// Use body-parser middleware
-
-
-// Configure session and cookie settings
-
-
-// Middleware to handle OpaqueResponseBlocking errors
-app.use((req, res, next) => {
-  if (res.statusCode === 0) {
-    console.error('Blocked by OpaqueResponseBlocking:', req.originalUrl);
-    return res.status(403).json({ message: 'Blocked by OpaqueResponseBlocking' });
-  }
-  next();
-});
-
-// Add headers to allow third-party cookies and storage access
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.APP_URL);
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
-
-// Route for user registration
-app.post('/api/register', async (req, res) => {
-  const { name, email, password } = req.body;
-
-  try {
-    const newUser = await User.create({ name, email, password });
-    res.status(201).json({ message: 'User registered successfully', user: newUser });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -170,16 +137,47 @@ app.get('/auth/google/callback', (req, res, next) => {
   })(req, res, next);
 });
 
+
+
+// Route for user registration
+app.post('/api/register', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    const newUser = await User.create({ name, email, password });
+    res.status(201).json({ message: 'User registered successfully', user: newUser });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
 // Middleware to handle 404 errors
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Resource not found' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  res.status(500).json({ message: 'Internal server error' });
+// Membuat server HTTPS dan menyimpannya dalam variabel
+const server = https.createServer(sslOptions, app);
+
+// Middleware to handle OpaqueResponseBlocking errors
+app.use((req, res, next) => {
+  if (res.statusCode === 0) {
+    console.error('Blocked by OpaqueResponseBlocking:', req.originalUrl);
+    return res.status(403).json({ message: 'Blocked by OpaqueResponseBlocking' });
+  }
+  next();
 });
+
+// Add headers to allow third-party cookies and storage access
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.APP_URL);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 
 // Menjalankan server HTTPS
 server.listen(HTTPS_PORT, () => {
