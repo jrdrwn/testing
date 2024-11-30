@@ -1,0 +1,33 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "pintura", 
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": true 
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "pintura", 
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false 
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "pintura", 
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false, 
+    "ssl": true, 
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false 
+      }
+    }
+  }
+}
