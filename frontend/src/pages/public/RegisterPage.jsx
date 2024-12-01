@@ -167,7 +167,9 @@ const RegisterPage = () => {
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
               >
+                <Link className="className="text-4xl font-bold text-blue-700 mb-2 to="/VerificationPage">
                 Register
+                </Link>
               </button>
             </div>
           </form>

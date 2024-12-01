@@ -9,7 +9,10 @@ import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
 import PricingPage from '../pages/public/PricingPage';
 import RegisterPage from '../pages/public/RegisterPage';
-
+import AktivationPage from '../pages/public/Aktivationpage';
+import ChangePasswordPage from '../pages/public/ChangePasswordPage';
+import VerificationCodePage from '../pages/public/VerificationCodePage';
+import VerificationCodepage2 from '../pages/public/VerificationCodepage2';
 const AppRoutes = () => {
   return (
     <Router>
@@ -24,6 +27,10 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} />
         <Route path="/dashboard/detailcontent" element={<DetailContent />} />
+        <Route path="/Aktivationpage" element={<AktivationPage />} />
+        <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
+        <Route path="/VerificationPage" element={<VerificationCodePage />} />
+        <Route path="/VerificationPage2" element={<VerificationCodepage2 />} />
       </Routes>
     </Router>
   );
