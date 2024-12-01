@@ -3,6 +3,7 @@ const passport = require('passport'); // Add this line
 const { register, login, logout } = require('../Controllers/authController');
 const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
+const { getAllCourses } = require('../Controllers/courseController');
 
 const router = express.Router();
 
@@ -21,6 +22,12 @@ router.post('/logout', (req, res, next) => {
   console.log('Logout route hit');
   next();
 }, logout);
+
+// get all courses
+router.get('/courses', (req,res,next)=>{
+  console.log('get all courses')
+  next();
+}, getAllCourses);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {
@@ -94,12 +101,6 @@ router.get('/courses/:id', (req,res,next)=>{
   console.log('get course by id')
   next();
 }, getCourseById);
-
-// get all courses
-router.get('/courses', (req,res,next)=>{
-  console.log('get all courses')
-  next();
-}, getCourses);
 
 // create course
 router.post('/courses', (req,res,next)=>{
