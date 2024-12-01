@@ -9,6 +9,7 @@ import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
 import PricingPage from '../pages/public/PricingPage';
 import RegisterPage from '../pages/public/RegisterPage';
+import SettingPage from '../pages/private/SettingPage';
 
 const AppRoutes = () => {
   return (
@@ -21,9 +22,10 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/home" element={<DashboardPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} />
         <Route path="/dashboard/detailcontent" element={<DetailContent />} />
+        <Route path="/dashboard/setting" element={<SettingPage />} />
       </Routes>
     </Router>
   );

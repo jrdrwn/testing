@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';  // Impor Link dari react-router-dom
 
 const Navbar = () => {
+  // State untuk melacak halaman aktif
+  const [activePage, setActivePage] = useState('Home');
+
+  // Fungsi untuk mengubah halaman aktif
+  const handleNavigation = (page) => {
+    setActivePage(page);
+  };
+
   return (
     <div>
       {/* Navbar Section */}
@@ -32,11 +41,20 @@ const Navbar = () => {
 
       {/* Navigation Section */}
       <div className="flex items-center space-x-8 p-4 bg-white">
-        <div className="p-2 bg-gray-100 rounded text-blue-600">Home</div>
-        <div className="text-gray-500">My Courses</div>
-        <div className="text-gray-500">Workshop</div>
-        <div className="text-gray-500">Community</div>
-        <div className="text-gray-500">Settings</div>
+        {['Home', 'My Courses', 'Workshop', 'Community', 'Setting'].map((page) => (
+          <Link
+            key={page}
+            to={`/dashboard/${page.toLowerCase().replace(' ', '')}`} // Gunakan Link dan URL dinamis
+            onClick={() => handleNavigation(page)} // Set active page on click
+            className={`cursor-pointer p-2 rounded ${
+              activePage === page
+                ? 'bg-blue-600 text-white'  // Active page style
+                : 'text-gray-500'           // Inactive pages style
+            }`}
+          >
+            {page}
+          </Link>
+        ))}
       </div>
     </div>
   );
