@@ -63,7 +63,7 @@ passport.use(new GoogleStrategy({
     console.log('Google profile received:', profile); // Log profil Google
 
     // Cek apakah pengguna sudah ada berdasarkan googleId
-    let user = await User.findOne({ where: { googleId: profile.id } });
+    let user = await User.findOne({ where: { google_id: profile.id } });
 
     if (user) {
       // Jika pengguna sudah ada berdasarkan googleId, login pengguna
@@ -81,7 +81,7 @@ passport.use(new GoogleStrategy({
         // Jika tidak ada pengguna, buat pengguna baru
         console.log('No user found. Creating a new user...');
         user = await User.create({
-          googleId: profile.id,
+          google_id: profile.id,
           name: profile.displayName,
           email: profile.emails[0].value,
           password: '', // Kosongkan password atau atur sesuai kebutuhan

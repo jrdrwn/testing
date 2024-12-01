@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true, // Tambahkan autoIncrement jika ingin auto generate
       },
-      googleId: {
+      google_id: {
         type: DataTypes.STRING,
         allowNull: true, // Allow null for regular registration
         unique: true,
