@@ -3,7 +3,7 @@
 ### cara generate dummy data
 1. buat database dengan nama 'pintura'
 2. import file pintura.sql
-3. generate data dummy melalui terminal : npx sequelize-cli db:seed --seed 20241126220906-seeding.js
+3. generate data dummy melalui terminal : npx sequelize-cli db:seed:all
 
 ### Buka terminal, masuk ke folder backend:
 1. cd backend
