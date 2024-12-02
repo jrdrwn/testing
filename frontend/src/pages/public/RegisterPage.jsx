@@ -16,12 +16,12 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Reset pesan error
+    // Reset error message
     setErrorMessage('');
 
-    // Validasi password
+    // Validate password
     if (password !== confirmPassword) {
-      setErrorMessage('Password tidak cocok.');
+      setErrorMessage('Passwords do not match.');
       return;
     }
 
@@ -45,10 +45,10 @@ const RegisterPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Simpan email untuk halaman verifikasi
+        // Save email for verification page
         localStorage.setItem('verificationEmail', email);
         
-        // Kirim kode OTP
+        // Send OTP code
         await fetch('https://localhost:5000/api/auth/send-verification', {
           method: 'POST',
           headers: {
@@ -62,7 +62,7 @@ const RegisterPage = () => {
         setErrorMessage(data.message);
       }
     } catch (error) {
-      setErrorMessage('Terjadi kesalahan. Silakan coba lagi nanti.');
+      setErrorMessage('An error occurred. Please try again later.');
     }
   };
 
