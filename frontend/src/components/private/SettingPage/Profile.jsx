@@ -1,54 +1,50 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import LayoutWithSidebar from "./LayoutWithSidebar";
 
 const Profile = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg w-full max-w-6xl p-6 flex mt-1">
-        {/* Sidebar Settings */}
-        <Sidebar />
+    <LayoutWithSidebar>
+      {/* Profile Content */}
+      <div>
+        <h2 className="text-blue-600 text-xl font-semibold mb-2 flex items-center">
+          <i className="fas fa-user mr-2"></i> Profile
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Make changes to your account here. Click save when you're done.
+        </p>
 
-        {/* Profile Content */}
-        <div className="flex-grow pl-6">
-          <h2 className="text-blue-600 text-xl font-semibold mb-2 flex items-center">
-            <i className="fas fa-user mr-2"></i> Profile
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Make changes to your account here. Click save when you're done.
-          </p>
-
-          {/* Profile Image & Info */}
-          <div className="flex items-center mb-6">
-            <img
-              src="https://placehold.co/100x100"
-              alt="Profile"
-              className="rounded-full w-24 h-24 mr-4"
-            />
-            <div>
-              <div className="flex items-center mb-2">
-                <div className="bg-gray-200 rounded-full h-2 w-48 mr-2">
-                  <div
-                    className="bg-blue-600 h-2 rounded-full"
-                    style={{ width: "80%" }}
-                  ></div>
-                </div>
-                <span className="text-gray-600 text-sm">12000/15000</span>
+        {/* Profile Image & Info */}
+        <div className="flex items-center mb-6">
+          <img
+            src="https://placehold.co/100x100"
+            alt="Profile"
+            className="rounded-full w-24 h-24 mr-4"
+          />
+          <div>
+            <div className="flex items-center mb-2">
+              <div className="bg-gray-200 rounded-full h-2 w-48 mr-2">
+                <div
+                  className="bg-blue-600 h-2 rounded-full"
+                  style={{ width: "80%" }}
+                ></div>
               </div>
-              <p className="text-gray-600 text-sm mb-2">
-                3000 more exp to reach the next tier.
-              </p>
-              <p className="text-blue-600 text-sm font-semibold">Rising Star</p>
+              <span className="text-gray-600 text-sm">12000/15000</span>
             </div>
-            <button className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
-              <i className="fas fa-pen mr-2"></i> Edit
-            </button>
+            <p className="text-gray-600 text-sm mb-2">
+              3000 more exp to reach the next tier.
+            </p>
+            <p className="text-blue-600 text-sm font-semibold">Rising Star</p>
           </div>
-          <p className="text-gray-600 text-sm mb-6">
-            Your Profile image should be no more than 2MB in size.
-          </p>
+          <button className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <i className="fas fa-pen mr-2"></i> Edit
+          </button>
+        </div>
+        <p className="text-gray-600 text-sm mb-6">
+          Your Profile image should be no more than 2MB in size.
+        </p>
 
-          {/* Profile Form */}
-          <form>
+        {/* Profile Form */}
+        <form>
             {/* Full Name */}
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2">
@@ -212,14 +208,13 @@ const Profile = () => {
               </p>
             </div>
 
-            {/* Save Button */}
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-              Save changes
-            </button>
-          </form>
-        </div>
+          {/* Save Button */}
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+            Save changes
+          </button>
+        </form>
       </div>
-    </div>
+    </LayoutWithSidebar>
   );
 };
 

@@ -15,6 +15,8 @@ import VerificationCodePage from '../pages/public/VerificationCodePage';
 import VerificationCodepage2 from '../pages/public/VerificationCodepage2';
 import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
+import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
+import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
 
 const AppRoutes = () => {
   return (
@@ -36,6 +38,8 @@ const AppRoutes = () => {
         <Route path="/VerificationPage2" element={<VerificationCodepage2 />} />
         <Route path="/dashboard/setting" element={<ProfilePage />} />
         <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
+        <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
+        <Route path="/dashboard/setting/subscriptions" element={<SubscriptionPage />} />
       </Routes>
     </Router>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import LayoutWithSidebar from "./LayoutWithSidebar";
 
 const Notifications = () => {
   const renderSection = (title, itemCount) => (
@@ -36,28 +36,20 @@ const Notifications = () => {
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg w-full max-w-6xl p-6 flex mt-1">
-        {/* Sidebar Settings */}
-        <Sidebar />
-
-        {/* Notifications Content */}
-        <div className="flex-grow pl-6">
-          <h1 className="text-2xl font-bold text-blue-600 mb-2 flex items-center">
-            <i className="fas fa-bell mr-2"></i> Notifications
-          </h1>
-          <p className="text-gray-600 mb-4">
-            Customize your notification preferences here. Click save when you're done.
-          </p>
-          <div className="space-y-6">
-            {renderSection("General", 3)}
-            {renderSection("Assignment & Activity", 3)}
-            {renderSection("Community", 2)}
-            {renderSection("Channel & Promotion Updates", 5)}
-          </div>
-        </div>
+    <LayoutWithSidebar>
+      <h1 className="text-2xl font-bold text-blue-600 mb-2 flex items-center">
+        <i className="fas fa-bell mr-2"></i> Notifications
+      </h1>
+      <p className="text-gray-600 mb-4">
+        Customize your notification preferences here. Click save when you're done.
+      </p>
+      <div className="space-y-6">
+        {renderSection("General", 3)}
+        {renderSection("Assignment & Activity", 3)}
+        {renderSection("Community", 2)}
+        {renderSection("Channel & Promotion Updates", 5)}
       </div>
-    </div>
+    </LayoutWithSidebar>
   );
 };
 

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';  // Impor Link dari react-router-dom
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom'; // Impor Link dan useLocation
 
 const Navbar = () => {
-  // State untuk melacak halaman aktif
-  const [activePage, setActivePage] = useState('Home');
+  const location = useLocation();
 
-  // Fungsi untuk mengubah halaman aktif
-  const handleNavigation = (page) => {
-    setActivePage(page);
-  };
+  // Fungsi untuk menentukan apakah menu aktif
+  const isActive = (path) =>
+    location.pathname === `/dashboard/${path.toLowerCase().replace(' ', '')}`;
 
   return (
     <div>
@@ -44,12 +42,11 @@ const Navbar = () => {
         {['Home', 'My Courses', 'Workshop', 'Community', 'Setting'].map((page) => (
           <Link
             key={page}
-            to={`/dashboard/${page.toLowerCase().replace(' ', '')}`} // Gunakan Link dan URL dinamis
-            onClick={() => handleNavigation(page)} // Set active page on click
+            to={`/dashboard/${page.toLowerCase().replace(' ', '')}`} // URL dinamis
             className={`cursor-pointer p-2 rounded ${
-              activePage === page
-                ? 'bg-blue-600 text-white'  // Active page style
-                : 'text-gray-500'           // Inactive pages style
+              isActive(page)
+                ? 'bg-blue-600 text-white' // Gaya halaman aktif
+                : 'text-gray-500'          // Gaya halaman tidak aktif
             }`}
           >
             {page}
