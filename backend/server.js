@@ -153,6 +153,20 @@ app.post('/api/register', async (req, res) => {
 });
 
 
+/* async function createTransaction(userId, sessionId, amount, status) {
+  try {
+    const transaction = await StripeTransaction.create({
+      user_id: userId,
+      session_id: sessionId,
+      amount: amount,
+      status: status,
+    });
+    console.log('Transaction created:', transaction);
+  } catch (error) {
+    console.error('Error creating transaction:', error);
+  }
+}  */
+
 
 // Middleware to handle 404 errors
 app.use((req, res, next) => {
