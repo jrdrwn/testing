@@ -1,35 +1,12 @@
 import React from "react";
+import Sidebar from "./Sidebar";
 
 const Profile = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-md rounded-lg w-full max-w-6xl p-6 flex mt-1">
         {/* Sidebar Settings */}
-        <div className="flex-shrink-0 w-1/4 border-r pr-4">
-          <h2 className="text-blue-600 text-xl font-semibold mb-6">Settings</h2>
-          <ul>
-            <li className="mb-4">
-              <a href="#" className="text-blue-600 flex items-center">
-                <i className="fas fa-user mr-2"></i> Profile
-              </a>
-            </li>
-            <li className="mb-4">
-              <a href="#" className="text-gray-600 flex items-center">
-                <i className="fas fa-bell mr-2"></i> Notifications
-              </a>
-            </li>
-            <li className="mb-4">
-              <a href="#" className="text-gray-600 flex items-center">
-                <i className="fas fa-link mr-2"></i> Social Links
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-600 flex items-center">
-                <i className="fas fa-credit-card mr-2"></i> Subscriptions
-              </a>
-            </li>
-          </ul>
-        </div>
+        <Sidebar />
 
         {/* Profile Content */}
         <div className="flex-grow pl-6">

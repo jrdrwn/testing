@@ -9,7 +9,8 @@ import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
 import PricingPage from '../pages/public/PricingPage';
 import RegisterPage from '../pages/public/RegisterPage';
-import SettingPage from '../pages/private/SettingPage';
+import ProfilePage from '../pages/private/settings/ProfilePage';
+import NotificationsPage from '../pages/private/settings/NotificationsPage';
 
 const AppRoutes = () => {
   return (
@@ -25,7 +26,8 @@ const AppRoutes = () => {
         <Route path="/dashboard/home" element={<DashboardPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} />
         <Route path="/dashboard/detailcontent" element={<DetailContent />} />
-        <Route path="/dashboard/setting" element={<SettingPage />} />
+        <Route path="/dashboard/setting" element={<ProfilePage />} />
+        <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
       </Routes>
     </Router>
   );
