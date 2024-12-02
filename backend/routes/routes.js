@@ -5,6 +5,7 @@ const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
 const { getAllCourses } = require('../Controllers/courseController');
 const stripeController = require('../Controllers/stripeController');
+const emailController = require('../Controllers/emailController');
 
 const router = express.Router();
 
@@ -160,5 +161,13 @@ router.use((err, req, res, next) => {
     next(err);
   }
 });
+
+// Verifikasi email routes
+router.post('/api/auth/send-verification', emailController.sendVerificationCode);
+router.post('/api/auth/verify-code', emailController.verifyCode);
+
+// Forgot password routes
+router.post('/forgot-password', emailController.forgotPassword);
+router.post('/reset-password', emailController.resetPassword);
 
 module.exports = router;
