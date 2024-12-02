@@ -1,20 +1,15 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Impor Link dan useLocation
+import { NavLink } from 'react-router-dom';
+import Logo from '../../../assets/logo/logo.png';
+
 
 const Navbar = () => {
-  const location = useLocation();
-
-  // Fungsi untuk menentukan apakah menu aktif
-  const isActive = (path) =>
-    location.pathname === `/dashboard/${path.toLowerCase().replace(' ', '')}`;
-
   return (
     <div>
       {/* Navbar Section */}
       <div className="flex items-center justify-between p-4 bg-white shadow-md">
         <div className="flex items-center">
-          <div className="text-2xl font-bold text-blue-600">PINTUR</div>
-          <div className="ml-2 w-4 h-4 bg-blue-600"></div>
+        <img src={Logo} alt="Pintura" className="w-[125px] h-[25px] object-contain" />
         </div>
         <div className="flex items-center flex-grow mx-4">
           <input
@@ -40,17 +35,17 @@ const Navbar = () => {
       {/* Navigation Section */}
       <div className="flex items-center space-x-8 p-4 bg-white">
         {['Home', 'My Courses', 'Workshop', 'Community', 'Setting'].map((page) => (
-          <Link
+          <NavLink
             key={page}
             to={`/dashboard/${page.toLowerCase().replace(' ', '')}`} // URL dinamis
-            className={`cursor-pointer p-2 rounded ${
-              isActive(page)
-                ? 'bg-blue-600 text-white' // Gaya halaman aktif
-                : 'text-gray-500'          // Gaya halaman tidak aktif
-            }`}
+            className={({ isActive }) =>
+              `cursor-pointer p-2 rounded ${
+                isActive ? 'bg-blue-600 text-white' : 'text-gray-500'
+              }`
+            } // Gunakan isActive dari NavLink
           >
             {page}
-          </Link>
+          </NavLink>
         ))}
       </div>
     </div>
