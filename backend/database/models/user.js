@@ -50,6 +50,18 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: null, // Null by default
       },
+      email_verification_token: {
+        type: DataTypes.STRING(6),
+        allowNull: true
+      },
+      email_verification_token_expires: {
+        type: DataTypes.DATE,
+        allowNull: true
+      },
+      email_verified: {
+        type: DataTypes.ENUM('0', '1'),
+        defaultValue: '0'
+      },
     },
     {
       tableName: 'users', // Nama tabel sesuai database

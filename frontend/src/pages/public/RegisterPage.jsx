@@ -16,25 +16,25 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Reset the error message
+    // Reset pesan error
     setErrorMessage('');
 
-    // Check if password and confirm password match
+    // Validasi password
     if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match.');
+      setErrorMessage('Password tidak cocok.');
       return;
     }
 
     const userData = {
       firstName,
       lastName,
-      name: `${firstName} ${lastName}`, // Combine firstName and lastName to create name
+      name: `${firstName} ${lastName}`,
       email,
       password,
     };
 
     try {
-      const response = await fetch('https://localhost:5000/api/auth/register', { // Use HTTPS
+      const response = await fetch('https://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,13 +45,24 @@ const RegisterPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage(data.message);
-        navigate('/dashboard'); // Redirect to /dashboard on success
+        // Simpan email untuk halaman verifikasi
+        localStorage.setItem('verificationEmail', email);
+        
+        // Kirim kode OTP
+        await fetch('https://localhost:5000/api/auth/send-verification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        navigate('/VerificationPage');
       } else {
         setErrorMessage(data.message);
       }
     } catch (error) {
-      setErrorMessage('Something went wrong. Please try again later.');
+      setErrorMessage('Terjadi kesalahan. Silakan coba lagi nanti.');
     }
   };
 
