@@ -5,6 +5,7 @@ import Img from '../../assets/public/imgVerificationCode2.svg';
 const VerificationCodePage2 = () => {
     const navigate = useNavigate();
     const [codeSent, setCodeSent] = useState(false);
+    const [code, setCode] = useState(['', '', '', '', '', '']);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -14,6 +15,28 @@ const VerificationCodePage2 = () => {
     const handleSendNewCode = () => {
         setCodeSent(true);
         // Tambahkan logika pengiriman kode baru di sini jika diperlukan.
+    };
+
+    const handleInput = (index, value) => {
+        const newCode = [...code];
+        newCode[index] = value;
+        setCode(newCode);
+
+        // Auto focus ke input berikutnya
+        if (value && index < 5) {
+            const nextInput = document.querySelector(`input[name=code-${index + 1}]`);
+            if (nextInput) nextInput.focus();
+        }
+    };
+
+    const handleKeyDown = (index, e) => {
+        // Jika backspace dan input kosong, fokus ke input sebelumnya
+        if (e.key === 'Backspace' && !code[index] && index > 0) {
+            const prevInput = document.querySelector(`input[name=code-${index - 1}]`);
+            if (prevInput) {
+                prevInput.focus();
+            }
+        }
     };
 
     return (
@@ -41,12 +64,18 @@ const VerificationCodePage2 = () => {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <div className="flex justify-center mb-4">
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
-                                <input type="text" maxLength="1" className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1" />
+                                {[0, 1, 2, 3, 4, 5].map((index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        name={`code-${index}`}
+                                        maxLength="1"
+                                        className="w-12 h-12 border border-gray-300 text-center text-2xl mx-1"
+                                        value={code[index]}
+                                        onChange={(e) => handleInput(index, e.target.value)}
+                                        onKeyDown={(e) => handleKeyDown(index, e)}
+                                    />
+                                ))}
                             </div>
                             <p className="text-gray-600 text-center mb-4">
                                 Please enter the one-time password that we sent to your email.
