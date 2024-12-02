@@ -13,6 +13,11 @@ import AktivationPage from '../pages/public/Aktivationpage';
 import ChangePasswordPage from '../pages/public/ChangePasswordPage';
 import VerificationCodePage from '../pages/public/VerificationCodePage';
 import VerificationCodepage2 from '../pages/public/VerificationCodepage2';
+import ProfilePage from '../pages/private/settings/ProfilePage';
+import NotificationsPage from '../pages/private/settings/NotificationsPage';
+import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
+import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
+
 const AppRoutes = () => {
   return (
     <Router>
@@ -24,13 +29,17 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/dashboard/home" element={<DashboardPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} />
         <Route path="/dashboard/detailcontent" element={<DetailContent />} />
         <Route path="/Aktivationpage" element={<AktivationPage />} />
         <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
         <Route path="/VerificationPage" element={<VerificationCodePage />} />
         <Route path="/VerificationPage2" element={<VerificationCodepage2 />} />
+        <Route path="/dashboard/setting" element={<ProfilePage />} />
+        <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
+        <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
+        <Route path="/dashboard/setting/subscriptions" element={<SubscriptionPage />} />
       </Routes>
     </Router>
   );

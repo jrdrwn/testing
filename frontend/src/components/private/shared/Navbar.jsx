@@ -1,4 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import Logo from '../../../assets/logo/logo.png';
+
 
 const Navbar = () => {
   return (
@@ -6,8 +9,7 @@ const Navbar = () => {
       {/* Navbar Section */}
       <div className="flex items-center justify-between p-4 bg-white shadow-md">
         <div className="flex items-center">
-          <div className="text-2xl font-bold text-blue-600">PINTUR</div>
-          <div className="ml-2 w-4 h-4 bg-blue-600"></div>
+        <img src={Logo} alt="Pintura" className="w-[125px] h-[25px] object-contain" />
         </div>
         <div className="flex items-center flex-grow mx-4">
           <input
@@ -32,11 +34,19 @@ const Navbar = () => {
 
       {/* Navigation Section */}
       <div className="flex items-center space-x-8 p-4 bg-white">
-        <div className="p-2 bg-gray-100 rounded text-blue-600">Home</div>
-        <div className="text-gray-500">My Courses</div>
-        <div className="text-gray-500">Workshop</div>
-        <div className="text-gray-500">Community</div>
-        <div className="text-gray-500">Settings</div>
+        {['Home', 'My Courses', 'Workshop', 'Community', 'Setting'].map((page) => (
+          <NavLink
+            key={page}
+            to={`/dashboard/${page.toLowerCase().replace(' ', '')}`} // URL dinamis
+            className={({ isActive }) =>
+              `cursor-pointer p-2 rounded ${
+                isActive ? 'bg-blue-600 text-white' : 'text-gray-500'
+              }`
+            } // Gunakan isActive dari NavLink
+          >
+            {page}
+          </NavLink>
+        ))}
       </div>
     </div>
   );
