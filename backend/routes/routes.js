@@ -167,7 +167,7 @@ router.post('/api/auth/send-verification', emailController.sendVerificationCode)
 router.post('/api/auth/verify-code', emailController.verifyCode);
 
 // Forgot password routes
-router.post('/forgot-password', emailController.forgotPassword);
-router.post('/reset-password', emailController.resetPassword);
+// router.post('/forgot-password', emailController.forgotPassword);
+// router.post('/reset-password', emailController.resetPassword);
 
 module.exports = router;
