@@ -3,6 +3,8 @@ const passport = require('passport'); // Add this line
 const { register, login, logout } = require('../Controllers/authController');
 const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
+const { getAllCourses } = require('../Controllers/courseController');
+const stripeController = require('../Controllers/stripeController');
 
 const router = express.Router();
 
@@ -21,6 +23,12 @@ router.post('/logout', (req, res, next) => {
   console.log('Logout route hit');
   next();
 }, logout);
+
+// get all courses
+router.get('/courses', (req,res,next)=>{
+  console.log('get all courses')
+  next();
+}, getAllCourses);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {
@@ -95,12 +103,6 @@ router.get('/courses/:id', (req,res,next)=>{
   next();
 }, getCourseById);
 
-// get all courses
-router.get('/courses', (req,res,next)=>{
-  console.log('get all courses')
-  next();
-}, getCourses);
-
 // create course
 router.post('/courses', (req,res,next)=>{
   console.log('create course')
@@ -125,18 +127,28 @@ router.post('/payment', (req,res,next)=>{
   next();
 }, payment);
  */
+
+
+// Route untuk membuat checkout session
+router.post('/create-checkout-session', stripeController.createCheckoutSession);
+
+// Route untuk membuat billing portal session
+router.post('/create-portal-session', stripeController.createPortalSession);
+
+// Route untuk menangani webhook dari Stripe
+router.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook);
+
+
+
+
+
 // Define routes for Google OAuth
 router.get('/google-register', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/' }), 
-  function(req, res) {
-    res.redirect('/dashboard');
-  }
-);
+// Rute untuk autentikasi Google
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Define routes for Google OAuth
-router.get('/auth/google', googleController.googleAuth);
+// Rute untuk menangani callback Google
 router.get('/auth/google/callback', googleController.googleAuthCallback);
 
 // Handle SSL errors
