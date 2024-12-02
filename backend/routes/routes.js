@@ -4,6 +4,7 @@ const { register, login, logout } = require('../Controllers/authController');
 const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
 const { getAllCourses } = require('../Controllers/courseController');
+const stripeController = require('../Controllers/stripeController');
 
 const router = express.Router();
 
@@ -126,6 +127,21 @@ router.post('/payment', (req,res,next)=>{
   next();
 }, payment);
  */
+
+
+// Route untuk membuat checkout session
+router.post('/create-checkout-session', stripeController.createCheckoutSession);
+
+// Route untuk membuat billing portal session
+router.post('/create-portal-session', stripeController.createPortalSession);
+
+// Route untuk menangani webhook dari Stripe
+router.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook);
+
+
+
+
+
 // Define routes for Google OAuth
 router.get('/google-register', passport.authenticate('google', { scope: ['profile', 'email'] }));
 

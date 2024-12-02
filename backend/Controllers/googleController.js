@@ -16,7 +16,7 @@ exports.googleAuthCallback = async (req, res, next) => {
     // If you want to skip the login logic, simply respond here
     try {
       // Check if the user already exists by googleId
-      let existingUser = await User.findOne({ where: { googleId: user.googleId } });
+      let existingUser = await User.findOne({ where: { google_id: user.google_id } });
   
       if (existingUser) {
         // Ensure req.session is defined before setting req.session.user
