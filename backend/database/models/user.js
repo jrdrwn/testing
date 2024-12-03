@@ -14,9 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true, // Allow null for regular registration
         unique: true,
-        
       },
-
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -62,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('0', '1'),
         defaultValue: '0'
       },
+      reset_password_token: {
+        type: DataTypes.STRING(6),
+        allowNull: true
+      },
+      reset_password_token_expires: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }
     },
     {
       tableName: 'users', // Nama tabel sesuai database

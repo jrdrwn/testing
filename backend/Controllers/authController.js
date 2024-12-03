@@ -59,33 +59,46 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     console.log('Login attempt for email:', email);
 
-    // Validate input
+    // Input validation
     if (!email || !password) {
       console.error('Email and password are required');
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    // Check if the user exists
+    // Check if user exists
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      console.error('Invalid credentials for user:', email);
-      return res.status(400).json({ message: 'wrong email or password.' });
+      console.error('Invalid credentials for:', email);
+      return res.status(400).json({ message: 'Invalid email or password.' });
     }
 
-    // Compare the password with the hashed password in the database
+    // Check if email is verified
+    if (user.email_verified !== '1') {
+      console.error('Email not verified:', email);
+      return res.status(403).json({ 
+        message: 'Email not verified. Please verify your email first.',
+        needsVerification: true 
+      });
+    }
+
+    // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      console.error('Invalid credentials for user:', email);
-      return res.status(400).json({ message: 'wrong email or password.' });
+      console.error('Invalid credentials for:', email);
+      return res.status(400).json({ message: 'Invalid email or password.' });
     }
 
-    // Generate a JWT token
-    const token = jwt.sign({ userId: user.user_id, email: user.email }, process.env.JWT_SECRET || 'yourSecretKey', { expiresIn: '1h' });
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user.user_id, email: user.email }, 
+      process.env.JWT_SECRET || 'yourSecretKey', 
+      { expiresIn: '1h' }
+    );
 
     console.log('Login successful for user:', email);
     return res.status(200).json({
       message: 'Login successful.',
-      token, // Send the token in the response
+      token,
     });
   } catch (error) {
     console.error('Error during login:', error);
