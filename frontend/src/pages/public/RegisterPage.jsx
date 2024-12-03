@@ -9,19 +9,19 @@ const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Reset error message
-    setErrorMessage('');
+    setError('');
 
     // Validate password
     if (password !== confirmPassword) {
-      setErrorMessage('Passwords do not match.');
+      setError('Passwords do not match.');
       return;
     }
 
@@ -32,6 +32,8 @@ const RegisterPage = () => {
       email,
       password,
     };
+
+    setLoading(true);
 
     try {
       const response = await fetch('https://localhost:5000/api/auth/register', {
@@ -59,10 +61,12 @@ const RegisterPage = () => {
 
         navigate('/VerificationPage');
       } else {
-        setErrorMessage(data.message);
+        setError(data.message || 'An error occurred');
       }
     } catch (error) {
-      setErrorMessage('An error occurred. Please try again later.');
+      setError('A server error occurred');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -89,8 +93,14 @@ const RegisterPage = () => {
           <h1 className="text-4xl font-bold text-blue-700 mb-2">Register</h1>
           <p className="text-gray-600 mb-6">Fill out the form below to create your account.</p>
           
-          {errorMessage && <p className="text-red-600 text-center mb-4">{errorMessage}</p>}
-          {successMessage && <p className="text-green-600 text-center mb-4">{successMessage}</p>}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <div className="flex">
+                <i className="fas fa-exclamation-circle mt-1 mr-2"></i>
+                <span>{error}</span>
+              </div>
+            </div>
+          )}
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -105,6 +115,7 @@ const RegisterPage = () => {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -121,6 +132,7 @@ const RegisterPage = () => {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -137,6 +149,7 @@ const RegisterPage = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -153,6 +166,7 @@ const RegisterPage = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -169,6 +183,7 @@ const RegisterPage = () => {
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -177,10 +192,9 @@ const RegisterPage = () => {
               <button
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
+                disabled={loading}
               >
-                <Link className="className="text-4xl font-bold text-blue-700 mb-2 to="/VerificationPage">
-                Register
-                </Link>
+                {loading ? 'Registering...' : 'Register'}
               </button>
             </div>
           </form>
