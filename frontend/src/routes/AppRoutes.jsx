@@ -8,6 +8,7 @@ import GoogleCallback from '../pages/public/GoogleCallback';
 import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
 import PricingPage from '../pages/public/PricingPage';
+import PaymentPage from '../pages/public/Subscription/payment';
 import RegisterPage from '../pages/public/RegisterPage';
 import AktivationPage from '../pages/public/Aktivationpage';
 import ChangePasswordPage from '../pages/public/ChangePasswordPage';
@@ -26,6 +27,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/pricing/payment" element={<PaymentPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
