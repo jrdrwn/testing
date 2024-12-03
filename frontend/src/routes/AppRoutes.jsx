@@ -8,15 +8,21 @@ import GoogleCallback from '../pages/public/GoogleCallback';
 import HomePage from '../pages/public/HomePage';
 import LoginPage from '../pages/public/LoginPage';
 import PricingPage from '../pages/public/PricingPage';
+import PaymentPage from '../pages/public/Subscription/payment';
 import RegisterPage from '../pages/public/RegisterPage';
 import AktivationPage from '../pages/public/Aktivationpage';
 import ChangePasswordPage from '../pages/public/ChangePasswordPage';
 import VerificationCodePage from '../pages/public/VerificationCodePage';
 import VerificationCodepage2 from '../pages/public/VerificationCodePage2';
+import VerificationCodeResetPassPage from '../pages/public/VerificationCodeResetPassPage';
 import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
+import Inprogress from '../pages/private/mycourses/InProgress';
+import Completed from '../pages/private/mycourses/completed';
+import Certificate from '../pages/private/mycourses/certificate';
+
 
 const AppRoutes = () => {
   return (
@@ -26,6 +32,7 @@ const AppRoutes = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/pricing/payment" element={<PaymentPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
@@ -35,11 +42,15 @@ const AppRoutes = () => {
         <Route path="/Aktivationpage" element={<AktivationPage />} />
         <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
         <Route path="/VerificationPage" element={<VerificationCodePage />} />
-        <Route path="/VerificationPage2" element={<VerificationCodepage2 />} />
+        <Route path="/VerificationResetPassPage" element={<VerificationCodeResetPassPage />} />
         <Route path="/dashboard/setting" element={<ProfilePage />} />
         <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
         <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
         <Route path="/dashboard/setting/subscriptions" element={<SubscriptionPage />} />
+        <Route path="/dashboard/mycourses" element={<Inprogress />} />
+        <Route path="/dashboard/mycourses/completed" element={<Completed/>} />
+        <Route path="/dashboard/mycourses/certificate" element={<Certificate />} />
+
       </Routes>
     </Router>
   );

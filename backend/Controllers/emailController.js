@@ -1,242 +1,246 @@
-const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt');
-const { User } = require('../database/models');
-const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
+const bcrypt = require("bcrypt");
+const { User } = require("../database/models");
+const jwt = require("jsonwebtoken");
 
-// Konfigurasi transporter email
+// Fungsi untuk generate kode verifikasi 6 digit
+const generateVerificationCode = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
+// Fungsi untuk membuat waktu kadaluarsa 15 menit dari sekarang
+const createExpiryTime = () => {
+    return new Date(Date.now() + 15 * 60000);
+};
+
+// Konfigurasi email menggunakan Gmail
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
-  }
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+    },
 });
 
-// Fungsi untuk mengirim email verifikasi
-const sendVerificationEmail = async (email, token) => {
-  try {
-    console.log('Attempting to send verification email to:', email);
-    console.log('With token:', token);
-    
+// Fungsi untuk mengirim email verifikasi akun
+const sendVerificationEmail = async (email, verificationCode) => {
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Verifikasi Akun Pintura',
-      html: `
-        <h1>Verifikasi Akun Anda</h1>
-        <p>Kode verifikasi Anda adalah:</p>
-        <h2>${token}</h2>
-        <p>Kode ini akan kadaluarsa dalam 15 menit.</p>
-      `
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Verify Your Account",
+        html: `
+            <h1>Verify Your Account</h1>
+            <p>Your verification code is:</p>
+            <h2>${verificationCode}</h2>
+            <p>This code will expire in 15 minutes.</p>
+        `,
     };
 
-    const result = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', result);
-    return result;
-  } catch (error) {
-    console.error('Error sending verification email:', error);
-    throw error;
-  }
+    try {
+        const result = await transporter.sendMail(mailOptions);
+        console.log("Email sent successfully:", result);
+        return result;
+    } catch (error) {
+        console.error("Error sending verification email:", error);
+        throw error;
+    }
 };
 
 // Fungsi untuk mengirim email reset password
-const sendPasswordResetEmail = async (email, token) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: 'Reset Password Pintura',
-    html: `
-      <h1>Reset Password</h1>
-      <p>Kode OTP untuk reset password Anda adalah:</p>
-      <h2>${token}</h2>
-      <p>Kode ini akan kadaluarsa dalam 15 menit.</p>
-    `
-  };
+const sendPasswordResetEmail = async (email, resetCode) => {
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Password Reset",
+        html: `
+            <h1>Password Reset</h1>
+            <p>Your OTP code for password reset is:</p>
+            <h2>${resetCode}</h2>
+            <p>This code will expire in 15 minutes.</p>
+        `,
+    };
 
-  return transporter.sendMail(mailOptions);
+    return transporter.sendMail(mailOptions);
 };
 
-// Controller untuk mengirim kode verifikasi
+// Controller untuk mengirim kode verifikasi email
 const sendVerificationCode = async (req, res) => {
-  try {
-    console.log('Request body:', req.body); // Log request body
-    const { email } = req.body;
-    console.log('Email:', email); // Log email
+    try {
+        const { email } = req.body;
+        const verificationCode = generateVerificationCode();
+        const expiryTime = createExpiryTime();
 
-    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log('Generated verification code:', verificationCode); // Log kode verifikasi
-
-    const expiryTime = new Date(Date.now() + 15 * 60000);
-    console.log('Expiry time:', expiryTime); // Log waktu kadaluarsa
-
-    const user = await User.findOne({ where: { email } });
-    console.log('Found user:', user); // Log user yang ditemukan
-
-    if (!user) {
-      console.log('User not found'); // Log jika user tidak ditemukan
-      return res.status(404).json({ message: 'Email tidak ditemukan' });
-    }
-
-    await User.update({
-      email_verification_token: verificationCode,
-      email_verification_token_expires: expiryTime
-    }, {
-      where: { email }
-    });
-    console.log('User updated with verification code'); // Log update berhasil
-
-    await sendVerificationEmail(email, verificationCode);
-    console.log('Verification email sent'); // Log email terkirim
-
-    res.status(200).json({ message: 'Kode verifikasi telah dikirim' });
-  } catch (error) {
-    console.error('Error in sendVerificationCode:', error); // Log detail error
-    res.status(500).json({ message: 'Terjadi kesalahan saat mengirim kode verifikasi' });
-  }
-};
-
-// Controller untuk verifikasi kode
-const verifyCode = async (req, res) => {
-  try {
-    console.log('Received verification request:', req.body);
-    const { email, code } = req.body;
-
-    const user = await User.findOne({ where: { email } });
-    console.log('Found user:', user);
-
-    if (!user) {
-      return res.status(404).json({ message: 'Email tidak ditemukan' });
-    }
-
-    if (user.email_verification_token !== code) {
-      console.log('Invalid code. Expected:', user.email_verification_token, 'Received:', code);
-      return res.status(400).json({ message: 'Kode verifikasi tidak valid' });
-    }
-
-    if (new Date() > user.email_verification_token_expires) {
-      return res.status(400).json({ message: 'Kode verifikasi telah kadaluarsa' });
-    }
-
-    // Coba update menggunakan model Sequelize terlebih dahulu
-    const updateResult = await User.update(
-      {
-        email_verified: '1',  // Pastikan ini string '1' bukan boolean
-        email_verification_token: null,
-        email_verification_token_expires: null
-      },
-      {
-        where: { email },
-        returning: true
-      }
-    );
-
-    console.log('Sequelize update result:', updateResult);
-
-    // Jika update Sequelize gagal, gunakan raw query
-    if (!updateResult[0]) {
-      const [rawUpdateCount] = await User.sequelize.query(
-        'UPDATE users SET email_verified = "1", email_verification_token = NULL, email_verification_token_expires = NULL WHERE email = ?',
-        {
-          replacements: [email],
-          type: User.sequelize.QueryTypes.UPDATE
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).json({ message: "Email not found" });
         }
-      );
-      console.log('Raw query update count:', rawUpdateCount);
 
-      if (rawUpdateCount === 0) {
-        throw new Error('Failed to update user verification status');
-      }
+        await User.update(
+            {
+                email_verification_token: verificationCode,
+                email_verification_token_expires: expiryTime,
+            },
+            { where: { email } }
+        );
+
+        await sendVerificationEmail(email, verificationCode);
+        res.status(200).json({ message: "Verification code has been sent" });
+    } catch (error) {
+        console.error("Error in sendVerificationCode:", error);
+        res.status(500).json({ message: "An error occurred while sending verification code" });
     }
-
-    // Verifikasi bahwa update berhasil
-    const updatedUser = await User.findOne({ 
-      where: { email },
-      raw: true  // Tambahkan ini untuk mendapatkan data mentah
-    });
-    console.log('Updated user raw data:', updatedUser);
-
-    if (updatedUser.email_verified !== '1') {
-      throw new Error(`Verification status not updated correctly. Current value: ${updatedUser.email_verified}`);
-    }
-
-    res.status(200).json({ message: 'Verifikasi berhasil' });
-  } catch (error) {
-    console.error('Error verifying code:', error);
-    res.status(500).json({ 
-      message: 'Terjadi kesalahan saat verifikasi',
-      error: error.message,
-      stack: error.stack
-    });
-  }
 };
 
-// Controller untuk forgot password
+// Controller untuk verifikasi kode email
+const verifyCode = async (req, res) => {
+    try {
+        const { email, code } = req.body;
+        const user = await User.findOne({ where: { email } });
+
+        if (!user) {
+            return res.status(404).json({ message: "Email not found" });
+        }
+
+        if (user.email_verification_token !== code) {
+            return res.status(400).json({ message: "Invalid verification code" });
+        }
+
+        if (new Date() > user.email_verification_token_expires) {
+            return res.status(400).json({ message: "Verification code has expired" });
+        }
+
+        await User.update(
+            {
+                email_verified: "1",
+                email_verification_token: null,
+                email_verification_token_expires: null,
+            },
+            { where: { email } }
+        );
+
+        res.status(200).json({ message: "Verification successful" });
+    } catch (error) {
+        console.error("Error verifying code:", error);
+        res.status(500).json({ 
+            message: "An error occurred while verifying",
+            error: error.message 
+        });
+    }
+};
+
+// Controller untuk mengirim kode reset password
 const forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiryTime = new Date(Date.now() + 15 * 60000); // 15 menit
+    try {
+        const { email } = req.body;
+        const resetCode = generateVerificationCode();
+        const expiryTime = createExpiryTime();
 
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: 'Email tidak ditemukan' });
+        console.log("Generated reset code:", resetCode);
+        console.log("Generated expiry time:", expiryTime);
+
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            console.error("User not found:", email);
+            return res.status(404).json({ message: "Email not found" });
+        }
+
+        const updateResult = await User.update(
+            {
+                reset_password_token: resetCode,
+                reset_password_token_expires: expiryTime,
+            },
+            { where: { email } }
+        );
+
+        console.log("Update result:", updateResult);
+
+        await sendPasswordResetEmail(email, resetCode);
+        console.log("Reset email sent successfully");
+
+        res.status(200).json({ message: "Password reset code has been sent" });
+    } catch (error) {
+        console.error("Error in forgotPassword:", error);
+        res.status(500).json({ message: "An error occurred while processing the request" });
     }
-
-    await User.update({
-      reset_password_token: resetCode,
-      reset_password_expires: expiryTime
-    }, {
-      where: { email }
-    });
-
-    await sendPasswordResetEmail(email, resetCode);
-
-    res.status(200).json({ message: 'Kode reset password telah dikirim' });
-  } catch (error) {
-    console.error('Error in forgot password:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan saat memproses permintaan' });
-  }
 };
 
-// Controller untuk reset password
+// Controller untuk verifikasi kode reset password
+const verifyResetCode = async (req, res) => {
+    try {
+        const { email, code } = req.body;
+
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).json({ message: "Email not found" });
+        }
+
+        if (user.reset_password_token !== code) {
+            return res.status(400).json({ message: "Invalid reset code" });
+        }
+
+        if (new Date() > user.reset_password_token_expires) {
+            return res.status(400).json({ message: "Reset code has expired" });
+        }
+
+        res.status(200).json({ message: "Reset code valid" });
+    } catch (error) {
+        console.error("Error verifying reset code:", error);
+        res.status(500).json({ message: "An error occurred while verifying" });
+    }
+};
+
+// Controller untuk melakukan reset password
 const resetPassword = async (req, res) => {
-  try {
-    const { email, code, newPassword } = req.body;
+    try {
+        console.log("Reset password request received:", req.body);
+        const { email, code, newPassword } = req.body;
 
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(404).json({ message: 'Email tidak ditemukan' });
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            console.error("User not found:", email);
+            return res.status(404).json({ message: "Email not found" });
+        }
+
+        console.log("Stored reset token:", user.reset_password_token);
+        console.log("Received code:", code);
+
+        if (user.reset_password_token !== code) {
+            console.error("Invalid reset code");
+            return res.status(400).json({ message: "Invalid reset code" });
+        }
+
+        if (new Date() > user.reset_password_token_expires) {
+            console.error("Reset code expired");
+            return res.status(400).json({ message: "Reset code has expired" });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        console.log("Password hashed successfully");
+
+        await User.update(
+            {
+                password: hashedPassword,
+                reset_password_token: null,
+                reset_password_token_expires: null,
+            },
+            {
+                where: { email },
+            }
+        );
+
+        console.log("Password updated successfully");
+        res.status(200).json({ message: "Password has been reset successfully" });
+    } catch (error) {
+        console.error("Error in resetPassword:", error);
+        res.status(500).json({ message: "An error occurred while resetting the password" });
     }
-
-    if (user.reset_password_token !== code) {
-      return res.status(400).json({ message: 'Kode reset tidak valid' });
-    }
-
-    if (new Date() > user.reset_password_expires) {
-      return res.status(400).json({ message: 'Kode reset telah kadaluarsa' });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    await User.update({
-      password: hashedPassword,
-      reset_password_token: null,
-      reset_password_expires: null
-    }, {
-      where: { email }
-    });
-
-    res.status(200).json({ message: 'Password berhasil direset' });
-  } catch (error) {
-    console.error('Error in reset password:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan saat reset password' });
-  }
 };
 
 module.exports = {
-  sendVerificationCode,
-  verifyCode,
-  forgotPassword,
-  resetPassword,
-  sendVerificationEmail
-}; 
+    sendVerificationCode,
+    verifyCode,
+    forgotPassword,
+    resetPassword,
+    sendVerificationEmail,
+    verifyResetCode,
+};
