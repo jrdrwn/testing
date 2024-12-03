@@ -51,7 +51,7 @@ const LoginPage = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         localStorage.setItem('token', data.token);
-        navigate('/dashboard');
+        navigate('/dashboard/home');
       } else {
         if (data.needsVerification) {
           localStorage.setItem('verificationEmail', email);

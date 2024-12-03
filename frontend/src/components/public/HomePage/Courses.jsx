@@ -1,60 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
 const Courses = () => {
-    const courses = [
-        {
-            title: "Data Science Fundamentals",
-            description: "Learn essential data analysis skills and tools",
-            category: "Data Science",
-            image: "https://placehold.co/600x400?text=Data+Science+Image",
-        },
-        {
-            title: "Full-Stack Development",
-            description: "Master modern web development technologies",
-            category: "Full-Stack",
-            image: "https://placehold.co/600x400?text=Full-Stack+Image",
-        },
-        {
-            title: "Project Management",
-            description: "Develop essential project management skills",
-            category: "Project Management",
-            image: "https://placehold.co/600x400?text=Project+Management+Image",
-        },
-        {
-            title: "User-Centric Web Design: Strategies for Better UI/UX",
-            description: "Become a UX/UI Designer! Master Mobile and Web Design, User Interface + User Experience",
-            category: "UI/UX Design",
-            image: "https://placehold.co/600x400?text=UI/UX+Design+Image",
-        },
-        {
-            title: "Adobe CC Masterclass: Photoshop, Illustrator, & XD",
-            description: "Learn graphic design today with Photoshop, Illustrator, Adobe XD, InDesign & more",
-            category: "Graphic Design",
-            image: "https://placehold.co/600x400?text=Graphic+Design+Image",
-        },
-        {
-            title: "Business Analysis Fundamentals - ECBA, CCBA, CBAP Endorsed",
-            description: "Set yourself up for success and learn the key business analysis concepts to thrive in your Business Analyst career!",
-            category: "Business Analysis",
-            image: "https://placehold.co/600x400?text=Business+Analysis+Image",
-        },
-    ];
+    const [courses, setCourses] = useState([]); // Semua kursus dari API
+    const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
+    const coursesPerPage = 6; // Jumlah kursus per halaman
+
+    useEffect(() => {
+        fetch("https://localhost:5000/api/auth/courses") // Pastikan endpoint sesuai
+            .then((res) => res.json())
+            .then((data) => {
+                setCourses(data.courses); // Simpan semua data
+            })
+            .catch((error) => console.error("Error fetching courses:", error));
+    }, []);
+
+    // Hitung indeks awal dan akhir berdasarkan halaman saat ini
+    const indexOfLastCourse = currentPage * coursesPerPage;
+    const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+    const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+
+    // Ganti halaman
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Fungsi untuk menangani tombol "Next" dan "Previous"
+    const handleNext = () => {
+        if (currentPage < Math.ceil(courses.length / coursesPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold text-center mb-4">See Our Courses</h1>
-            <div className="flex justify-center mb-4">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded mr-2">Popular</button>
-                <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2">Development</button>
-                <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2">Business</button>
-                <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded">Finance</button>
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {courses.map((course, index) => (
-                    <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
+                {currentCourses.map((course, index) => (
+                    <div
+                        key={index}
+                        className="bg-white shadow-md rounded-lg overflow-hidden"
+                    >
                         <div className="relative">
                             <img
-                                src={course.image}
+                                src={course.image_url}
                                 alt={course.title}
                                 className="w-full h-48 object-cover"
                             />
@@ -73,16 +67,29 @@ const Courses = () => {
                 ))}
             </div>
             <div className="flex justify-center mt-4">
-                <button className="px-3 py-1 border rounded-l">
+                <button
+                    onClick={handlePrevious}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1 border rounded-l disabled:opacity-50"
+                >
                     <i className="fas fa-chevron-left"></i> Previous
                 </button>
-                <button className="px-3 py-1 border">1</button>
-                <button className="px-3 py-1 border">2</button>
-                <button className="px-3 py-1 border">3</button>
-                <button className="px-3 py-1 border">4</button>
-                <button className="px-3 py-1 border">5</button>
-                <button className="px-3 py-1 border">6</button>
-                <button className="px-3 py-1 border rounded-r">
+                {[...Array(Math.ceil(courses.length / coursesPerPage)).keys()].map((page) => (
+                    <button
+                        key={page + 1}
+                        onClick={() => handlePageChange(page + 1)}
+                        className={`px-3 py-1 border ${
+                            currentPage === page + 1 ? "bg-blue-600 text-white" : ""
+                        }`}
+                    >
+                        {page + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={handleNext}
+                    disabled={currentPage === Math.ceil(courses.length / coursesPerPage)}
+                    className="px-3 py-1 border rounded-r disabled:opacity-50"
+                >
                     Next <i className="fas fa-chevron-right"></i>
                 </button>
             </div>

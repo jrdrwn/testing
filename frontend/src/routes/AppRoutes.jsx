@@ -13,16 +13,14 @@ import RegisterPage from '../pages/public/RegisterPage';
 import AktivationPage from '../pages/public/Aktivationpage';
 import ChangePasswordPage from '../pages/public/ChangePasswordPage';
 import VerificationCodePage from '../pages/public/VerificationCodePage';
-import VerificationCodepage2 from '../pages/public/VerificationCodePage2';
 import VerificationCodeResetPassPage from '../pages/public/VerificationCodeResetPassPage';
 import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
-import Inprogress from '../pages/private/mycourses/InProgress';
+import Inprogress from '../pages/private/mycourses/Inprogress';
 import Completed from '../pages/private/mycourses/completed';
 import Certificate from '../pages/private/mycourses/certificate';
-
 
 const AppRoutes = () => {
   return (
