@@ -18,6 +18,10 @@ import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
+import Inprogress from '../pages/private/mycourses/InProgress';
+import Completed from '../pages/private/mycourses/completed';
+import Certificate from '../pages/private/mycourses/certificate';
+
 
 const AppRoutes = () => {
   return (
@@ -42,6 +46,10 @@ const AppRoutes = () => {
         <Route path="/dashboard/setting/notifications" element={<NotificationsPage />} />
         <Route path="/dashboard/setting/sociallinks" element={<SocialLinksPage />} />
         <Route path="/dashboard/setting/subscriptions" element={<SubscriptionPage />} />
+        <Route path="/dashboard/mycourses" element={<Inprogress />} />
+        <Route path="/dashboard/mycourses/completed" element={<Completed/>} />
+        <Route path="/dashboard/mycourses/certificate" element={<Certificate />} />
+
       </Routes>
     </Router>
   );
