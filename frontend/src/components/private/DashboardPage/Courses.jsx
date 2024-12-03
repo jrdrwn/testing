@@ -134,15 +134,15 @@ const Courses = () => {
               </h2>
               <p className="text-gray-600 mt-2">{course.description}</p>
               <div className="flex items-center mt-4">
-                <span className="text-sm text-gray-500">{course.price}</span>
+                <span className="text-sm text-gray-500">{"$ "+ course.price}</span>
               </div>
               <div className="flex items-center mt-2">
                 <img
-                  src={course.institutionLogo}
+                  src={"https://placehold.co/20x20?text=Logo"}
                   alt={course.institution}
                   className="w-5 h-5 mr-2"
                 />
-                <span className="text-sm text-gray-700">{course.institution}</span>
+                <span className="text-sm text-gray-700">{"company_"+[course.course_id]+".id"}</span>
               </div>
             </div>
           </div>
