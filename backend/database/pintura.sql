@@ -47,6 +47,7 @@ CREATE TABLE courses (
   description text,
   category_id int DEFAULT NULL,
   price decimal(10,2) NOT NULL,
+  image_url VARCHAR(255) DEFAULT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   deleted_at datetime DEFAULT NULL,

@@ -25,6 +25,29 @@ const getAllCourses = async (req, res) => {
   }
 };
 
+const addCourse = async (req, res) => {
+  try {
+    const { title, description, category_id, price } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    // Query SQL mentah untuk menyisipkan data ke tabel courses
+    const query = `
+      INSERT INTO courses (title, description, category_id, price, image_url, created_at, updated_at)
+      VALUES (:title, :description, :category_id, :price, :image_url, NOW(), NOW())
+    `;
+
+    // Eksekusi query dengan parameter pengganti
+    await db.sequelize.query(query, {
+      replacements: { title, description, category_id, price, image_url: imageUrl },
+    });
+
+    res.status(201).json({ message: 'Course added successfully!' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
-    getAllCourses,
+    getAllCourses, addCourse
     };

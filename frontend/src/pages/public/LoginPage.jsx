@@ -47,7 +47,7 @@ const LoginPage = () => {
       if (response.ok) {
         console.log('Login successful:', data);
         localStorage.setItem('authToken', data.token); // Save the token in localStorage
-        navigate('/dashboard'); // Navigate to dashboard after login
+        navigate('/dashboard/home'); // Navigate to dashboard after login
       } else {
         console.error('Login error:', data);
         setErrorMessage('wrong email or password');
