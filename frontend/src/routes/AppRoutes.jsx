@@ -34,7 +34,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="/dashboard/home" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/auth/google/callback" element={<GoogleCallback />} />
         <Route path="/dashboard/detailcontent" element={<DetailContent />} />
         <Route path="/Aktivationpage" element={<AktivationPage />} />
