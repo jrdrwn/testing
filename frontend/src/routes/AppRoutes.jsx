@@ -21,6 +21,9 @@ import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
 import Inprogress from '../pages/private/mycourses/InProgress';
 import Completed from '../pages/private/mycourses/completed';
 import Certificate from '../pages/private/mycourses/certificate';
+import Carrer from '../pages/private/career/career';
+import Articles from '../pages/private/career/article';
+import Articlecontents from '../pages/private/career/articlecontent';
 
 
 const AppRoutes = () => {
@@ -49,6 +52,9 @@ const AppRoutes = () => {
         <Route path="/dashboard/mycourses" element={<Inprogress />} />
         <Route path="/dashboard/mycourses/completed" element={<Completed/>} />
         <Route path="/dashboard/mycourses/certificate" element={<Certificate />} />
+        <Route path="/dashboard/workshop" element={<Carrer />} />
+        <Route path="/dashboard/workshop/article" element={<Articles />} />
+        <Route path="/dashboard/workshop/articlecontents" element={<Articlecontents />} />
 
       </Routes>
     </Router>
