@@ -21,10 +21,12 @@ import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
 import Inprogress from '../pages/private/mycourses/Inprogress';
 import Completed from '../pages/private/mycourses/completed';
 import Certificate from '../pages/private/mycourses/certificate';
+import ScrollToTop from '@/components/public/HomePage/ScrollToTop';
 
 const AppRoutes = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
