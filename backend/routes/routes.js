@@ -6,7 +6,8 @@ const { console } = require('node:inspector/promises');
 const { getAllCourses } = require('../Controllers/courseController');
 const stripeController = require('../Controllers/stripeController');
 const emailController = require('../Controllers/emailController');
-
+const upload = require('../middleware/multerConfig');
+const { addCourse } = require('../Controllers/courseController');
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -30,6 +31,9 @@ router.get('/courses', (req,res,next)=>{
   console.log('get all courses')
   next();
 }, getAllCourses);
+
+// addCourse
+router.post('/courses', upload.single('image'), addCourse);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {
@@ -129,7 +133,6 @@ router.post('/payment', (req,res,next)=>{
 }, payment);
  */
 
-
 // Route untuk membuat checkout session
 router.post('/create-checkout-session', stripeController.createCheckoutSession);
 
@@ -138,10 +141,6 @@ router.post('/create-portal-session', stripeController.createPortalSession);
 
 // Route untuk menangani webhook dari Stripe
 router.post('/webhook', express.raw({ type: 'application/json' }), stripeController.handleWebhook);
-
-
-
-
 
 // Define routes for Google OAuth
 router.get('/google-register', passport.authenticate('google', { scope: ['profile', 'email'] }));

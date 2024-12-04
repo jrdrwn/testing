@@ -1,98 +1,85 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const PricingCard = ({ title, price, oldPrice, features, buttonText, isPopular }) => (
-  <div className={`border ${isPopular ? 'border-blue-500' : 'border-gray-300'} rounded-lg p-6 w-full md:w-1/3`}>
-    <h3 className="text-lg font-semibold mb-4">{title}</h3>
-    <div className="text-4xl font-bold mb-2">
-      {oldPrice && <span className="line-through text-gray-500 mr-2">{oldPrice}</span>}
-      {price}
-      <span className="text-lg font-normal"> USD</span>
-    </div>
-    <p className="text-gray-600 mb-4">per user</p>
-    <p className="text-gray-600 mb-4">{features.description}</p>
-    <hr className="my-4" />
-    <ul className="mb-6">
-      {features.items.map((item, index) => (
-        <li key={index} className="flex items-center mb-2">
-          <i className="fas fa-check text-blue-500 mr-2"></i>
-          {item}
-        </li>
-      ))}
-    </ul>
-    <button
-      className={`w-full py-2 rounded-lg ${
-        isPopular ? 'bg-blue-500 text-white' : 'bg-gray-200 text-blue-500'
-      } font-semibold`}
-    >
-      {buttonText}
-    </button>
-  </div>
-);
+const PricingSection = () => {
+  const navigate = useNavigate();
 
-const PricingSection = () => (
-  <div className="flex flex-col items-center p-8">
-    <h1 className="title text-3xl font-bold text-blue-600 mb-4">Friendly pricing plans</h1>
-    <p className="text-gray-600 text-center mb-8">
-      Explore affordable plans tailored to support your learning and career growth. Choose the best option for your needs
-      and unlock a world of knowledge.
-    </p>
-    <div className="flex items-center mb-8">
-      <span className="text-gray-600 mr-2">Monthly</span>
-      <label className="switch">
-        <input type="checkbox" />
-        <span className="slider round"></span>
-      </label>
-      <span className="text-gray-600 ml-2">Annually</span>
+  return (
+    <div className="text-center p-6">
+      <h1 className="text-3xl font-bold text-blue-700 mb-2">Friendly pricing plans</h1>
+      <p className="text-gray-600 mb-6">
+        Explore affordable plans tailored to support your learning and career growth. Choose the best option for your needs and unlock a world of knowledge.
+      </p>
+      <div className="flex justify-center items-center mb-6">
+        <span className="text-gray-600 mr-2">Monthly</span>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" className="sr-only peer" />
+          <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+        </label>
+        <span className="text-gray-600 ml-2">Annually</span>
+      </div>
+      <div className="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-6">
+        <div className="border border-gray-300 rounded-lg p-6 w-80">
+          <h2 className="text-xl font-bold mb-4">Basic</h2>
+          <p className="text-4xl font-bold text-gray-800 mb-2">
+            <span className="line-through text-gray-400">10</span>0 USD{' '}
+            <span className="text-sm font-normal">per user</span>
+          </p>
+          <p className="text-gray-600 mb-4">Ideal for individual learners seeking essential resources.</p>
+          <hr className="mb-4" />
+          <ul className="text-left mb-6">
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check text-blue-600 mr-2"></i>Access to over 50 courses
+            </li>
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check text-blue-600 mr-2"></i>Skill-based learning modules
+            </li>
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check text-blue-600 mr-2"></i>Basic support
+            </li>
+            <li className="flex items-center">
+              <i className="fas fa-check text-blue-600 mr-2"></i>Access to the student community
+            </li>
+          </ul>
+          <button
+            onClick={() => navigate('/pricing/payment')}
+            className="bg-blue-600 text-white py-2 px-4 rounded-lg w-full"
+          >
+            Upgrade to Basic
+          </button>
+        </div>
+        <div className="border border-blue-600 bg-blue-600 text-white rounded-lg p-6 w-80">
+          <h2 className="text-xl font-bold mb-4">Pro</h2>
+          <p className="text-4xl font-bold mb-2">
+            <span className="line-through text-gray-300">594</span>9 USD{' '}
+            <span className="text-sm font-normal">per user</span>
+          </p>
+          <p className="mb-4">For serious learners focused on career development with extra support.</p>
+          <hr className="border-gray-300 mb-4" />
+          <ul className="text-left mb-6">
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check mr-2"></i>Access to over 500 courses
+            </li>
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check mr-2"></i>Resume templates and job interview prep
+            </li>
+            <li className="flex items-center mb-2">
+              <i className="fas fa-check mr-2"></i>One-on-one mentoring
+            </li>
+            <li className="flex items-center">
+              <i className="fas fa-check mr-2"></i>Priority support
+            </li>
+          </ul>
+          <button
+            onClick={() => navigate('/pricing/payment')}
+            className="bg-white text-blue-600 py-2 px-4 rounded-lg w-full"
+          >
+            Upgrade to Pro
+          </button>
+        </div>
+      </div>
     </div>
-    <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 w-full max-w-4xl">
-      <PricingCard
-        title="Basic"
-        price="100"
-        oldPrice="100"
-        features={{
-          description: 'Ideal for individual learners seeking essential resources.',
-          items: [
-            'Access to over 50 courses',
-            'Skill-based learning modules',
-            'Basic support',
-            'Access to the student community',
-          ],
-        }}
-        buttonText="Upgrade to Basic →"
-      />
-      <PricingCard
-        title="Pro"
-        price="49"
-        oldPrice="59"
-        features={{
-          description: 'For serious learners focused on career development with extra support.',
-          items: [
-            'Access to over 500 courses',
-            'Resume templates and job interview prep',
-            'One-on-one mentoring',
-            'Priority support',
-          ],
-        }}
-        buttonText="Upgrade to Plus →"
-        isPopular={true}
-      />
-      <PricingCard
-        title="Premium"
-        price="99"
-        oldPrice="109"
-        features={{
-          description: 'Designed for professionals who need comprehensive learning and personalized guidance.',
-          items: [
-            'Unlimited course access',
-            'Exclusive career resources and templates',
-            'Personalized mentorship sessions',
-            'Premium support',
-          ],
-        }}
-        buttonText="Upgrade to Premium →"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 export default PricingSection;

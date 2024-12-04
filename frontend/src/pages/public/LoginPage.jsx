@@ -9,7 +9,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate(); // For navigating after login
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Sanitize input values
   const handleInputChange = (e, setValue) => {
@@ -26,6 +27,9 @@ const LoginPage = () => {
       return;
     }
 
+    setLoading(true);
+    setErrorMessage('');
+
     const userData = {
       email,
       password,
@@ -34,7 +38,7 @@ const LoginPage = () => {
 
     try {
       console.log('Sending login request to server...');
-      const response = await fetch('https://localhost:5000/api/auth/login', { // Ensure this is the correct endpoint
+      const response = await fetch('https://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,15 +50,28 @@ const LoginPage = () => {
 
       if (response.ok) {
         console.log('Login successful:', data);
-        localStorage.setItem('authToken', data.token); // Save the token in localStorage
-        navigate('/dashboard'); // Navigate to dashboard after login
+        localStorage.setItem('token', data.token);
+        navigate('/dashboard/home');
       } else {
-        console.error('Login error:', data);
-        setErrorMessage('wrong email or password');
+        if (data.needsVerification) {
+          localStorage.setItem('verificationEmail', email);
+          await fetch('https://localhost:5000/api/auth/send-verification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+          });
+          navigate('/VerificationPage');
+        } else {
+          setErrorMessage(data.message || 'An error occurred during login');
+        }
       }
     } catch (error) {
-      console.error('Something went wrong:', error);
-      setErrorMessage('Something went wrong. Please try again later.');
+      console.error('Error:', error);
+      setErrorMessage('A server error occurred');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,7 +92,7 @@ const LoginPage = () => {
           />
         </div>
         <div className="w-1/2 flex flex-col justify-center p-8">
-        <Link to="/" className="flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] w-20 mb-6">
+          <Link to="/" className="flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] w-20 mb-6">
             <i className="fas fa-arrow-left mr-2"></i>Back
           </Link>
           <h1 className="text-4xl font-bold text-blue-700 mb-2">Welcome Back</h1>
@@ -83,7 +100,14 @@ const LoginPage = () => {
             Enter your email and password below to log into your account.
           </p>
 
-          {errorMessage && <p className="text-red-600 text-center mb-4">{errorMessage}</p>}
+          {errorMessage && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <div className="flex">
+                <i className="fas fa-exclamation-circle mt-1 mr-2"></i>
+                <span>{errorMessage}</span>
+              </div>
+            </div>
+          )}
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -139,8 +163,9 @@ const LoginPage = () => {
               <button
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 type="submit"
+                disabled={loading}
               >
-                Login
+                {loading ? 'Logging in...' : 'Login'}
               </button>
             </div>
             <div className="relative my-4">

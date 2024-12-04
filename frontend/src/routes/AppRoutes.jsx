@@ -18,17 +18,15 @@ import ProfilePage from '../pages/private/settings/ProfilePage';
 import NotificationsPage from '../pages/private/settings/NotificationsPage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
-import Inprogress from '../pages/private/mycourses/InProgress';
+import Inprogress from '../pages/private/mycourses/Inprogress';
 import Completed from '../pages/private/mycourses/completed';
 import Certificate from '../pages/private/mycourses/certificate';
-import Carrer from '../pages/private/career/career';
-import Articles from '../pages/private/career/article';
-import Articlecontents from '../pages/private/career/articlecontent';
-
+import ScrollToTop from '@/components/public/HomePage/ScrollToTop';
 
 const AppRoutes = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
