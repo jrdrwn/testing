@@ -16,6 +16,14 @@ module.exports = {
         },
         onDelete: 'CASCADE', // Menghapus transaksi ketika pengguna dihapus
       },
+      name: {  // Menambahkan kolom 'name'
+        type: Sequelize.STRING,  // Tipe data string
+        allowNull: true,  // Kolom ini opsional
+      },
+      phone: {  // Menambahkan kolom 'phone'
+        type: Sequelize.STRING,  // Tipe data string
+        allowNull: true,  // Kolom ini opsional
+      },
       session_id: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -24,10 +32,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      quality: {  // Menambahkan kolom 'quality'
+        type: Sequelize.INTEGER,  // Tipe data integer
+        allowNull: true,  // Kolom ini opsional
+      },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      
+      
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -45,6 +59,12 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    // Hapus kolom tambahan jika rollback dilakukan
+    await queryInterface.removeColumn('stripe_transactions', 'quality');
+    await queryInterface.removeColumn('stripe_transactions', 'phone');
+    await queryInterface.removeColumn('stripe_transactions', 'name');
+    
+    // Hapus tabel jika rollback dilakukan
     await queryInterface.dropTable('stripe_transactions');
   }
 };

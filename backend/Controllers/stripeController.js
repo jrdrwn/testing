@@ -6,7 +6,7 @@ const { StripeTransaction, User } = require('../database/models');
 // Create Checkout Session
 const createCheckoutSession = async (req, res) => {
   try {
-    const { email, subscriptionType } = req.body;
+    const { email, subscriptionType, quality, phone } = req.body;
 
     // Check if the email exists in the users table
     const user = await User.findOne({ where: { email } });
@@ -44,14 +44,25 @@ const createCheckoutSession = async (req, res) => {
       mode: 'subscription', // Mode untuk langganan
       success_url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}?canceled=true`,
+      metadata: {
+        email,         // Menyimpan email pengguna
+        phone,         // Menyimpan nomor telepon
+        quality,       // Menyimpan informasi kualitas
+        name: user.name, // Menyimpan nama pengguna
+      },
     });
 
     // Simpan transaksi ke database
     await StripeTransaction.create({
-      user_id: user.user_id, // Ensure the correct field name is used
+      user_id: user.user_id,  // Ensure the correct field name is used
+      name: user.name, // Menyimpan nama pengguna
+      phone,         // Menyimpan nomor telepon
       session_id: session.id,
       amount: prices.data[0].unit_amount,
-      status: 'pending',
+      quality,       // Menyimpan kualitas yang dipilih
+      status: 'Success',
+      
+      
     });
 
     // Redirect pengguna ke Stripe Checkout
