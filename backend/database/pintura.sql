@@ -1,6 +1,9 @@
 CREATE DATABASE IF NOT EXISTS pintura;
 
 USE pintura;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 -- Tabel untuk menyimpan peran pengguna (admin, instructor, dll)
 CREATE TABLE userroles (
