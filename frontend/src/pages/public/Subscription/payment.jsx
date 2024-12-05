@@ -5,6 +5,7 @@ const payment = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [subscriptionType, setSubscriptionType] = useState('monthly');
+  const [quality, setQuality] = useState(1);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,11 +14,28 @@ const payment = () => {
         email,
         phone,
         subscriptionType,
+        quality,
       });
       window.location.href = response.data.url;
     } catch (error) {
       console.error('Error creating checkout session:', error);
     }
+  };
+
+  // Menghitung harga berdasarkan jenis langganan dan kualitas
+  const getPrice = () => {
+    const basePrice = subscriptionType === 'monthly' ? 49.00 : 485.01;
+    return basePrice * quality;
+  };
+
+  // Menghitung pajak (10% dari harga)
+  const getTax = () => {
+    return getPrice() * 0.10;
+  };
+
+  // Menghitung total (harga + pajak)
+  const getTotal = () => {
+    return getPrice() + getTax();
   };
 
   return (
@@ -36,8 +54,15 @@ const payment = () => {
           <option value="monthly">Monthly - US$53.09</option>
           <option value="yearly">Yearly - US$485.01</option>
         </select>
+        <input
+          type="number"
+          className="mb-4 p-2 rounded"
+          value={quality}
+          onChange={(e) => setQuality(e.target.value)}
+          min="1"
+        />
         <h3 className="text-4xl font-bold mb-1">
-          {subscriptionType === 'monthly' ? 'US$49.00' : 'US$485.01'}{' '}
+          {`US$${getPrice().toFixed(2)}`}{' '}
           <span className="text-lg font-normal">
             {subscriptionType === 'monthly' ? 'per month' : 'per year'}
           </span>
@@ -46,27 +71,29 @@ const payment = () => {
           <img src="https://placehold.co/50x50" alt="Pintura Premium" className="w-12 h-12 mr-4"/>
           <div>
             <p className="font-semibold">Pintura Premium</p>
-            <p className="text-sm">Pintura's premium the best choice for you</p>
-            <p className="text-sm">Qty <span className="font-semibold">1</span> Billed {subscriptionType}</p>
+            <p className="text-sm">Pintura's premium is the best choice for you</p>
+            <p className="text-sm">Qty <span className="font-semibold">{quality}</span> Billed {subscriptionType}</p>
           </div>
           <p className="ml-auto font-semibold">
-            {subscriptionType === 'monthly' ? 'US$49.00' : 'US$485.01'}
+            {`US$${getPrice().toFixed(2)}`}
           </p>
         </div>
         <div className="border-t border-white my-4"></div>
+        
+        {/* Menampilkan harga, pajak, dan total dengan urutan yang benar */}
         <div className="flex justify-between mb-4">
           <p>Subtotal</p>
-          <p>{subscriptionType === 'monthly' ? 'US$49.00' : 'US$485.01'}</p>
+          <p>{`US$${getPrice().toFixed(2)}`}</p>
         </div>
         <button className="bg-blue-800 text-white py-2 px-4 rounded mb-4">Add promotion code</button>
         <div className="flex justify-between mb-4">
           <p>Sales tax (10%)</p>
-          <p>{subscriptionType === 'monthly' ? 'US$4.09' : 'US$44.55'}</p>
+          <p>{`US$${getTax().toFixed(2)}`}</p>
         </div>
         <div className="border-t border-white my-4"></div>
         <div className="flex justify-between font-bold">
           <p>Total due today</p>
-          <p>{subscriptionType === 'monthly' ? 'US$53.09' : 'US$529.56'}</p>
+          <p>{`US$${getTotal().toFixed(2)}`}</p>
         </div>
       </div>
       <div className="bg-white p-8 lg:w-1/2">
