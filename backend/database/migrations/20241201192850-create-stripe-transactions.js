@@ -1,8 +1,12 @@
-/*
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('stripe_transactions', {
+      id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -44,4 +48,3 @@ module.exports = {
     await queryInterface.dropTable('stripe_transactions');
   }
 };
- */
