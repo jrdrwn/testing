@@ -1,8 +1,12 @@
-// models/stripe.js
 const { Sequelize, DataTypes } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   const StripeTransaction = sequelize.define('StripeTransaction', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -12,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: 'CASCADE',
     },
+    name: {  // Menambahkan kolom 'name'
+      type: DataTypes.STRING,  // Tipe data string
+      allowNull: true,  // Kolom ini opsional
+    },
+    phone: {  // Menambahkan kolom 'phone'
+      type: DataTypes.STRING,  // Misalnya tipe data string
+      allowNull: true,  // Kolom ini opsional
+    },
     session_id: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -20,10 +32,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    quality: {  // Menambahkan kolom 'quality'
+      type: DataTypes.INTEGER,  // Misalnya tipe data integer
+      allowNull: true,  // Kolom ini opsional
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+   
+    
     created_at: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -42,9 +60,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
+  // Relasi dengan User (untuk mengakses nama pengguna)
   StripeTransaction.associate = function(models) {
-    // Definisikan relasi jika diperlukan
-    StripeTransaction.belongsTo(models.User, { foreignKey: 'user_id' });
+    StripeTransaction.belongsTo(models.User, { 
+      foreignKey: 'user_id', 
+      targetKey: 'user_id',
+      as: 'userInfo',  // Alias untuk mengakses data pengguna
+    });
   };
 
   return StripeTransaction;

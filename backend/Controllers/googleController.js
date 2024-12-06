@@ -27,7 +27,7 @@ exports.googleAuthCallback = async (req, res, next) => {
           console.error('Session is not defined. Please ensure session middleware is set up correctly.');
         }
         
-        return res.redirect('/dashboard'); // Redirect to the dashboard after authentication
+        return res.redirect('/dashboard/home'); // Redirect to the dashboard after authentication
       } else {
         // If the user does not exist, you can either create a new user or redirect
         console.error('User not found. Redirecting to home...');
