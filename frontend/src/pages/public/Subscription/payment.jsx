@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Payment = () => {
   const [email, setEmail] = useState('');
@@ -34,9 +34,9 @@ const Payment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/create-checkout-session`, {
+      const response = await axios.post('/api/create-checkout-session', {
         email,
-        phone,
+        phone: `${selectedCountry}${phone}`,
         subscriptionType,
         quality,
       });
