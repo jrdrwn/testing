@@ -1,4 +1,4 @@
-import LearningOverview from "../../../components/private/Career/LearningOverview";
+import LearningOverview from "../../../components/private/Career/learningOverview";
 
 const LearningOverviewComponent = () => {
     return (
