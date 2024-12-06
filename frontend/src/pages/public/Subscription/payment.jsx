@@ -1,16 +1,40 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const payment = () => {
+const Payment = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [subscriptionType, setSubscriptionType] = useState('monthly');
   const [quality, setQuality] = useState(1);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('+62');
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryMonth, setExpiryMonth] = useState(""); // For MM
+  const [expiryYear, setExpiryYear] = useState("");  // For YY
+  const [cvc, setCvc] = useState("");
+
+  useEffect(() => {
+    // Memuat file JSON
+    fetch('/countries.json')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to load countries');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setCountries(data);
+        setSelectedCountry(data[0]?.code || ''); // Set default ke negara pertama
+      })
+      .catch((error) => {
+        console.error('Error loading countries:', error);
+      });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/create-checkout-session', {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/create-checkout-session`, {
         email,
         phone,
         subscriptionType,
@@ -22,53 +46,75 @@ const payment = () => {
     }
   };
 
-  // Menghitung harga berdasarkan jenis langganan dan kualitas
   const getPrice = () => {
     const basePrice = subscriptionType === 'monthly' ? 49.00 : 485.01;
-    return basePrice * quality;
+    return basePrice * (quality || 1);
   };
 
-  // Menghitung pajak (10% dari harga)
   const getTax = () => {
     return getPrice() * 0.10;
   };
 
-  // Menghitung total (harga + pajak)
   const getTotal = () => {
     return getPrice() + getTax();
   };
+  console.log(countries); // Pastikan data terisi
 
   return (
+
     <div className="min-h-screen flex flex-col lg:flex-row">
-      <div className="bg-blue-700 text-white p-8 lg:w-1/2">
+      <div className="bg-blue-700 text-white p-12 lg:w-1/2">
         <div className="flex items-center mb-8">
-          <i className="fas fa-arrow-left mr-4"></i>
-          <h1 className="text-2xl font-bold">PINTURA</h1>
+          <i className="fas fa-arrow-left text-xl mr-2"></i>
+          <img src="https://placehold.co/20x20" alt="Pintura logo" className="mr-2" />
+          <span className="font-bold">PINTURA</span>
         </div>
-        <h2 className="text-2xl font-semibold mb-2">Subscribe to Pintura Premium</h2>
-        <select
-          className="mb-4 p-2 rounded"
-          value={subscriptionType}
-          onChange={(e) => setSubscriptionType(e.target.value)}
-        >
-          <option value="monthly">Monthly - US$53.09</option>
-          <option value="yearly">Yearly - US$485.01</option>
-        </select>
-        <input
-          type="number"
-          className="mb-4 p-2 rounded"
-          value={quality}
-          onChange={(e) => setQuality(e.target.value)}
-          min="1"
-        />
+        <h3 className="text-2xl font-semibold mb-2">Subscribe to Pintura Premium</h3>
+
+        {/* Wrapper untuk Subscription Type */}
+        <div className="flex items-center mb-4">
+          <label
+            className="w-1/3 text-sm font-medium"
+            htmlFor="subscriptionType"
+          >
+            Subscription Type
+          </label>
+          <select
+            id="subscriptionType"
+            className="flex-1 p-2 rounded bg-white text-black border border-gray-300"
+            value={subscriptionType}
+            onChange={(e) => setSubscriptionType(e.target.value)}
+          >
+            <option value="monthly">Monthly - US$53.09</option>
+            <option value="yearly">Yearly - US$485.01</option>
+          </select>
+        </div>
+
+        {/* Wrapper untuk Quantity */}
+        <div className="flex items-center mb-4">
+          <label
+            className="w-1/3 text-sm font-medium"
+            htmlFor="quantity"
+          >
+            Quantity
+          </label>
+          <input
+            id="quantity"
+            type="number"
+            className="flex-1 p-2 rounded bg-white text-black border border-gray-300"
+            value={quality}
+            onChange={(e) => setQuality(Number(e.target.value))}
+            min="1"
+          />
+        </div>
         <h3 className="text-4xl font-bold mb-1">
           {`US$${getPrice().toFixed(2)}`}{' '}
           <span className="text-lg font-normal">
             {subscriptionType === 'monthly' ? 'per month' : 'per year'}
           </span>
         </h3>
-        <div className="flex items-center mb-4">
-          <img src="https://placehold.co/50x50" alt="Pintura Premium" className="w-12 h-12 mr-4"/>
+        <div className="flex items-center mb-4 mt-2">
+          <img src="https://placehold.co/50x50" alt="Pintura Premium" className="w-12 h-12 mr-4" />
           <div>
             <p className="font-semibold">Pintura Premium</p>
             <p className="text-sm">Pintura's premium is the best choice for you</p>
@@ -79,8 +125,6 @@ const payment = () => {
           </p>
         </div>
         <div className="border-t border-white my-4"></div>
-        
-        {/* Menampilkan harga, pajak, dan total dengan urutan yang benar */}
         <div className="flex justify-between mb-4">
           <p>Subtotal</p>
           <p>{`US$${getPrice().toFixed(2)}`}</p>
@@ -96,7 +140,7 @@ const payment = () => {
           <p>{`US$${getTotal().toFixed(2)}`}</p>
         </div>
       </div>
-      <div className="bg-white p-8 lg:w-1/2">
+      <div className="bg-white p-14 lg:w-1/2">
         <form onSubmit={handleSubmit}>
           <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
           <div className="mb-4">
@@ -109,34 +153,130 @@ const payment = () => {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <input
-              type="tel"
-              className="w-full border border-gray-300 p-2 rounded"
-              placeholder="(+62)812345678"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
+            <div className="flex mb-2">
+              <select
+                className="border border-gray-300 p-2 rounded mr-2"
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+              >
+                {countries.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name} ({country.code})
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                className="flex-1 border border-gray-300 p-2 rounded"
+                placeholder="812345678"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                onKeyDown={(e) => {
+                  if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+                    e.preventDefault(); // Mencegah input selain angka
+                  }
+                }}
+                pattern="^\d{9,13}$"
+                required
+              />
+            </div>
           </div>
           <h2 className="text-xl font-semibold mb-4">Payment</h2>
+
+          {/* Card Information */}
           <div className="border border-gray-300 p-4 rounded mb-4">
-            <div className="flex items-center mb-4">
-              <i className="fas fa-credit-card mr-2"></i>
-              <p className="font-semibold">Card Information</p>
-            </div>
-            <input type="text" className="w-full border border-gray-300 p-2 rounded mb-2" placeholder="1234 1234 1234 1234"/>
-            <div className="flex mb-2">
-              <input type="text" className="w-1/2 border border-gray-300 p-2 rounded mr-2" placeholder="MM / YY"/>
-              <input type="text" className="w-1/2 border border-gray-300 p-2 rounded" placeholder="CVC"/>
-            </div>
-            <input type="text" className="w-full border border-gray-300 p-2 rounded mb-2" placeholder="Full name on card"/>
-            <div className="flex mb-2">
-              <select className="w-1/2 border border-gray-300 p-2 rounded mr-2">
-                <option>Indonesia</option>
-              </select>
-              <input type="text" className="w-1/2 border border-gray-300 p-2 rounded" placeholder="Address"/>
-            </div>
-          </div>
+      <div className="flex items-center mb-4">
+        <i className="fas fa-credit-card mr-2"></i>
+        <p className="font-semibold">Card Information</p>
+      </div>
+      {/* Card Number */}
+      <div className="relative">
+        <input
+          type="text"
+          className="w-full border border-gray-300 p-2 rounded mb-2"
+          placeholder="1234 1234 1234 1234"
+          value={cardNumber}
+          onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ""))}
+          maxLength={16}
+        />
+        {/* Visa/MasterCard Icon */}
+        <div className="absolute right-2 top-2 flex space-x-2">
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg"
+    alt="Visa"
+    className="h-5"
+  />
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg"
+    alt="MasterCard"
+    className="h-5"
+  />
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/800px-American_Express_logo_%282018%29.svg.png"
+    alt="American Express"
+    className="h-5"
+  />
+  <img
+    src="https://upload.wikimedia.org/wikipedia/id/3/3c/Currentdiscover.jpg"
+    alt="Discover"
+    className="h-5"
+  />
+</div>
+
+      </div>
+      {/* MM / YY */}
+      <div className="flex mb-2">
+        <input
+          type="text"
+          className="w-1/2 border border-gray-300 p-2 rounded mr-2"
+          placeholder="MM"
+          value={expiryMonth}
+          onChange={(e) => setExpiryMonth(e.target.value.replace(/\D/g, ""))}
+          maxLength={2}
+        />
+        <input
+          type="text"
+          className="w-1/2 border border-gray-300 p-2 rounded"
+          placeholder="YY"
+          value={expiryYear}
+          onChange={(e) => setExpiryYear(e.target.value.replace(/\D/g, ""))}
+          maxLength={2}
+        />
+      </div>
+      {/* CVC */}
+      <input
+        type="text"
+        className="w-full border border-gray-300 p-2 rounded mb-2"
+        placeholder="CVC"
+        value={cvc}
+        onChange={(e) => setCvc(e.target.value.replace(/\D/g, ""))}
+        maxLength={3}
+      />
+      {/* Full Name */}
+      <input
+        type="text"
+        className="w-full border border-gray-300 p-2 rounded mb-2"
+        placeholder="Full name on card"
+      />
+      {/* Country and Address */}
+      <div className="flex mb-2">
+      <select className="w-1/2 border border-gray-300 p-2 rounded mr-2">
+        {countries.map((country, index) => (
+          <option key={index} value={country.name}>
+            {country.name}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        className="w-1/2 border border-gray-300 p-2 rounded"
+        placeholder="Address"
+      />
+    </div>
+
+    </div>
+
+
           <button type="submit" className="bg-blue-700 text-white py-2 px-4 rounded w-full mb-4">Subscribe</button>
         </form>
         <p className="text-sm text-gray-600 mb-4">By confirming your subscription, you allow Pintura to charge you for future payments in accordance with their terms. You can always cancel your subscription.</p>
@@ -154,4 +294,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default Payment;
