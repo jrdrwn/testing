@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      quality: {  // Menambahkan kolom 'quality'
+      quantity: {  // Menambahkan kolom 'quantity'
         type: Sequelize.INTEGER,  // Tipe data integer
         allowNull: true,  // Kolom ini opsional
       },
@@ -60,7 +60,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // Hapus kolom tambahan jika rollback dilakukan
-    await queryInterface.removeColumn('stripe_transactions', 'quality');
+    await queryInterface.removeColumn('stripe_transactions', 'quantity');
     await queryInterface.removeColumn('stripe_transactions', 'phone');
     await queryInterface.removeColumn('stripe_transactions', 'name');
     

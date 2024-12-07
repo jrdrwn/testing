@@ -5,7 +5,7 @@ const Payment = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [subscriptionType, setSubscriptionType] = useState('monthly');
-  const [quality, setQuality] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('+62');
   const [cardNumber, setCardNumber] = useState("");
@@ -43,7 +43,7 @@ const Payment = () => {
         email,
         phone: `${selectedCountry}${phone}`,
         subscriptionType,
-        quality,
+        quantity,
       });
       if (response.status === 200) {
         window.location.href = response.data.url;
@@ -65,7 +65,7 @@ const Payment = () => {
 
   const getPrice = () => {
     const basePrice = subscriptionType === 'monthly' ? 49.00 : 485.01;
-    return basePrice * (quality || 1);
+    return basePrice * (quantity || 1);
   };
 
   const getTax = () => {
@@ -119,8 +119,8 @@ const Payment = () => {
             id="quantity"
             type="number"
             className="flex-1 p-2 rounded bg-white text-black border border-gray-300"
-            value={quality}
-            onChange={(e) => setQuality(Number(e.target.value))}
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
             min="1"
           />
         </div>
@@ -135,7 +135,7 @@ const Payment = () => {
           <div>
             <p className="font-semibold">Pintura Premium</p>
             <p className="text-sm">Pintura's premium is the best choice for you</p>
-            <p className="text-sm">Qty <span className="font-semibold">{quality}</span> Billed {subscriptionType}</p>
+            <p className="text-sm">Qty <span className="font-semibold">{quantity}</span> Billed {subscriptionType}</p>
           </div>
           <p className="ml-auto font-semibold">
             {`US$${getPrice().toFixed(2)}`}

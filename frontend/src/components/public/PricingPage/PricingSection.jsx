@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PricingSection = () => {
@@ -6,6 +6,15 @@ const PricingSection = () => {
 
   // State untuk melacak apakah opsi adalah Monthly atau Annually
   const [isAnnual, setIsAnnual] = useState(false);
+
+  const handleUpgradeClick = () => {
+    const isLoggedIn = localStorage.getItem('token');
+    if (isLoggedIn) {
+      navigate('/pricing/payment');
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="text-center p-6">
@@ -97,7 +106,7 @@ const PricingSection = () => {
             </li>
           </ul>
           <button
-            onClick={() => navigate('/pricing/payment')}
+            onClick={handleUpgradeClick}
             className="bg-white text-blue-600 py-2 px-4 rounded-lg w-full"
           >
             Upgrade to Pro
