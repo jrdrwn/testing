@@ -13,6 +13,11 @@ const Payment = () => {
   const [expiryYear, setExpiryYear] = useState("");  // For YY
   const [cvc, setCvc] = useState("");
 
+  // State for pop-up
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupVisible, setPopupVisible] = useState(false);
+
+
   useEffect(() => {
     // Memuat file JSON
     fetch('/countries.json')
@@ -40,10 +45,22 @@ const Payment = () => {
         subscriptionType,
         quality,
       });
-      window.location.href = response.data.url;
+      if (response.status === 200) {
+        window.location.href = response.data.url;
+        setPopupMessage('Subscription successful!');
+      } else {
+        setPopupMessage('An error occurred. Please try again.');
+      }
     } catch (error) {
       console.error('Error creating checkout session:', error);
+      setPopupMessage('An error occurred. Please try again.');
     }
+    setPopupVisible(true);
+  };
+  
+
+  const handleClosePopup = () => {
+    setPopupVisible(false);
   };
 
   const getPrice = () => {
@@ -290,6 +307,22 @@ const Payment = () => {
           </div>
         </div>
       </div>
+ 
+ {popupVisible && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-lg font-semibold">{popupMessage}</h3>
+            <button
+              onClick={handleClosePopup}
+              className="mt-4 w-full bg-blue-800 text-white py-2 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
