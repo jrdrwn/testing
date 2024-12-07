@@ -828,6 +828,47 @@ module.exports = {
       updated_at: new Date('2024-11-06T10:00:00Z'),
     },
   ]);
+  await queryInterface.bulkInsert('stripe_transactions', [
+    {
+      id:1,
+      user_id: 3,
+      name: 'Sarah Student',
+      phone: '+628938938938',
+      session_id: 'cs_test_b1c4f9b5-6e7c-4d2b-8e2d-6b5a3e3f8b8d',
+      amount: 500000,
+      quantity: 2,
+      status: 'Success',
+      created_at: new Date('2024-11-01T10:00:00Z'),
+      updated_at: new Date('2024-11-01T10:00:00Z'),
+      deleted_at: null,
+    },
+    {
+      id:2,
+      user_id: 4,
+      name: 'Mike Mentor',
+      phone: '+628938938938',
+      session_id: 'cs_test_1a2b3c4d-5e6f-7a8b-9c0d1e2f3a4b',
+      amount: 300000,
+      quantity: 1,
+      status: 'Success',
+      created_at: new Date('2024-11-02T11:00:00Z'),
+      updated_at: new Date('2024-11-02T11:00:00Z'),
+      deleted_at: null,
+    },
+    {
+      id:3,
+      user_id: 5,
+      name: 'Clara Counselor',
+      phone: '+628938938938',
+      session_id: 'cs_test_5a6b7c8d-9e0f-1a2b-3c4d5e6f7a8b',
+      amount: 400000,
+      quantity: 1,
+      status: 'Failed',
+      created_at: new Date('2024-11-03T12:00:00Z'),
+      updated_at: new Date('2024-11-03T12:00:00Z'),
+      deleted_at: null,
+    }
+  ]);
   },
   
   down: async (queryInterface, Sequelize) => {

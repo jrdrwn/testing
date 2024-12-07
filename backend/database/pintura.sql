@@ -355,3 +355,19 @@ CREATE TABLE refunds (
     PRIMARY KEY (refund_id),
     FOREIGN KEY (order_id) REFERENCES courseorders (order_id)
 );
+
+CREATE TABLE `stripe_transactions` (
+  id int NOT NULL,
+  user_id int NOT NULL,
+  name varchar(255) DEFAULT NULL,
+  phone varchar(255) DEFAULT NULL,
+  session_id varchar(255) NOT NULL,
+  amount int NOT NULL,
+  quantity int DEFAULT NULL,
+  status varchar(255) NOT NULL,
+  created_at datetime DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime DEFAULT CURRENT_TIMESTAMP,
+  deleted_at datetime DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
