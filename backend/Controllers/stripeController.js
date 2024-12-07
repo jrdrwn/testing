@@ -97,7 +97,7 @@ const createCheckoutSession = async (req, res) => {
     await sendEmail(user.email, subject, text, html);
 
     // Redirect pengguna ke Stripe Checkout
-    res.redirect(303, session.url);
+    res.status(200).json({ url: session.url });
   } catch (err) {
     console.error('Error creating checkout session: ', err);
     res.status(500).send('Internal Server Error');
