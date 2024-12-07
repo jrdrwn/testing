@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Payment = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,8 @@ const Payment = () => {
   const [expiryMonth, setExpiryMonth] = useState(""); // For MM
   const [expiryYear, setExpiryYear] = useState("");  // For YY
   const [cvc, setCvc] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Memuat file JSON
@@ -65,7 +68,13 @@ const Payment = () => {
     <div className="min-h-screen flex flex-col lg:flex-row">
       <div className="bg-blue-700 text-white p-12 lg:w-1/2">
         <div className="flex items-center mb-8">
-          <i className="fas fa-arrow-left text-xl mr-2"></i>
+          <button
+        className="text-xl mr-2"
+        onClick={() => navigate("/pricing")}
+        aria-label="Go to pricing"
+      >
+        <i className="fas fa-arrow-left"></i>
+      </button>
           <img src="https://placehold.co/20x20" alt="Pintura logo" className="mr-2" />
           <span className="font-bold">PINTURA</span>
         </div>
