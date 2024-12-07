@@ -48,6 +48,92 @@ const addCourse = async (req, res) => {
   }
 };
 
+const getMyCourses = async (req, res) => {
+  // Mengonversi userId menjadi integer
+  const userId = parseInt(req.params.userId, 10);
+
+  const query = `
+    SELECT 
+      c.title AS course_title,
+      c.description,
+      c.rating,
+      c.price,
+      c.image_url,
+      e.progress,
+      e.enrolled_at
+    FROM enrollments e
+    JOIN courses c ON e.course_id = c.course_id
+    WHERE e.student_id = :userId AND e.completion_date IS NULL
+  `;
+
+  // Jalankan query dengan replacements
+  const [rows] = await db.sequelize.query(query, {
+    replacements: { userId },
+    type: Sequelize.QueryTypes.SELECT,
+  });
+
+  // Log untuk debugging
+  console.log('Data yang dikembalikan oleh query:', rows);
+  console.log('Jumlah kursus yang ditemukan:', rows.length);
+
+  // Jika tidak ada data ditemukan
+  if (!rows || rows.length === 0) {
+    return res.status(404).json({
+      message: 'No courses found for this user.',
+      courses: rows, // Konsistensi format respons
+    });
+  }
+
+  // Berikan respons sukses dengan data kursus
+  return res.status(200).json({
+    message: 'Courses retrieved successfully.',
+    courses: rows,
+  });
+};
+
+const getMyCoursesComplete = async (req, res) => {
+  // Mengonversi userId menjadi integer
+  const userId = parseInt(req.params.userId, 10);
+
+  const query = `
+    SELECT 
+      c.title AS course_title,
+      c.description,
+      c.rating,
+      c.price,
+      c.image_url,
+      e.progress,
+      e.enrolled_at
+    FROM enrollments e
+    JOIN courses c ON e.course_id = c.course_id
+    WHERE e.student_id = :userId AND e.completion_date IS NOT NULL
+  `;
+
+  // Jalankan query dengan replacements
+  const [rows] = await db.sequelize.query(query, {
+    replacements: { userId },
+    type: Sequelize.QueryTypes.SELECT,
+  });
+
+  // Log untuk debugging
+  console.log('Data yang dikembalikan oleh query:', rows);
+  console.log('Jumlah kursus yang ditemukan:', rows.length);
+
+  // Jika tidak ada data ditemukan
+  if (!rows || rows.length === 0) {
+    return res.status(404).json({
+      message: 'No courses found for this user.',
+      courses: rows, // Konsistensi format respons
+    });
+  }
+
+  // Berikan respons sukses dengan data kursus
+  return res.status(200).json({
+    message: 'Courses retrieved successfully.',
+    courses: rows,
+  });
+};
+
 module.exports = {
-    getAllCourses, addCourse
+    getAllCourses, addCourse, getMyCourses, getMyCoursesComplete
     };

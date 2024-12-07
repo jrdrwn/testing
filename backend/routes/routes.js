@@ -9,6 +9,7 @@ const emailController = require('../Controllers/emailController');
 const upload = require('../middleware/multerConfig');
 const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
+const { getMyCourses, getMyCoursesComplete } = require('../Controllers/courseController');
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -35,6 +36,12 @@ router.get('/courses', (req,res,next)=>{
 
 // addCourse
 router.post('/courses', upload.single('image'), addCourse);
+
+// Route untuk mendapatkan kursus user
+router.get('/mycourses/:userId', getMyCourses);
+
+// Route untuk mendapatkan kursus user
+router.get('/mycourses/:userId/completed', getMyCoursesComplete);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {

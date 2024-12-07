@@ -207,11 +207,25 @@ const Profile = () => {
                 Tell us a little bit about yourself
               </p>
             </div>
+            <div className="flex justify-between">
+  {/* Tombol di kiri */}
+  <div>
+    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+      Save changes
+    </button>
+  </div>
 
-          {/* Save Button */}
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-            Save changes
-          </button>
+  {/* Tombol di kanan */}
+  <div className="flex space-x-4"> {/* Gunakan `space-x-4` untuk jarak antar tombol */}
+    <button className="bg-red-600 text-white px-4 py-2 rounded-lg">
+      Delete Account
+    </button>
+    <button className="bg-red-600 text-white px-4 py-2 rounded-lg">
+      Logout
+    </button>
+  </div>
+</div>
+
         </form>
       </div>
     </LayoutWithSidebar>
