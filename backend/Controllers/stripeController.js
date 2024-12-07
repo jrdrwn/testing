@@ -31,7 +31,7 @@ const sendEmail = (to, subject, text, html) => {
 // Create Checkout Session
 const createCheckoutSession = async (req, res) => {
   try {
-    const { email, subscriptionType, quality, phone } = req.body;
+    const { email, subscriptionType, quantity, phone } = req.body;
 
     // Cek apakah pengguna ada di database
     const user = await User.findOne({ where: { email } });
@@ -72,7 +72,7 @@ const createCheckoutSession = async (req, res) => {
       metadata: {
         email,         // Menyimpan email pengguna
         phone,         // Menyimpan nomor telepon
-        quality,       // Menyimpan informasi kualitas
+        quantity,       // Menyimpan informasi kualitas
         name: user.name, // Menyimpan nama pengguna
       },
     });
@@ -84,7 +84,7 @@ const createCheckoutSession = async (req, res) => {
       phone,         
       session_id: session.id,
       amount: prices.data[0].unit_amount,
-      quality,       
+      quantity,       
       status: 'Success',
     });
 
