@@ -1,28 +1,73 @@
-import React from 'react'
+import React from 'react';
+
+const Card = ({ icon, title, description }) => (
+  <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center text-center">
+    <div className="text-blue-500 text-4xl mb-4">
+      <i className={icon}></i>
+    </div>
+    <h3 className="text-xl font-bold text-blue-900 mb-2">{title}</h3>
+    <p className="text-gray-600">{description}</p>
+  </div>
+);
 
 const CardsV9 = () => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
-                    <h1 className="text-3xl font-bold text-blue-700 mb-8">Highly effective solutions</h1>
-                    <div className="flex space-x-8">
-                        <div className="bg-blue-700 text-white rounded-lg shadow-lg p-8 w-64 text-center">
-                            <div className="text-4xl font-bold mb-4">01</div>
-                            <h2 className="text-xl font-bold mb-2">Skill-Based Learning</h2>
-                            <p>Access practical courses aligned with industry needs, from coding to project management</p>
-                        </div>
-                        <div className="bg-blue-700 text-white rounded-lg shadow-lg p-8 w-64 text-center">
-                            <div className="text-4xl font-bold mb-4">02</div>
-                            <h2 className="text-xl font-bold mb-2">Career Support</h2>
-                            <p>Get professional guidance through resume workshops and interview simulations</p>
-                        </div>
-                        <div className="bg-blue-700 text-white rounded-lg shadow-lg p-8 w-64 text-center">
-                            <div className="text-4xl font-bold mb-4">03</div>
-                            <h2 className="text-xl font-bold mb-2">Mental Wellness</h2>
-                            <p>Access counseling services and stress management workshops</p>
-                        </div>
-                    </div>
-                </div>
-  )
-}
+  const cardsData = [
+    {
+      icon: "fas fa-user",
+      title: "Personalized Learning Experience",
+      description: "Get personalized course recommendations for you",
+    },
+    {
+      icon: "fas fa-book",
+      title: "Comprehensive Course Library",
+      description: "Access courses on a variety of topics for your personal development.",
+    },
+    {
+      icon: "fas fa-comments",
+      title: "Engaging Community and Support",
+      description: "Connect with an active community and get the support you need.",
+    },
+    {
+      icon: "fas fa-heart",
+      title: "Stress Management Support",
+      description: "Find stress management guides and content to maintain mental health.",
+    },
+    {
+      icon: "fas fa-play-circle",
+      title: "Flexible Learning Options",
+      description: "Learn anytime and anywhere with flexible materials.",
+    },
+  ];
 
-export default CardsV9
+  return (
+    <div className="container mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold text-center text-blue-900 mb-8">
+        Unlock Your Best Learning Experience
+      </h1>
+      {/* Baris pertama dengan 3 card */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cardsData.slice(0, 3).map((card, index) => (
+          <Card
+            key={index}
+            icon={card.icon}
+            title={card.title}
+            description={card.description}
+          />
+        ))}
+      </div>
+      {/* Baris kedua dengan 2 card di tengah */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center mt-6">
+        {cardsData.slice(3).map((card, index) => (
+          <Card
+            key={index + 3} // Menambahkan offset untuk memastikan key unik
+            icon={card.icon}
+            title={card.title}
+            description={card.description}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CardsV9;
