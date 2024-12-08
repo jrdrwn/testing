@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    quality: {  // Menambahkan kolom 'quality'
+    quantity: {  // Menambahkan kolom 'quantity'
       type: DataTypes.INTEGER,  // Misalnya tipe data integer
       allowNull: true,  // Kolom ini opsional
     },
