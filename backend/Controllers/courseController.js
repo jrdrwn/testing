@@ -67,7 +67,7 @@ const getMyCourses = async (req, res) => {
   `;
 
   // Jalankan query dengan replacements
-  const [rows] = await db.sequelize.query(query, {
+  const rows = await db.sequelize.query(query, {
     replacements: { userId },
     type: Sequelize.QueryTypes.SELECT,
   });

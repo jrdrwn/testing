@@ -371,3 +371,24 @@ CREATE TABLE `stripe_transactions` (
   PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
+
+
+CREATE TABLE videocontents (
+  id INT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  tags JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE articles (
+  id INT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  date TIMESTAMP NOT NULL,
+  category VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
