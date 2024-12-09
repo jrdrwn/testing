@@ -10,6 +10,7 @@ const upload = require('../middleware/multerConfig');
 const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
 const { getMyCourses, getMyCoursesComplete } = require('../Controllers/courseController');
+const careerController = require('../Controllers/careerController'); 
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -178,5 +179,11 @@ router.post('/api/auth/forgot-password', emailController.forgotPassword);
 router.post('/api/auth/reset-password', emailController.resetPassword);
 
 router.post('/api/auth/verify-reset-code', emailController.verifyResetCode);
+
+// Route to get video content
+router.get('/api/videoContents', careerController.getVideos);
+
+// Route to get articles
+router.get('/api/articles', careerController.getArticles);
 
 module.exports = router;
