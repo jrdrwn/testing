@@ -120,7 +120,7 @@ const Career = () => {
                         {articles.length > 0 ? (
                             articles.map((article) => (
                                 <div key={article.id} className="bg-white rounded-lg shadow-lg p-4 flex">
-                                    <img src={article.image_url} alt={article.title} className="rounded-lg mb-4" />
+                                    <img src={article.author_image_url} alt={article.title} className="w-[150px] h-[100px] rounded-lg object-cover mb-4" />
                                     <div className="ml-4">
                                         <div className="flex items-center text-gray-500 text-sm mb-2">
                                             <i className="far fa-calendar-alt mr-2"></i>
@@ -136,12 +136,11 @@ const Career = () => {
 
                                         {/* Author Section */}
                                         <div className="mt-4">
-                                            {/* Author Image */}
-                                            <div className="flex items-center">
-                                            <img src={article.author_image_url} alt="" className="w-8 h-8 rounded-full mr-4" />
+                                         
+                                           
                                                 {/* Author Name */}
                                                 <span className="text-gray-600 font-semibold">{article.author_name}</span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

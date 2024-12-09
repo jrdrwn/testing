@@ -934,7 +934,7 @@ await queryInterface.bulkInsert('articles', [
     category: "Resume Writing", 
     description: "Tips and steps to create a resume that catches the recruiter's attention.", 
     author_name: "John Doe",  // Tambahkan author_name
-    author_image_url: "https://example.com/authors/john_doe.jpg",  // Tambahkan author_image_url
+    author_image_url: "https://www.hipwee.com/wp-content/uploads/2015/04/business-855-750x565.png",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   },
@@ -946,7 +946,7 @@ await queryInterface.bulkInsert('articles', [
     category: "Interview Preparation", 
     description: "Simulations and job interview guides to boost confidence.", 
     author_name: "Jane Smith",  // Tambahkan author_name
-    author_image_url: "https://example.com/authors/jane_smith.jpg",  // Tambahkan author_image_url
+    author_image_url: "https://media.licdn.com/dms/image/v2/C4E12AQEmuCIP3RulUg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1560004190905?e=2147483647&v=beta&t=ggdfWVXNL6dFFbmoMWgWDZe8GyqQoZTxWOZUO9YJqWI",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   },
@@ -958,7 +958,7 @@ await queryInterface.bulkInsert('articles', [
     category: "Personal Branding", 
     description: "Guide to maximizing your LinkedIn profile to be more professional and effective.", 
     author_name: "Emily Brown",  // Tambahkan author_name
-    author_image_url: "https://example.com/authors/emily_brown.jpg",  // Tambahkan author_image_url
+    author_image_url: "https://media.licdn.com/dms/image/v2/D4D12AQEXfCs0v3rvjQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1730043613906?e=2147483647&v=beta&t=NUn7FaOYerg1YezczkAM9S1DsgrnpLtXaHlHpz2lp-E",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   }
