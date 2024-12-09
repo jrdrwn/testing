@@ -130,17 +130,14 @@ const Career = () => {
                                             <span>{article.category}</span>
                                         </div>
                                         <h4 className="text-lg font-semibold text-gray-800">
-                                            <Link to={`/article/${article.id}`} className="hover:text-blue-600">{article.title}</Link>
+                                            <Link to={`/dashboard/workshop/articlecontents/`} className="hover:text-blue-600">{article.title}</Link>
                                         </h4>
                                         <p className="text-gray-600 mt-2">{article.description}</p>
 
                                         {/* Author Section */}
                                         <div className="mt-4">
-                                         
-                                           
-                                                {/* Author Name */}
-                                                <span className="text-gray-600 font-semibold">{article.author_name}</span>
-                                            
+                                            {/* Author Name */}
+                                            <span className="text-gray-600 font-semibold">{article.author_name}</span>
                                         </div>
                                     </div>
                                 </div>
