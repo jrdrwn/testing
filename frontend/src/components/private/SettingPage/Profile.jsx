@@ -4,8 +4,7 @@ import LayoutWithSidebar from "./LayoutWithSidebar";
 const Profile = () => {
   return (
     <LayoutWithSidebar>
-      {/* Profile Content */}
-      <div>
+      <div className="p-4 md:p-6">
         <h2 className="text-blue-600 text-xl font-semibold mb-2 flex items-center">
           <i className="fas fa-user mr-2"></i> Profile
         </h2>
@@ -13,16 +12,15 @@ const Profile = () => {
           Make changes to your account here. Click save when you're done.
         </p>
 
-        {/* Profile Image & Info */}
-        <div className="flex items-center mb-6">
+        <div className="flex flex-col md:flex-row items-center mb-6">
           <img
             src="https://placehold.co/100x100"
             alt="Profile"
-            className="rounded-full w-24 h-24 mr-4"
+            className="rounded-full w-24 h-24 mr-4 mb-4 md:mb-0"
           />
-          <div>
+          <div className="w-full md:w-auto">
             <div className="flex items-center mb-2">
-              <div className="bg-gray-200 rounded-full h-2 w-48 mr-2">
+              <div className="bg-gray-200 rounded-full h-2 w-full md:w-48 mr-2">
                 <div
                   className="bg-blue-600 h-2 rounded-full"
                   style={{ width: "80%" }}
@@ -35,30 +33,25 @@ const Profile = () => {
             </p>
             <p className="text-blue-600 text-sm font-semibold">Rising Star</p>
           </div>
-          <button className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+          <button className="mt-4 md:mt-0 ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
             <i className="fas fa-pen mr-2"></i> Edit
           </button>
         </div>
-        <p className="text-gray-600 text-sm mb-6">
-          Your Profile image should be no more than 2MB in size.
-        </p>
 
-        {/* Profile Form */}
         <form>
-            {/* Full Name */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2">
-                Full Name*
-              </label>
-              <input
-                type="text"
-                className="w-full border rounded-lg px-3 py-2"
-                value="Deca Devin"
-              />
-            </div>
-
-            {/* Username */}
-            <div className="mb-4">
+          {/* Adjust form fields */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">
+              Full Name*
+            </label>
+            <input
+              type="text"
+              className="w-full border rounded-lg px-3 py-2"
+              defaultValue="Deca Devin"
+            />
+          </div>
+          {/* Username */}
+          <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2">
                 Username*
               </label>
@@ -207,25 +200,10 @@ const Profile = () => {
                 Tell us a little bit about yourself
               </p>
             </div>
-            <div className="flex justify-between">
-  {/* Tombol di kiri */}
-  <div>
-    <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-      Save changes
-    </button>
-  </div>
-
-  {/* Tombol di kanan */}
-  <div className="flex space-x-4"> {/* Gunakan `space-x-4` untuk jarak antar tombol */}
-    <button className="bg-red-600 text-white px-4 py-2 rounded-lg">
-      Delete Account
-    </button>
-    <button className="bg-red-600 text-white px-4 py-2 rounded-lg">
-      Logout
-    </button>
-  </div>
-</div>
-
+          {/* Additional fields */}
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg w-full md:w-auto">
+            Save Changes
+          </button>
         </form>
       </div>
     </LayoutWithSidebar>
