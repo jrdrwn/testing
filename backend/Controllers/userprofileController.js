@@ -132,6 +132,44 @@ const getSocialMedia = async (req, res) => {
     res.status(500).json({ message: "Gagal mendapatkan profil.", error });
   }
 };
+const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user.id; // ID pengguna dari middleware autentikasi
+    const { username, date_of_birth, ...otherFields } = req.body; // Data dari request body
+
+    // Validasi data input
+    if (!username || !date_of_birth) {
+      return res.status(400).json({ message: 'Username dan tanggal lahir wajib diisi.' });
+    }
+
+    // Cari profil berdasarkan userId
+    const profile = await UserProfile.findOne({ userId: userId });
+
+    if (!profile) {
+      return res.status(404).json({ message: 'Profil tidak ditemukan.' });
+    }
+
+    // Perbarui data profil
+    profile.username = username;
+    profile.date_of_birth = date_of_birth;
+
+    // Tambahkan field lainnya jika ada
+    for (const [key, value] of Object.entries(otherFields)) {
+      profile[key] = value;
+    }
+
+    // Simpan perubahan ke database
+    const updatedProfile = await profile.save();
+
+    res.status(200).json({
+      message: 'Profil berhasil diperbarui.',
+      data: updatedProfile,
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan saat memperbarui profil.' });
+  }
+};
 
 // Ekspor fungsi agar bisa digunakan di file lain
-module.exports = { completeProfile, authenticate, getProfile, completeSocialMedia, getSocialMedia };
+module.exports = { completeProfile, authenticate, getProfile, completeSocialMedia, getSocialMedia, updateUserProfile };

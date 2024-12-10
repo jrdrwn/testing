@@ -12,7 +12,7 @@ const Career = () => {
         const fetchData = async () => {
             try {
                 // Fetch VideoContents
-                const videoResponse = await fetch('/api/videoContents'); 
+                const videoResponse = await fetch('/api/auth/videoContents'); 
                 if (!videoResponse.ok) {
                     throw new Error('Failed to fetch video contents');
                 }
