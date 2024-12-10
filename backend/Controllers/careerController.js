@@ -56,12 +56,16 @@ exports.getArticles = async (req, res) => {
     const formattedArticles = articles.map(article => ({
       id: article.id,
       title: article.title,
+      author_name: article.author_name, // Author name
+      author_image_url: article.author_image_url, // Author image URL
       date: article.date ? article.date.toISOString() : null, // Standardize date format
       category: article.category,
       description: article.description,
+      content: article.content, // Article full text/content
       created_at: article.created_at ? article.created_at.toISOString() : null,
-      updated_at: article.updated_at ? article.updated_at.toISOString() : null
+      updated_at: article.updated_at ? article.updated_at.toISOString() : null,
     }));
+    
 
     return res.status(200).json(formattedArticles);
   } catch (err) {

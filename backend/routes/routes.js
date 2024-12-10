@@ -9,8 +9,10 @@ const emailController = require('../Controllers/emailController');
 const upload = require('../middleware/multerConfig');
 const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
-const { getMyCourses, getMyCoursesComplete } = require('../Controllers/courseController');
+const { getMyCourses, getMyCoursesComplete, authenticateToken } = require('../Controllers/courseController');
 const careerController = require('../Controllers/careerController'); 
+const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
+const articledetailController = require("../Controllers/articledetailController");
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -39,10 +41,22 @@ router.get('/courses', (req,res,next)=>{
 router.post('/courses', upload.single('image'), addCourse);
 
 // Route untuk mendapatkan kursus user
-router.get('/mycourses/:userId', getMyCourses);
+router.get('/mycourses',authenticateToken, getMyCourses);
 
 // Route untuk mendapatkan kursus user
 router.get('/mycourses/:userId/completed', getMyCoursesComplete);
+
+// Route untuk mendapatkan data user profil
+router.post('/userprofiles', authenticate, completeProfile);
+
+router.get('/profile', authenticate, getProfile);
+
+// Route untuk mendapatkan data sosial media user
+router.put('/profile/social', authenticate, completeSocialMedia);
+
+router.get('/socialmedia', authenticate, getSocialMedia);
+
+router.put('profile', updateUserProfile);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {
@@ -185,5 +199,10 @@ router.get('/api/videoContents', careerController.getVideos);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
+// Route untuk mendapatkan semua data artikel author beserta artikel terkait
+router.get("/api/article-authors", articledetailController.getAllAuthors);
+// Route untuk mendapatkan satu data artikel author berdasarkan ID beserta artikel terkait
+router.get("/api/article-authors/:id", articledetailController.getAuthorById);
+
 
 module.exports = router;

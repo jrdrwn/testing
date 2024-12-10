@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      author_name: {
+        type: DataTypes.STRING,  // Add author's name
+        allowNull: false,        // Make it required if needed
+      },
+      author_image_url: {
+        type: DataTypes.STRING,  // Add URL to author's image
+        allowNull: true,         // Allow null in case no image is provided
+      },
       date: {
         type: DataTypes.DATE,
         allowNull: false,

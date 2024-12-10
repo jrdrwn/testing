@@ -1,65 +1,119 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const Article = () => {
-  return (
-    <div className="bg-gray-50">
-      <main className="container mx-auto px-4 py-8">
-        <section className="mb-8">
-          <div className="relative">
-            <img src="https://placehold.co/1200x400" alt="Man reading a document" className="w-full h-64 object-cover" />
-            <div className="absolute top-1/2 left-1/4 transform -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded">Resume Writing</button>
-              <span className="text-gray-500 ml-4">Nov 21, 2024</span>
-              <h2 className="text-2xl font-bold mt-2">How to Create a Winning Resume</h2>
-              <p className="text-gray-700 mt-2">Tips and steps to create a resume that catches the recruiter's attention.</p>
-              <Link to="/dashboard/workshop/articlecontents" className="text-blue-600 mt-4 inline-block">Read more <i className="fas fa-arrow-right"></i></Link>
-            </div>
-          </div>
-        </section>
+    const { id } = useParams(); // Retrieve the dynamic ID from the URL
+    const [article, setArticle] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-        <section>
-          <h2 className="text-2xl font-bold text-blue-600 mb-4">Latest articles</h2>
-          <div className="flex space-x-8">
-            <aside className="w-1/4">
-              <ul className="space-y-2">
-                <li><a href="#" className="text-blue-600">All</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Resume Writing</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Interview Preparation</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Portfolio Building</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Personal Branding</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Job Search Strategies</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Workplace Skills</a></li>
-                <li><a href="#" className="text-gray-700 hover:text-blue-600">Career Growth</a></li>
-              </ul>
-            </aside>
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                const response = await fetch(`/api/article-authors/${id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch article details');
+                }
+                const data = await response.json();
+                setArticle(data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching article:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        };
 
-            <div className="w-3/4 space-y-8">
-              {[{ category: "Interview Preparation", date: "Nov 20, 2024", title: "Interview Preparation 101" },
-                { category: "Personal Branding", date: "Nov 19, 2024", title: "Mastering LinkedIn Optimization" },
-                { category: "Resume Writing", date: "Nov 18, 2024", title: "5 Resume Mistakes You Should Avoid to Land Your Dream Job" },
-                { category: "Resume Writing", date: "Nov 17, 2024", title: "Crafting a Winning Resume for Fresh Graduates" },
-                { category: "Interview Preparation", date: "Nov 16, 2024", title: "The Top 10 Behavioral Questions and How to Answer Them" },
-                { category: "Interview Preparation", date: "Nov 15, 2024", title: "Ace Your Next Job Interview with These Body Language Tips" },
-                { category: "Portfolio Building", date: "Nov 14, 2024", title: "Designing a Standout Portfolio for Creative Professionals" },
-                { category: "Portfolio Building", date: "Nov 13, 2024", title: "Why Every Data Scientist Needs a GitHub Portfolio" },
-                { category: "Personal Branding", date: "Nov 12, 2024", title: "How to Build a Professional LinkedIn Profile in 5 Easy Steps" },
-                { category: "Personal Branding", date: "Nov 11, 202en 4", title: "The Art of Personal Branding for Freelancers" },
-                { category: "Job Search Strategies", date: "Nov 10, 2024", title: "Mastering Job Boards: Finding Hidden Opportunities Online" },
-                { category: "Workplace Skills", date: "Nov 9, 2024", title: "Time Management Tips for Young Professionals" }
-              ].map((article, index) => (
-                <div key={index} className="border-b pb-4">
-                  <span className="text-gray-500">{article.category} &mdash; {article.date}</span>
-                  <h3 className="text-xl font-semibold mt-2">{article.title}</h3>
-                  <a href="#" className="text-blue-600 mt-2 inline-block">Read more <i className="fas fa-arrow-right"></i></a>
+        fetchArticle();
+    }, [id]);
+
+    if (loading) {
+        return <div className="text-center py-8"><p className="text-lg text-gray-600">Loading article...</p></div>;
+    }
+
+    if (error) {
+        return <div className="text-center py-8"><p className="text-lg text-red-600">Error: {error}</p></div>;
+    }
+
+    return (
+        <div>
+            <div className="container mx-auto px-4 py-8">
+                <div className="bg-white shadow-lg rounded-lg p-6">
+                    <img src={article.author_image_url} alt={article.title} className="w-full h-64 object-cover rounded-lg mb-6" />
+                    <div className="flex items-center">
+                        <img src={article.author_image_url} alt={article.author_name} className="w-12 h-12 rounded-full mr-4" />
+                        <span className="text-gray-700 font-semibold">{article.author_name}</span>
+                    </div>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{article.title}</h1>
+                    <p className="text-gray-600 mb-4">{article.description_new}</p>
                 </div>
-              ))}
             </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+
+            <div className="container mx-auto px-4 py-8">
+                <div className="bg-white shadow-lg rounded-lg p-6">
+                <h2 className="text-2xl font-bold mb-4">Comments (3)</h2>
+                <div className="space-y-6">
+                    <div className="bg-white shadow rounded-lg p-4">
+                        <div className="flex items-center mb-4">
+                            <img src="https://placehold.co/50x50" alt="Commenter's profile picture" className="rounded-full w-12 h-12 mr-4" />
+                            <div>
+                                <div className="font-bold">Sarah Tan</div>
+                                <div className="text-gray-500">18:32, 2 days ago</div>
+                            </div>
+                        </div>
+                        <p className="text-gray-700 mb-4">This article is a game-changer! I realized I was guilty of at least three of these mistakes. After tweaking my resume using these tips, I landed an interview within a week. Thank you for such practical advice!</p>
+                        <div className="flex items-center space-x-4">
+                            <div className="text-blue-600"><i className="fas fa-thumbs-up"></i> 67</div>
+                            <div className="text-blue-600"><i className="fas fa-comment"></i> 2</div>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-4">
+                        <div className="flex items-center mb-4">
+                            <img src="https://placehold.co/50x50" alt="Commenter's profile picture" className="rounded-full w-12 h-12 mr-4" />
+                            <div>
+                                <div className="font-bold">Muhammad Yusuf</div>
+                                <div className="text-gray-500">17:45, 3 days ago</div>
+                            </div>
+                        </div>
+                        <p className="text-gray-700 mb-4">Great article with actionable tips! I especially liked the advice about quantifying achievements. However, it would be helpful to see a sample resume that incorporates all these tips.</p>
+                        <div className="flex items-center space-x-4">
+                            <div className="text-blue-600"><i className="fas fa-thumbs-up"></i> 25</div>
+                            <div className="text-blue-600"><i className="fas fa-comment"></i> 0</div>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow rounded-lg p-4">
+                        <div className="flex items-center mb-4">
+                            <img src="https://placehold.co/50x50" alt="Commenter's profile picture" className="rounded-full w-12 h-12 mr-4" />
+                            <div>
+                                <div className="font-bold">Clara Wijaya</div>
+                                <div className="text-gray-500">14:07, 4 days ago</div>
+                            </div>
+                        </div>
+                        <p className="text-gray-700 mb-4">As someone who's been reviewing resumes for years, I can confirm these are some of the most common mistakes people make. Excellent insights, especially about using action verbs. Highly recommended!</p>
+                        <div className="flex items-center space-x-4">
+                            <div className="text-blue-600"><i className="fas fa-thumbs-up"></i> 34</div>
+                            <div className="text-blue-600"><i className="fas fa-comment"></i> 0</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="mt-6">
+                    <textarea className="w-full border rounded-lg p-4" rows="4" placeholder="Join the discussion and share your thoughts or experiences"></textarea>
+                    <button className="bg-blue-600 text-white rounded-lg px-4 py-2 mt-4">Add Comment</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    );
 };
 
-export default Article
+export default Article;
