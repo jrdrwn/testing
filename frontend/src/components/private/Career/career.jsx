@@ -113,7 +113,7 @@ const Career = () => {
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center">
                             <h3 className="text-xl font-semibold text-gray-800 mr-2">Latest Articles</h3>
-                            <Link to="/dashboard/workshop/articlecontents" className="text-blue-600">→</Link>
+                            <Link to="/dashboard/workshop/articlecontent" className="text-blue-600">→</Link>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
