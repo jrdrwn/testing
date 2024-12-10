@@ -11,6 +11,7 @@ const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
 const { getMyCourses, getMyCoursesComplete } = require('../Controllers/courseController');
 const careerController = require('../Controllers/careerController'); 
+const articledetailController = require("../Controllers/articledetailController");
 const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia } = require('../Controllers/userprofileController');
 const router = express.Router();
 
@@ -196,5 +197,10 @@ router.get('/api/videoContents', careerController.getVideos);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
+// Route untuk mendapatkan semua data artikel author beserta artikel terkait
+router.get("/api/article-authors", articledetailController.getAllAuthors);
+// Route untuk mendapatkan satu data artikel author berdasarkan ID beserta artikel terkait
+router.get("/api/article-authors/:id", articledetailController.getAuthorById);
+
 
 module.exports = router;
