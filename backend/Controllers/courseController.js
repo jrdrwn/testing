@@ -1,4 +1,5 @@
 const db = require('../database/models'); // Import db
+const jwt = require('jsonwebtoken'); // Import jwt
 const { Sequelize } = db;
 
 // Fungsi untuk mendapatkan semua daftar kursus
@@ -47,48 +48,60 @@ const addCourse = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: 'Invalid token.' });
+
+    req.userId = decoded.userId; // Simpan userId di request untuk digunakan di controller
+    next();
+  });
+};
 
 const getMyCourses = async (req, res) => {
-  // Mengonversi userId menjadi integer
-  const userId = parseInt(req.params.userId, 10);
+  try {
+    // Ambil userId dari JWT, bukan dari URL
+    const userId = req.userId; // Ini diatur oleh middleware autentikasi
 
-  const query = `
-    SELECT 
-      c.title AS course_title,
-      c.description,
-      c.rating,
-      c.price,
-      c.image_url,
-      e.progress,
-      e.enrolled_at
-    FROM enrollments e
-    JOIN courses c ON e.course_id = c.course_id
-    WHERE e.student_id = :userId AND e.completion_date IS NULL
-  `;
+    const query = `
+      SELECT 
+        c.title AS course_title,
+        c.description,
+        c.rating,
+        c.price,
+        c.image_url,
+        e.progress,
+        e.enrolled_at
+      FROM enrollments e
+      JOIN courses c ON e.course_id = c.course_id
+      WHERE e.student_id = :userId AND e.completion_date IS NULL
+    `;
 
-  // Jalankan query dengan replacements
-  const rows = await db.sequelize.query(query, {
-    replacements: { userId },
-    type: Sequelize.QueryTypes.SELECT,
-  });
+    const rows = await db.sequelize.query(query, {
+      replacements: { userId },
+      type: Sequelize.QueryTypes.SELECT,
+    });
 
-  // Log untuk debugging
-  console.log('Data yang dikembalikan oleh query:', rows);
-  console.log('Jumlah kursus yang ditemukan:', rows.length);
+    // Log untuk debugging
+    console.log('Data yang dikembalikan oleh query:', rows);
+    console.log('Jumlah kursus yang ditemukan:', rows.length);
 
-  // Jika tidak ada data ditemukan
-  if (!rows || rows.length === 0) {
-    return res.status(404).json({
-      message: 'No courses found for this user.',
-      courses: rows, // Konsistensi format respons
+    // Berikan respons sukses dengan data kursus
+    return res.status(200).json({
+      message: 'Courses retrieved successfully.',
+      courses: rows,
+    });
+  } catch (error) {
+    console.error('Error retrieving courses:', error.message);
+    return res.status(500).json({
+      message: 'An error occurred while retrieving courses.',
+      error: error.message,
     });
   }
-
-  // Berikan respons sukses dengan data kursus
-  return res.status(200).json({
-    message: 'Courses retrieved successfully.',
-    courses: rows,
-  });
 };
 
 const getMyCoursesComplete = async (req, res) => {
@@ -135,5 +148,5 @@ const getMyCoursesComplete = async (req, res) => {
 };
 
 module.exports = {
-    getAllCourses, addCourse, getMyCourses, getMyCoursesComplete
+    getAllCourses, addCourse, getMyCourses, getMyCoursesComplete, authenticateToken
     };
