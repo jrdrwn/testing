@@ -928,35 +928,78 @@ module.exports = {
 
 await queryInterface.bulkInsert('articles', [
   { 
-    id:1,
+    id: 1,
     title: "How to Create a Winning Resume", 
     date: new Date('2024-11-21'), 
     category: "Resume Writing", 
     description: "Tips and steps to create a resume that catches the recruiter's attention.", 
+    author_name: "John Doe",  // Tambahkan author_name
+    author_image_url: "https://www.hipwee.com/wp-content/uploads/2015/04/business-855-750x565.png",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   },
 
   { 
-    id:2,
+    id: 2,
     title: "Interview Preparation 101", 
     date: new Date('2024-11-20'), 
     category: "Interview Preparation", 
     description: "Simulations and job interview guides to boost confidence.", 
+    author_name: "Jane Smith",  // Tambahkan author_name
+    author_image_url: "https://media.licdn.com/dms/image/v2/C4E12AQEmuCIP3RulUg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1560004190905?e=2147483647&v=beta&t=ggdfWVXNL6dFFbmoMWgWDZe8GyqQoZTxWOZUO9YJqWI",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   },
 
   { 
-    id:3,
+    id: 3,
     title: "Mastering LinkedIn Optimization", 
     date: new Date('2024-11-19'), 
     category: "Personal Branding", 
     description: "Guide to maximizing your LinkedIn profile to be more professional and effective.", 
+    author_name: "Emily Brown",  // Tambahkan author_name
+    author_image_url: "https://media.licdn.com/dms/image/v2/D4D12AQEXfCs0v3rvjQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1730043613906?e=2147483647&v=beta&t=NUn7FaOYerg1YezczkAM9S1DsgrnpLtXaHlHpz2lp-E",  // Tambahkan author_image_url
     created_at: new Date(), 
     updated_at: new Date() 
   }
 ]);
+
+await queryInterface.bulkInsert('article_authors', [
+  {
+    id: 1,
+    author_name: "John Doe",  // Nama penulis
+    author_image_url: "https://www.hipwee.com/wp-content/uploads/2015/04/business-855-750x565.png",  // Gambar penulis
+    title: "How to Create a Winning Resume", 
+    article_id: 1,  // ID artikel yang terkait
+    description_new: "John Doe is a renowned resume writing expert who has helped countless job seekers secure their dream roles. With over 10 years of experience, John specializes in crafting resumes that not only highlight achievements but also resonate with hiring managers. He is known for his attention to detail and his ability to tailor resumes for specific industries and job roles.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+
+  {
+    id: 2,
+    author_name: "Jane Smith",  // Nama penulis
+    author_image_url: "https://media.licdn.com/dms/image/v2/C4E12AQEmuCIP3RulUg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1560004190905?e=2147483647&v=beta&t=ggdfWVXNL6dFFbmoMWgWDZe8GyqQoZTxWOZUO9YJqWI",  // Gambar penulis
+    title: "Interview Preparation 101", 
+    article_id: 2,  // ID artikel yang terkait
+    description_new: "Jane Smith has spent over 15 years helping professionals prepare for job interviews. With a background in human resources, Jane offers insights into common interview questions, tips for answering them confidently, and strategies to help job seekers make a lasting impression. She is passionate about helping people boost their interview skills and secure job offers.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+
+  {
+    id: 3,
+    author_name: "Emily Brown",  // Nama penulis
+    author_image_url: "https://media.licdn.com/dms/image/v2/D4D12AQEXfCs0v3rvjQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1730043613906?e=2147483647&v=beta&t=NUn7FaOYerg1YezczkAM9S1DsgrnpLtXaHlHpz2lp-E",  // Gambar penulis
+    title: "Mastering LinkedIn Optimization", 
+    article_id: 3,  // ID artikel yang terkait
+    description_new: "Emily Brown is a personal branding strategist who specializes in LinkedIn optimization. With a keen understanding of how recruiters search for candidates, Emily helps professionals create LinkedIn profiles that stand out. She advises on profile pictures, headline writing, and crafting compelling summaries to attract the attention of hiring managers and recruiters.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+]);
+
+
   },
   
   down: async (queryInterface, Sequelize) => {

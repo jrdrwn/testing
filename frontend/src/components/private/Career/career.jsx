@@ -113,14 +113,14 @@ const Career = () => {
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center">
                             <h3 className="text-xl font-semibold text-gray-800 mr-2">Latest Articles</h3>
-                            <button className="text-blue-600">→</button>
+                            <Link to="/dashboard/workshop/articlecontents" className="text-blue-600">→</Link>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4">
                         {articles.length > 0 ? (
                             articles.map((article) => (
                                 <div key={article.id} className="bg-white rounded-lg shadow-lg p-4 flex">
-                                    <img src={article.image_url} alt={article.title} className="rounded-lg mb-4" />
+                                    <img src={article.author_image_url} alt={article.title} className="w-[150px] h-[100px] rounded-lg object-cover mb-4" />
                                     <div className="ml-4">
                                         <div className="flex items-center text-gray-500 text-sm mb-2">
                                             <i className="far fa-calendar-alt mr-2"></i>
@@ -130,9 +130,15 @@ const Career = () => {
                                             <span>{article.category}</span>
                                         </div>
                                         <h4 className="text-lg font-semibold text-gray-800">
-                                            <Link to={`/article/${article.id}`} className="hover:text-blue-600">{article.title}</Link>
+                                            <Link to={`/dashboard/workshop/article/${article.id}`} className="hover:text-blue-600">{article.title}</Link>
                                         </h4>
                                         <p className="text-gray-600 mt-2">{article.description}</p>
+
+                                        {/* Author Section */}
+                                        <div className="mt-4">
+                                            {/* Author Name */}
+                                            <span className="text-gray-600 font-semibold">{article.author_name}</span>
+                                        </div>
                                     </div>
                                 </div>
                             ))
