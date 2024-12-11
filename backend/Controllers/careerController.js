@@ -29,6 +29,9 @@ exports.getVideos = async (req, res) => {
         description: video.description,
         url: video.url,
         tags, // Safely parsed tags (or fallback to split tags)
+        thumbnail_url: video.thumbnail_url,  // Include thumbnail_url in response
+        date: video.date ? video.date.toISOString() : null,  // Format date if it exists
+        duration: video.duration,
         created_at: video.created_at ? video.created_at.toISOString() : null,
         updated_at: video.updated_at ? video.updated_at.toISOString() : null
       };
