@@ -11,6 +11,7 @@ const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
 const { getMyCourses, getMyCoursesComplete, authenticateToken } = require('../Controllers/courseController');
 const careerController = require('../Controllers/careerController'); 
+const videocareerController = require('../Controllers/videocareerController'); 
 const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
 const articledetailController = require("../Controllers/articledetailController");
 const router = express.Router();
@@ -196,6 +197,12 @@ router.post('/api/auth/verify-reset-code', emailController.verifyResetCode);
 
 // Route to get video content
 router.get('/api/auth/videoContents', careerController.getVideos);
+// Route to get all video contents with related video information
+router.get("/api/videos", videocareerController.getAllVideos);
+
+// Route to get a single video content by ID with related video information
+router.get("/api/videos/:id", videocareerController.getVideoById);
+
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
