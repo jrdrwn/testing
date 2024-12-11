@@ -195,7 +195,7 @@ router.post('/api/auth/reset-password', emailController.resetPassword);
 router.post('/api/auth/verify-reset-code', emailController.verifyResetCode);
 
 // Route to get video content
-router.get('/api/videoContents', careerController.getVideos);
+router.get('/api/auth/videoContents', careerController.getVideos);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
