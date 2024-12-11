@@ -378,8 +378,9 @@ CREATE TABLE VideoContents (
   description TEXT NOT NULL,
   url VARCHAR(255) NOT NULL,
   tags JSON NOT NULL,
-  thumbnail_url VARCHAR(255) NULL, -- Menambahkan kolom untuk thumbnail
-  date DATETIME NULL, -- Menambahkan kolom untuk tanggal
+  thumbnail_url VARCHAR(255) NULL, 
+  date DATETIME NULL,
+  duration VARCHAR(255) NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

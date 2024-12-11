@@ -878,6 +878,7 @@ module.exports = {
       tags: JSON.stringify(["resume", "career", "job search"]),
       thumbnail_url: "https://mycvcreator.com/administrator/postimages/66c5c34fa02068.66439125.jpg", // Tambahkan thumbnail
       date: new Date('2024-12-11'), // Tambahkan tanggal
+      duration: "29min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -889,6 +890,7 @@ module.exports = {
       tags: JSON.stringify(["portfolio", "UI/UX", "design"]),
       thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjhWtiGZz2aW08oqoY7WD7MQC25UKl-sa0VQ&s", // Tambahkan thumbnail
       date: new Date('2024-12-10'), // Tambahkan tanggal
+      duration: "9min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -900,6 +902,7 @@ module.exports = {
       tags: JSON.stringify(["linkedin", "career", "networking"]),
       thumbnail_url: "https://www.bleepstatic.com/content/hl-images/2023/08/15/hacker-holding-linkedin.jpg", // Tambahkan thumbnail
       date: new Date('2024-12-09'), // Tambahkan tanggal
+      duration: "8min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -911,6 +914,7 @@ module.exports = {
       tags: JSON.stringify(["branding", "career", "personal development"]),
       thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6l74Qeqb4XanhCUndv-dWgCe0JFPd4aQ0Tw&s", // Tambahkan thumbnail
       date: new Date('2024-12-08'), // Tambahkan tanggal
+      duration: "6min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -922,6 +926,7 @@ module.exports = {
       tags: JSON.stringify(["interview", "career", "job tips"]),
       thumbnail_url: "https://img.freepik.com/free-photo/man-being-interviewed-indoors-by-journalist_23-2149029359.jpg", // Tambahkan thumbnail
       date: new Date('2024-12-07'), // Tambahkan tanggal
+      duration: "7min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -933,6 +938,7 @@ module.exports = {
       tags: JSON.stringify(["interview", "career", "job search"]),
       thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUO7WSJvOIEsFpMrno_JR__Dq3OFIJUzrivQ&s", // Tambahkan thumbnail
       date: new Date('2024-12-06'), // Tambahkan tanggal
+      duration: "10min",
       created_at: new Date(),
       updated_at: new Date()
   }

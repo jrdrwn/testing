@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: true, // Ini juga bisa null jika tidak ada tanggal khusus
     },
+    duration: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
