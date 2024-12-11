@@ -15,6 +15,8 @@ const Profile = () => {
     bio: "",
   });
 
+  const [isEditing, setIsEditing] = useState(false); // State untuk mengatur mode edit
+
   // Mengambil data profil dari server
   useEffect(() => {
     const fetchProfile = async () => {
@@ -56,7 +58,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("https://localhost:5000/api/profile", {
+      const response = await fetch("https://localhost:5000/api/auth/profile", {
         method: "PUT", // Menggunakan PUT untuk memperbarui data
         headers: {
           Authorization: `Bearer ${token}`,
@@ -110,8 +112,12 @@ const Profile = () => {
             </p>
             <p className="text-blue-600 text-sm font-semibold">Rising Star</p>
           </div>
-          <button className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
-            <i className="fas fa-pen mr-2"></i> Edit
+          <button
+            className="ml-auto bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center"
+            onClick={() => setIsEditing(!isEditing)} // Toggle mode edit
+          >
+            <i className={`fas fa-${isEditing ? "save" : "pen"} mr-2`}></i>
+            {isEditing ? "Save" : "Edit"}
           </button>
         </div>
         <p className="text-gray-600 text-sm mb-6">
@@ -131,6 +137,7 @@ const Profile = () => {
               value={profile.username}
               onChange={handleInputChange}
               name="username"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
               required
             />
           </div>
@@ -144,6 +151,10 @@ const Profile = () => {
               type="text"
               className="w-full border rounded-lg px-3 py-2"
               value={profile.username}
+              onChange={handleInputChange}
+              name="username"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
+              required
             />
             <p className="text-gray-500 text-sm mt-1">
               This is your public display name.
@@ -181,6 +192,7 @@ const Profile = () => {
                   className="w-full border rounded-lg px-3 py-2"
                   value={profile.date_of_birth} // Menampilkan nilai dari state
                   onChange={handleInputChange} // Mengupdate state ketika nilai berubah
+                  disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
                 />
                 <i className="fas fa-calendar-alt absolute right-3 top-3 text-gray-500"></i>
               </div>
@@ -199,6 +211,7 @@ const Profile = () => {
                     value="Male"
                     checked={profile.gender === "Male"} // Menandai jika sesuai dengan state
                     onChange={handleInputChange} // Mengupdate state ketika dipilih
+                    disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
                     className="mr-2"
                   />
                   Male
@@ -211,6 +224,7 @@ const Profile = () => {
                     checked={profile.gender === "Female"} // Menandai jika sesuai dengan state
                     onChange={handleInputChange} // Mengupdate state ketika dipilih
                     className="mr-2"
+                    disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
                   />
                   Female
                 </label>
@@ -231,6 +245,9 @@ const Profile = () => {
                 type="text"
                 className="w-full border rounded-r-lg px-3 py-2"
                 value={profile.phone_number}
+                onChange={handleInputChange}
+                name="phone_number"
+                disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
               />
             </div>
             <div className="flex items-center mt-2">
@@ -250,6 +267,9 @@ const Profile = () => {
               type="text"
               className="w-full border rounded-lg px-3 py-2"
               value={profile.city}
+              onChange={handleInputChange}
+              name="city"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
             />
             <p className="text-gray-500 text-sm mt-1">
               Fill in the city where you currently live.
@@ -275,6 +295,9 @@ const Profile = () => {
               type="text"
               className="w-full border rounded-lg px-3 py-2"
               value={profile.company}
+              onChange={handleInputChange}
+              name="company"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
             />
             <p className="text-gray-500 text-sm mt-1">
               You can write the name of the company or campus.
@@ -290,6 +313,9 @@ const Profile = () => {
               type="text"
               className="w-full border rounded-lg px-3 py-2"
               value={profile.role}
+              onChange={handleInputChange}
+              name="role"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
             />
             <p className="text-gray-500 text-sm mt-1">
               Can be filled with your main role or position.
@@ -305,15 +331,20 @@ const Profile = () => {
               className="w-full border rounded-lg px-3 py-2"
               placeholder="Write a little about yourself..."
               value={profile.bio}
+              onChange={handleInputChange}
+              name="bio"
+              disabled={!isEditing} // Menonaktifkan input jika mode edit tidak
             ></textarea>
             <p className="text-gray-500 text-sm mt-1">{profile.bio}</p>
           </div>
           <div className="flex justify-between">
             {/* Tombol di kiri */}
             <div>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                Save changes
-              </button>
+              {isEditing && (
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                  Save changes
+                </button>
+              )}
             </div>
 
             {/* Tombol di kanan */}

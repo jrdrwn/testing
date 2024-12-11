@@ -999,7 +999,6 @@ await queryInterface.bulkInsert('article_authors', [
   }
 ]);
 
-
   },
   
   down: async (queryInterface, Sequelize) => {

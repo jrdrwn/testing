@@ -1,28 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const InProgress = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
-      try {
-        const userId = localStorage.getItem('userId'); // Ambil userId dari localStorage
-        if (!userId) {
-          throw new Error('User not logged in');
-        }
+      const token = localStorage.getItem('token'); // Ambil token dari localStorage
 
-        const response = await fetch(`https://localhost:5000/api/auth/mycourses/${userId}`);
+      console.log('Token from localStorage:', token);
+
+      if (!token) {
+        console.log('Token not found. Redirecting to login...');
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://localhost:5000/api/auth/mycourses`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log('API Response:', response);
+
         if (response.ok) {
           const data = await response.json();
           console.log('Data from API:', data);
-          const courseArray = Array.isArray(data.courses) ? data.courses : [data.courses];
+          const courseArray = Array.isArray(data.courses) ? data.courses : [];
           setCourses(courseArray);
           setError(null);
         } else {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          const errorData = await response.json();
+          console.error('Error from API:', errorData.message);
+          throw new Error(errorData.message || 'Failed to fetch courses.');
         }
       } catch (err) {
         console.error('Error fetching courses:', err.message);
@@ -34,7 +51,7 @@ const InProgress = () => {
     };
 
     fetchCourses();
-  }, []);
+  }, [navigate]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;

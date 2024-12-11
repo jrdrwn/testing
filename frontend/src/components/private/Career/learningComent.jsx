@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from '../../../assets/logo/logo.png';
 import { FaExclamationCircle, FaComment } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
+
 const LearningComent = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -34,6 +35,7 @@ const LearningComent = () => {
               title="Video Tutorial"
             />
           </div>
+
           {/* Tab Navigation */}
           <div className="flex items-center justify-between border-b border-gray-300 mb-4">
             <Link to="/dashboard/workshop/learningoverview" className="py-2 px-4 text-gray-500 flex items-center space-x-2">
@@ -45,6 +47,7 @@ const LearningComent = () => {
               <span>Comment <span className="text-gray-400">(2)</span></span>
             </button>
           </div>
+
           {/* Comments Section */}
           <div className="space-y-6">
             {/* Comment 1 */}
@@ -58,6 +61,7 @@ const LearningComent = () => {
                 </div>
               </div>
             </div>
+
             {/* Comment 2 */}
             <div className="flex items-start">
               <img src="https://placehold.co/40x40" alt="User avatar" className="rounded-full mr-4" />
@@ -69,6 +73,7 @@ const LearningComent = () => {
                 </div>
               </div>
             </div>
+
             {/* Add Comment */}
             <div className="flex items-start space-x-4">
               <img src="https://placehold.co/40x40" alt="User avatar" className="rounded-full" />
@@ -83,6 +88,7 @@ const LearningComent = () => {
             </div>
           </div>
         </div>
+
         {/* Sidebar */}
         <aside>
           {/* Instructor Info */}
@@ -103,6 +109,7 @@ const LearningComent = () => {
               </ul>
             </div>
           </div>
+
           {/* Related Videos */}
           {/* Related Videos */}
 <div className="bg-white p-6 rounded-lg shadow">
@@ -168,9 +175,14 @@ const LearningComent = () => {
     </div>
   </div>
 </div>
+
         </aside>
       </div>
     </div>
   );
 };
+
 export default LearningComent;
+
+
+

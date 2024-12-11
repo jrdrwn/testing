@@ -9,10 +9,10 @@ const emailController = require('../Controllers/emailController');
 const upload = require('../middleware/multerConfig');
 const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
-const { getMyCourses, getMyCoursesComplete } = require('../Controllers/courseController');
+const { getMyCourses, getMyCoursesComplete, authenticateToken } = require('../Controllers/courseController');
 const careerController = require('../Controllers/careerController'); 
+const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
 const articledetailController = require("../Controllers/articledetailController");
-const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia } = require('../Controllers/userprofileController');
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -41,7 +41,7 @@ router.get('/courses', (req,res,next)=>{
 router.post('/courses', upload.single('image'), addCourse);
 
 // Route untuk mendapatkan kursus user
-router.get('/mycourses/:userId', getMyCourses);
+router.get('/mycourses',authenticateToken, getMyCourses);
 
 // Route untuk mendapatkan kursus user
 router.get('/mycourses/:userId/completed', getMyCoursesComplete);
@@ -55,6 +55,8 @@ router.get('/profile', authenticate, getProfile);
 router.put('/profile/social', authenticate, completeSocialMedia);
 
 router.get('/socialmedia', authenticate, getSocialMedia);
+
+router.put('profile', updateUserProfile);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {

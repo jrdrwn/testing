@@ -1,4 +1,5 @@
 import LearningComent from "../../../components/private/Career/learningComent";
+
 const LearningComentComponent = () => {
     return (
         <div>
@@ -6,4 +7,5 @@ const LearningComentComponent = () => {
         </div>
     )
 }
+
 export default LearningComentComponent;
