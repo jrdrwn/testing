@@ -386,9 +386,23 @@ CREATE TABLE videocontents (
 CREATE TABLE articles (
   id INT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
+  author_name VARCHAR(255) NOT NULL,
+  author_image_url VARCHAR(255) NOT NULL,
   date TIMESTAMP NOT NULL,
   category VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE article_authors (
+  id INT PRIMARY KEY,
+  author_name VARCHAR(255) NOT NULL,
+  author_image_url VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  article_id INT NOT NULL,
+  description_new TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
 );

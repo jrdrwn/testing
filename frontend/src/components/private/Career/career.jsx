@@ -67,53 +67,69 @@ const Career = () => {
                 </section>
 
                 {/* Video Content Section */}
-                <section className="mb-8">
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-xl font-semibold text-blue-800">Video Content</h3>
-                        <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full bg-white shadow-md">
-                            <span className="text-blue-600 font-medium">Category</span>
-                            <i className="fas fa-filter text-blue-600 ml-2"></i>
-                        </button>
+{/* Video Content Section */}
+<section className="mb-8">
+    <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold text-blue-800">Video Content</h3>
+        <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full bg-white shadow-md">
+            <span className="text-blue-600 font-medium">Category</span>
+            <i className="fas fa-filter text-blue-600 ml-2"></i>
+        </button>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {videos.length > 0 ? (
+            videos.map((video) => (
+                <div key={video.id} className="bg-white rounded-lg shadow-lg p-4 flex flex-col">
+                    {/* Thumbnail */}
+                    <img 
+                        src={video.thumbnail_url} 
+                        alt={video.title} 
+                        className="rounded-lg mb-4 object-cover h-40 w-full" 
+                    />
+                    <h4 className="text-lg font-semibold text-blue-800 mb-2">{video.title}</h4>
+                    <p className="text-gray-600 mb-2">{video.description}</p>
+                    <div className="flex justify-between items-center mt-auto">
+                        {/* Speaker & Date Info */}
+                        <div className="flex items-center">
+                            <img 
+                                src={video.thumbnail_url} 
+                                alt={video.url} 
+                                className="rounded-full mr-2 w-8 h-8 object-cover" 
+                            />
+                            <div>
+                                <p className="text-gray-600">{video.date}</p>
+                                <p className="text-gray-400 text-sm">{video.tags.join(', ')}</p>
+                            </div>
+                        </div>
+                        {/* Duration */}
+                        <span className="bg-gray-200 text-gray-600 text-sm px-3 py-1 rounded-full ml-4">{video.duration}</span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {videos.length > 0 ? (
-                            videos.map((video) => (
-                                <div key={video.id} className="bg-white rounded-lg shadow-lg p-4">
-                                    <img src={video.thumbnail_url} alt={video.title} className="rounded-lg mb-4" />
-                                    <h4 className="text-lg font-semibold text-blue-800">{video.title}</h4>
-                                    <div className="flex justify-between items-center mt-2">
-                                        <div className="flex items-center">
-                                            <img src={video.speaker_image_url} alt={video.speaker} className="rounded-full mr-2" />
-                                            <div>
-                                                <p className="text-gray-600">{video.speaker}</p>
-                                                <p className="text-gray-400 text-sm">{video.role}</p>
-                                            </div>
-                                        </div>
-                                        <span className="bg-gray-200 text-gray-600 text-sm px-2 py-1 rounded-full ml-4">{video.duration}</span>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-center text-gray-600">No video content available.</p>
-                        )}
-                    </div>
-                    {/* Pagination */}
-                    <div className="flex justify-center mt-4">
-                        <nav className="inline-flex space-x-2">
-                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Previous</a>
-                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">1</a>
-                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">2</a>
-                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Next</a>
-                        </nav>
-                    </div>
-                </section>
+                </div>
+            ))
+        ) : (
+            <p className="text-center text-gray-600">No video content available.</p>
+        )}
+    </div>
+
+    {/* Pagination */}
+    <div className="flex justify-center mt-6">
+        <nav className="inline-flex space-x-2">
+            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">Previous</a>
+            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">1</a>
+            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">2</a>
+            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">Next</a>
+        </nav>
+    </div>
+</section>
+
+
 
                 {/* Latest Articles Section */}
                 <section className="mb-8">
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center">
                             <h3 className="text-xl font-semibold text-gray-800 mr-2">Latest Articles</h3>
-                            <Link to="/dashboard/workshop/articlecontents" className="text-blue-600">→</Link>
+                            <Link to="/dashboard/workshop/articlecontent" className="text-blue-600">→</Link>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4">

@@ -874,8 +874,11 @@ module.exports = {
       id: 1,
       title: "Crafting a Resume That Stands Out",
       description: "Learn how to craft a resume that stands out from the crowd and attracts the attention of recruiters.",
-      url: "https://www.example.com/crafting-resume",
+      url: "https://youtu.be/MqXjqOy-TA8?si=fWR5tr01IJBouZ6Z",
       tags: JSON.stringify(["resume", "career", "job search"]),
+      thumbnail_url: "https://mycvcreator.com/administrator/postimages/66c5c34fa02068.66439125.jpg", // Tambahkan thumbnail
+      date: new Date('2024-12-11'), // Tambahkan tanggal
+      duration: "29min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -883,8 +886,11 @@ module.exports = {
       id: 2,
       title: "Digital Portfolio Best Practices",
       description: "Tips and best practices for creating a digital portfolio that showcases your work effectively.",
-      url: "https://www.example.com/digital-portfolio",
+      url: "https://youtu.be/0VGc7jrD9zo?si=t_No1fdcX6r-iIa_",
       tags: JSON.stringify(["portfolio", "UI/UX", "design"]),
+      thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjhWtiGZz2aW08oqoY7WD7MQC25UKl-sa0VQ&s", // Tambahkan thumbnail
+      date: new Date('2024-12-10'), // Tambahkan tanggal
+      duration: "9min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -892,8 +898,11 @@ module.exports = {
       id: 3,
       title: "LinkedIn Profile Hacks",
       description: "Maximize the potential of your LinkedIn profile to get noticed by recruiters and hiring managers.",
-      url: "https://www.example.com/linkedin-profile",
+      url: "https://youtu.be/B4OhuzwLc9o?si=U253PeoAGygUJRZd",
       tags: JSON.stringify(["linkedin", "career", "networking"]),
+      thumbnail_url: "https://www.bleepstatic.com/content/hl-images/2023/08/15/hacker-holding-linkedin.jpg", // Tambahkan thumbnail
+      date: new Date('2024-12-09'), // Tambahkan tanggal
+      duration: "8min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -901,8 +910,11 @@ module.exports = {
       id: 4,
       title: "Elevate Your Personal Brand",
       description: "Learn how to elevate your personal brand to gain more visibility and attract career opportunities.",
-      url: "https://www.example.com/personal-brand",
+      url: "https://youtu.be/ozMCb0wOnMU?si=ZVgR5Wy4faQvNTJv",
       tags: JSON.stringify(["branding", "career", "personal development"]),
+      thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6l74Qeqb4XanhCUndv-dWgCe0JFPd4aQ0Tw&s", // Tambahkan thumbnail
+      date: new Date('2024-12-08'), // Tambahkan tanggal
+      duration: "6min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -910,8 +922,11 @@ module.exports = {
       id: 5,
       title: "Acing Behavioral Interviews",
       description: "Master the art of answering behavioral interview questions to impress employers.",
-      url: "https://www.example.com/behavioral-interviews",
+      url: "https://youtu.be/gZ2354BH0a0?si=a_nDev-9QGrTCJ1o",
       tags: JSON.stringify(["interview", "career", "job tips"]),
+      thumbnail_url: "https://img.freepik.com/free-photo/man-being-interviewed-indoors-by-journalist_23-2149029359.jpg", // Tambahkan thumbnail
+      date: new Date('2024-12-07'), // Tambahkan tanggal
+      duration: "7min",
       created_at: new Date(),
       updated_at: new Date()
   },
@@ -919,8 +934,11 @@ module.exports = {
       id: 6,
       title: "Ace Your Next Job Interview",
       description: "Get prepared to ace your next job interview with tips and strategies from industry experts.",
-      url: "https://www.example.com/job-interview-tips",
+      url: "https://youtu.be/mmQcX6HpCGs?si=3wGAXGPX-gq984tB",
       tags: JSON.stringify(["interview", "career", "job search"]),
+      thumbnail_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUO7WSJvOIEsFpMrno_JR__Dq3OFIJUzrivQ&s", // Tambahkan thumbnail
+      date: new Date('2024-12-06'), // Tambahkan tanggal
+      duration: "10min",
       created_at: new Date(),
       updated_at: new Date()
   }
@@ -998,7 +1016,6 @@ await queryInterface.bulkInsert('article_authors', [
     updated_at: new Date()
   }
 ]);
-
 
   },
   

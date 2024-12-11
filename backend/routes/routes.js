@@ -195,10 +195,12 @@ router.post('/api/auth/reset-password', emailController.resetPassword);
 router.post('/api/auth/verify-reset-code', emailController.verifyResetCode);
 
 // Route to get video content
-router.get('/api/videoContents', careerController.getVideos);
+router.get('/api/auth/videoContents', careerController.getVideos);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
+// Route for articlecontent
+router.get('/api/articlecontent', careerController.getArticleContents);
 // Route untuk mendapatkan semua data artikel author beserta artikel terkait
 router.get("/api/article-authors", articledetailController.getAllAuthors);
 // Route untuk mendapatkan satu data artikel author berdasarkan ID beserta artikel terkait

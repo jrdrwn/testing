@@ -29,6 +29,9 @@ exports.getVideos = async (req, res) => {
         description: video.description,
         url: video.url,
         tags, // Safely parsed tags (or fallback to split tags)
+        thumbnail_url: video.thumbnail_url,  // Include thumbnail_url in response
+        date: video.date ? video.date.toISOString() : null,  // Format date if it exists
+        duration: video.duration,
         created_at: video.created_at ? video.created_at.toISOString() : null,
         updated_at: video.updated_at ? video.updated_at.toISOString() : null
       };
@@ -71,5 +74,22 @@ exports.getArticles = async (req, res) => {
   } catch (err) {
     console.error('Error fetching articles:', err);
     return res.status(500).json({ message: "Error fetching articles.", error: err.message });
+  }
+};
+
+// Controller for articlecontent
+exports.getArticleContents = async (req, res) => {
+  try {
+    const articles = await Article.findAll({
+      attributes: ['id', 'title', 'author_name', 'author_image_url', 'date', 'category', 'description'],
+      order: [['date', 'DESC']], // Example: Fetch articles by the latest date
+    });
+    if (!articles || articles.length === 0) {
+      return res.status(404).json({ message: 'No articles found' });
+    }
+    res.status(200).json(articles);
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    res.status(500).json({ message: 'Failed to fetch articles', error: error.message });
   }
 };
