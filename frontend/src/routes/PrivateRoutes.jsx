@@ -18,6 +18,8 @@ import LearningQuizPage from '../pages/private/mycourses/learningquiz';
 import LearningafterQuizPage from '../pages/private/mycourses/learningafterquiz';
 import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail';
 import LearningComentComponent from '../pages/private/career/learningComent';
+import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
+import LearningSectionVideocomponent from '../pages/private/mycourses/learningSectionVideo';
 
 
 const PrivateRoutes = () => {
@@ -35,12 +37,14 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/workshop" element={<Career />} />
       <Route path="/dashboard/workshop/article/:id" element={<Articles />} />
       <Route path="/dashboard/workshop/articlecontent" element={<ArticleContents />} />
-      <Route path="/dashboard/workshop/learningoverview" element={<LearningOverviewComponent />} />
-      <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />
-      <Route path="/dashboard/workshop/learningquiz" element={<LearningQuizPage />} />
-      <Route path="/dashboard/workshop/learningafterquiz" element={<LearningafterQuizPage />} />
-      <Route path="/dashboard/workshop/learningviewdetail" element={<LearningViewQuizPage />} />
+      <Route path="/dashboard/mycourses/learningoverview" element={<LearningOverviewComponent />} />
+      <Route path="/dashboard/mycourses/learningstartquiz" element={<LearningStartQuizPage />} />
+      <Route path="/dashboard/mycourses/learningquiz" element={<LearningQuizPage />} />
+      <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
+      <Route path="/dashboard/mycourses/learningviewdetail" element={<LearningViewQuizPage />} />
       <Route path="/dashboard/workshop/learningcomment" element={<LearningComentComponent />} />
+      <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
+      <Route path="/dashboard/mycourses/learningsectionvideo" element={<LearningSectionVideocomponent />} />
     </Routes>
   );
 };
