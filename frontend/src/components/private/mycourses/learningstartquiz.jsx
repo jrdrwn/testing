@@ -32,7 +32,7 @@ const Learningstartquiz = () => {
   const handleContinue = () => {
     setShowConfirmation(false); // Sembunyikan konfirmasi dan lanjutkan ke kuis
     // Arahkan pengguna ke halaman yang diinginkan setelah klik continue
-    navigate('/dashboard/workshop/learningquiz'); 
+    navigate('/dashboard/mycourses/learningquiz'); 
   };
 
   return (
