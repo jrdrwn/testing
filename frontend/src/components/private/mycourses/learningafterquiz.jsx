@@ -22,12 +22,12 @@ const Learningafterquiz = () => {
 
   const handleStartClick = () => {
     // Arahkan pengguna ke halaman yang diinginkan setelah klik start
-    navigate('/dashboard/workshop/learningquiz');
+    navigate('/dashboard/mycourses/learningquiz');
   };
 
   const handleViewDetailClick = () => {
     // Arahkan pengguna ke halaman detail setelah klik "View Detail"
-    navigate('/dashboard/workshop/learningviewdetail');
+    navigate('/dashboard/mycourses/learningviewdetail');
   };
 
   return (

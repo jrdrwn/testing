@@ -54,7 +54,7 @@ const Learningquiz = () => {
 
   const handleContinue = () => {
     setShowConfirmation(false); 
-    navigate('/dashboard/workshop/learningafterquiz');
+    navigate('/dashboard/mycourses/learningafterquiz');
   };
 
   // Format waktu menjadi MM:SS
