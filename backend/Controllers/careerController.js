@@ -44,6 +44,8 @@ exports.getVideos = async (req, res) => {
   }
 };
 
+
+
 // Controller to get all articles
 exports.getArticles = async (req, res) => {
   try {

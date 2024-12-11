@@ -39,7 +39,7 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/workshop" element={<Career />} />
       <Route path="/dashboard/workshop/article/:id" element={<Articles />} />
       <Route path="/dashboard/workshop/articlecontent" element={<ArticleContents />} />
-      <Route path="/dashboard/workshop/learningoverview" element={<LearningOverviewComponent />} />
+      <Route path="/dashboard/workshop/learningoverview/:id" element={<LearningOverviewComponent />} />
       <Route path="/dashboard/workshop/learningcomment" element={<LearningComentComponent />} />
       <Route path="/dashboard/mycourses/learningstartquiz" element={<LearningStartQuizPage />} />
       <Route path="/dashboard/mycourses/learningquiz" element={<LearningQuizPage />} />
