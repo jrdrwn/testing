@@ -4,12 +4,13 @@ import Logo from '../../../assets/logo/logo.png';
 
 const Learningquiz = () => {
   const [isModuleOpen, setIsModuleOpen] = useState(Array(6).fill(false)); 
-  const [activeQuestion, setActiveQuestion] = useState(4); 
+  const [activeQuestion, setActiveQuestion] = useState(1); 
   const [timeElapsed, setTimeElapsed] = useState(0); 
   const [showConfirmation, setShowConfirmation] = useState(false); 
+  const [selectedModule, setSelectedModule] = useState(null); // Menambahkan state untuk modul terpilih
 
   const navigate = useNavigate(); 
-  
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeElapsed(prevTime => prevTime + 1);
@@ -22,6 +23,13 @@ const Learningquiz = () => {
     const updatedModuleStatus = [...isModuleOpen];
     updatedModuleStatus[index] = !updatedModuleStatus[index];
     setIsModuleOpen(updatedModuleStatus);
+
+    // Memastikan modul yang sama bisa dibuka dan ditutup
+    if (selectedModule === index) {
+      setSelectedModule(null);
+    } else {
+      setSelectedModule(index);
+    }
   };
 
   const handleQuestionClick = (questionNumber) => {
@@ -64,11 +72,15 @@ const Learningquiz = () => {
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="text-sm text-gray-500">
-            Home &gt; My Courses &gt; Data Analysis Fundamentals &gt; Module 1 &gt; Quiz
+            Home &gt; My Courses &gt; Data Analysis Fundamentals &gt; Module 1 &gt; Lesson 1.2
           </div>
           <nav className="flex space-x-4">
-            <a href="#" className="text-gray-500 hover:text-gray-700">Previous</a>
-            <a href="#" className="text-gray-500 hover:text-gray-700">Next</a>
+            <a href="#" className="text-gray-500 hover:text-gray-700" onClick={() => navigate('/dashboard/workshop/learningstartquiz')}>
+              &lt; Previous
+            </a>
+            <a href="#" className="text-gray-500 hover:text-gray-700">
+              Next &gt;
+            </a>
           </nav>
         </div>
       </header>
@@ -78,74 +90,65 @@ const Learningquiz = () => {
             <div className="bg-blue-600 p-4 rounded-t-lg">
               <h2 className="text-lg font-semibold text-white">Introduction</h2>
             </div>
-            <div className="bg-white p-4 border-b border-gray-300 mb-2">
-              <div className="flex justify-between items-center">
-                <h3 className={`text-lg font-semibold ${isModuleOpen[0] ? 'bg-blue-600 text-white' : 'text-black'}`}>Module 1</h3>
-                <button onClick={() => toggleModule(0)} className="text-black">
-                  {isModuleOpen[0] ? (
-                    <i className="fas fa-chevron-down"></i>
-                  ) : (
-                    <i className="fas fa-chevron-right"></i>
-                  )}
-                </button>
-              </div>
-              <p className="text-sm text-black">Introduction to Data Analysis</p>
-              {isModuleOpen[0] && (
-                <ul className="mt-2 space-y-2">
-                  <li className="flex items-center text-black border-b border-gray-300 py-2">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    <span>Lesson 1.1: What is Data Analysis?</span>
-                    <i className="fas fa-chevron-right ml-auto"></i>
-                  </li>
-                  <li className="flex items-center text-black border-b border-gray-300 py-2">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    <span>Lesson 1.2: Types of Data</span>
-                    <i className="fas fa-chevron-right ml-auto"></i>
-                  </li>
-                  <li className="flex items-center text-black border-b border-gray-300 py-2">
-                    <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                    <span>Lesson 1.3: Tools and Technologies</span>
-                    <i className="fas fa-chevron-right ml-auto"></i>
-                  </li>
-                  <li className="flex items-center text-black border-b border-gray-300 py-2">
-                    <i className="fas fa-check-circle text-gray-500 mr-2"></i>
-                    <span>Quiz</span>
-                    <i className="fas fa-chevron-right ml-auto"></i>
-                  </li>
-                </ul>
-              )}
-            </div>
 
-            {["Module 2", "Module 3", "Module 4", "Module 5", "Module 6"].map((module, index) => (
-              <div key={index} className="bg-white p-4 border-b border-gray-300 mb-2 shadow">
-                <div className="flex justify-between items-center">
-                  <h3 className={`text-lg font-semibold ${isModuleOpen[index + 1] ? 'bg-blue-600 text-white' : 'text-black'}`}>{module}</h3>
-                  <button onClick={() => toggleModule(index + 1)} className="text-black">
-                    {isModuleOpen[index + 1] ? (
-                      <i className="fas fa-chevron-down"></i>
-                    ) : (
-                      <i className="fas fa-chevron-right"></i>
-                    )}
-                  </button>
+            {/* Repeat for other modules */}
+            {["Module 1", "Module 2", "Module 3", "Module 4", "Module 5", "Module 6"].map((module, index) => (
+              <div key={index}>
+                <div
+                  className={`p-4 border-b border-gray-300 mb-2 shadow cursor-pointer ${selectedModule === index ? 'bg-blue-100' : 'bg-white'}`}
+                  onClick={() => toggleModule(index)}
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold text-black">{module}</h3>
+                    <button onClick={() => toggleModule(index)} className="text-black">
+                      {isModuleOpen[index] ? (
+                        <i className="fas fa-chevron-down"></i>
+                      ) : (
+                        <i className="fas fa-chevron-right"></i>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-sm text-black">
+                    {module === "Module 1" ? "Introduction to Data Analysis" : 
+                    module === "Module 2" ? "Data Collection and Cleaning" : 
+                    module === "Module 3" ? "Data Manipulation with Excel & SQL" : 
+                    module === "Module 4" ? "Data Visualization with Power BI" : 
+                    module === "Module 5" ? "Basic Statistical Analysis" : 
+                    "Real-world Case Studies and Applications"}
+                  </p>
                 </div>
-                <p className="text-sm text-black">
-                  {module === "Module 2" ? "Data Collection and Cleaning" : 
-                   module === "Module 3" ? "Data Manipulation with Excel & SQL" : 
-                   module === "Module 4" ? "Data Visualization with Power BI" : 
-                   module === "Module 5" ? "Basic Statistical Analysis" : 
-                   "Real-world Case Studies and Applications"}
-                </p>
-                {isModuleOpen[index + 1] && (
+                {isModuleOpen[index] && (
                   <ul className="mt-2 space-y-2">
                     <li className="flex items-center text-black border-b border-gray-300 py-2">
                       <i className="fas fa-check-circle text-green-500 mr-2"></i>
-                      <span>Lesson {index + 2}.1: Example Lesson</span>
+                      <span>Lesson {index + 1}.1: {module === "Module 1" ? "What is Data Analysis?" : 
+                      module === "Module 2" ? "Data Collection Methods" : 
+                      module === "Module 3" ? "Excel Basics" : 
+                      module === "Module 4" ? "Creating Charts" : 
+                      module === "Module 5" ? "Introduction to Statistics" : 
+                      "Case Study 1"}</span>
                       <i className="fas fa-chevron-right ml-auto"></i>
                     </li>
                     <li className="flex items-center text-black border-b border-gray-300 py-2">
+                      <i className="fas fa-check-circle text-green-500 mr-2"></i>
+                      <span>Lesson {index + 1}.2: {module === "Module 1" ? "Types of Data" : 
+                      module === "Module 2" ? "Data Cleaning Techniques" : 
+                      module === "Module 3" ? "SQL Basics" : 
+                      module === "Module 4" ? "Advanced Charts" : 
+                      module === "Module 5" ? "Probability" : 
+                      "Case Study 2"}</span>
+                      <i className="fas fa-chevron-right ml-auto"></i>
+                    </li>
+                    {module === "Module 1" && (
+                      <li className="flex items-center text-black border-b border-gray-300 py-2">
+                        <i className="fas fa-check-circle text-green-500 mr-2"></i>
+                        <span>Lesson 1.3: Tools and Technologies</span>
+                        <i className="fas fa-chevron-right ml-auto"></i>
+                      </li>
+                    )}
+                    <li className="flex items-center text-black border-b border-gray-300 py-2">
                       <i className="fas fa-check-circle text-gray-500 mr-2"></i>
                       <span>Quiz</span>
-                      <i className="fas fa-chevron-right ml-auto"></i>
                     </li>
                   </ul>
                 )}
@@ -156,59 +159,71 @@ const Learningquiz = () => {
             </div>
           </div>
         </aside>
+
         <section className="flex-1 bg-white p-8 shadow">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-xl font-semibold">Questions category: Introduction to Data Analysis</h1>
             <div className="text-lg font-semibold text-gray-700">{formatTime(timeElapsed)}</div>
           </div>
+
           <div className="flex mb-4">
             {[1, 2, 3, 4, 5].map((num) => (
               <button
                 key={num}
                 onClick={() => handleQuestionClick(num)}
-                className={`w-10 h-10 flex items-center justify-center rounded mr-2 ${
-                  activeQuestion === num ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
-                }`}
+                className={`w-10 h-10 flex items-center justify-center rounded mr-2 ${activeQuestion === num ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
               >
                 {num}
               </button>
             ))}
           </div>
+
           <div className="mb-4">
             <h2 className="text-lg font-semibold mb-2">What is the primary purpose of data analysis?</h2>
             <ul>
               <li className="mb-2">
                 <label className="flex items-center text-black">
                   <input type="radio" name="question-1" className="mr-2" />
-                  To make informed decisions
+                  To make informed business decisions
                 </label>
               </li>
               <li className="mb-2">
                 <label className="flex items-center text-black">
                   <input type="radio" name="question-1" className="mr-2" />
-                  To collect more data
+                  To collect data
                 </label>
               </li>
               <li className="mb-2">
                 <label className="flex items-center text-black">
                   <input type="radio" name="question-1" className="mr-2" />
-                  To automate processes
+                  To clean data
+                </label>
+              </li>
+              <li className="mb-2">
+                <label className="flex items-center text-black">
+                  <input type="radio" name="question-1" className="mr-2" />
+                  To visualize data
                 </label>
               </li>
             </ul>
           </div>
           <div className="flex justify-between">
-            {activeQuestion > 1 && (
-              <button className="text-blue-600">Previous</button>
-            )}
-            <button onClick={handleNextClick} className="text-blue-600">
-              {activeQuestion === 5 ? 'End Quiz' : 'Next'}
+            <button
+              className="bg-gray-200 text-black py-2 px-4 rounded hover:bg-gray-300"
+            >
+              &lt; Previous
+            </button>
+            <button
+              onClick={handleNextClick}
+              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            >
+              Next &gt;
             </button>
           </div>
         </section>
       </main>
-      {/* Confirmation Modal */}
-      {showConfirmation && (
+       {/* Confirmation Modal */}
+       {showConfirmation && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200 max-w-md w-full">
             <div className="flex items-center mb-4">
