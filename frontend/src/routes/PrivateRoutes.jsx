@@ -20,6 +20,8 @@ import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail'
 import LearningComentComponent from '../pages/private/career/learningComent';
 import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
 import LearningSectionVideocomponent from '../pages/private/mycourses/learningSectionVideo';
+import InprogressNone from '../pages/private/mycourses/Inprogressnone';
+import CompletedNone from '../pages/private/mycourses/completednone';
 
 
 const PrivateRoutes = () => {
@@ -45,6 +47,8 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/mycourses/learningviewdetail" element={<LearningViewQuizPage />} />
       <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
       <Route path="/dashboard/mycourses/learningsectionvideo" element={<LearningSectionVideocomponent />} />
+      <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
+      <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
     </Routes>
   );
 };
