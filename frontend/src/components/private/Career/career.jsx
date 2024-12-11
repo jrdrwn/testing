@@ -1,10 +1,63 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Career = () => {
+    const [videos, setVideos] = useState([]);
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true); // Added loading state
+    const [error, setError] = useState(null); // Added error state for error handling
+
+    // Fetching data for VideoContents and Articles
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch VideoContents
+                const videoResponse = await fetch('/api/auth/videoContents'); 
+                if (!videoResponse.ok) {
+                    throw new Error('Failed to fetch video contents');
+                }
+                const videoData = await videoResponse.json();
+                setVideos(videoData);
+
+                // Fetch Articles
+                const articleResponse = await fetch('/api/articles');
+                if (!articleResponse.ok) {
+                    throw new Error('Failed to fetch articles');
+                }
+                const articleData = await articleResponse.json();
+                setArticles(articleData);
+
+                setLoading(false); // Stop loading when data is fetched
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false); // Stop loading even if there's an error
+                setError(error.message); // Set error message
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="text-center py-8">
+                <p className="text-lg text-gray-600">Loading content...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="text-center py-8">
+                <p className="text-lg text-red-600">Error: {error}</p>
+            </div>
+        );
+    }
+
     return (
         <div>
             <main className="container mx-auto px-4 py-8">
+                {/* Highlight Event Section */}
                 <section className="text-center mb-8">
                     <h2 className="text-2xl font-semibold text-blue-600">Highlight Event</h2>
                     <p className="text-gray-600">Don't miss out on this exclusive opportunity to elevate your career and gain insights from top speakers — secure your spot now!</p>
@@ -13,73 +66,61 @@ const Career = () => {
                     </div>
                 </section>
 
+                {/* Video Content Section */}
                 <section className="mb-8">
-    <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold text-blue-800">Videos Content</h3>
-        <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full bg-white shadow-md">
-            <span className="text-blue-600 font-medium">Category</span>
-            <i className="fas fa-filter text-blue-600 ml-2"></i>
-        </button>
-    </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Repeatable content cards */}
-        {[
-            { title: "Crafting a Resume That Stands Out", speaker: "Michael Anderson", role: "HR Specialist at Google", time: "12 min" },
-            { title: "Digital Portfolio Best Practices", speaker: "Sarah Lee", role: "UI/UX Designer at Airbnb", time: "15 min" },
-            { title: "LinkedIn Profile Hacks", speaker: "Robert Tan", role: "LinkedIn Trainer", time: "10 min" },
-            { title: "Elevate Your Personal Brand", speaker: "Rachel Lim", role: "Marketing Strategist at Amazon", time: "18 min" },
-            { title: "Acing Behavioral Interviews", speaker: "Jonathan Chen", role: "HR Manager at Amazon", time: "20 min" },
-            { title: "Ace Your Next Job Interview", speaker: "Imran Usman", role: "COO of Ruangguru", time: "15 min" }
-        ].map((video, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg p-4">
-                <img src="https://placehold.co/300x200" alt={video.title} className="rounded-lg mb-4" />
-                <h4 className="text-lg font-semibold text-blue-800">{video.title}</h4>
-                <div className="flex justify-between items-center mt-2">
-                    <div className="flex items-center">
-                        <img src="https://placehold.co/40x40" alt={video.speaker} className="rounded-full mr-2" />
-                        <div>
-                            <p className="text-gray-600">{video.speaker}</p>
-                            <p className="text-gray-400 text-sm">{video.role}</p>
-                        </div>
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-xl font-semibold text-blue-800">Video Content</h3>
+                        <button className="flex items-center px-4 py-2 border border-gray-300 rounded-full bg-white shadow-md">
+                            <span className="text-blue-600 font-medium">Category</span>
+                            <i className="fas fa-filter text-blue-600 ml-2"></i>
+                        </button>
                     </div>
-                    {/* Tambahan untuk menempatkan waktu di kanan sejajar dengan speaker */}
-                    <span className="bg-gray-200 text-gray-600 text-sm px-2 py-1 rounded-full ml-4">{video.time}</span>
-                </div>
-            </div>
-        ))}
-    </div>
-    <div className="flex justify-center mt-4">
-        <nav className="inline-flex space-x-2">
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Previous</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">1</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">2</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">3</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">4</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">5</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">6</a>
-            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Next</a>
-        </nav>
-    </div>
-</section>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {videos.length > 0 ? (
+                            videos.map((video) => (
+                                <div key={video.id} className="bg-white rounded-lg shadow-lg p-4">
+                                    <img src={video.thumbnail_url} alt={video.title} className="rounded-lg mb-4" />
+                                    <h4 className="text-lg font-semibold text-blue-800">{video.title}</h4>
+                                    <div className="flex justify-between items-center mt-2">
+                                        <div className="flex items-center">
+                                            <img src={video.speaker_image_url} alt={video.speaker} className="rounded-full mr-2" />
+                                            <div>
+                                                <p className="text-gray-600">{video.speaker}</p>
+                                                <p className="text-gray-400 text-sm">{video.role}</p>
+                                            </div>
+                                        </div>
+                                        <span className="bg-gray-200 text-gray-600 text-sm px-2 py-1 rounded-full ml-4">{video.duration}</span>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-center text-gray-600">No video content available.</p>
+                        )}
+                    </div>
+                    {/* Pagination */}
+                    <div className="flex justify-center mt-4">
+                        <nav className="inline-flex space-x-2">
+                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Previous</a>
+                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">1</a>
+                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">2</a>
+                            <a href="#" className="px-3 py-1 border rounded-full text-gray-600">Next</a>
+                        </nav>
+                    </div>
+                </section>
 
-
+                {/* Latest Articles Section */}
                 <section className="mb-8">
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex items-center">
                             <h3 className="text-xl font-semibold text-gray-800 mr-2">Latest Articles</h3>
-                            <button className="text-blue-600">→</button>
+                            <Link to="/dashboard/workshop/articlecontent" className="text-blue-600">→</Link>
                         </div>
                     </div>
-                    <section className="mb-8">
-                        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-                            {/* Repeatable article cards */}
-                            {[ 
-                                { title: "How to Create a Winning Resume", date: "Nov 21, 2024", category: "Resume Writing", description: "Tips and steps to create a resume that catches the recruiter's attention." },
-                                { title: "Interview Preparation 101", date: "Nov 20, 2024", category: "Interview Preparation", description: "Simulations and job interview guides to boost confidence." },
-                                { title: "Mastering LinkedIn Optimization", date: "Nov 19, 2024", category: "Personal Branding", description: "Guide to maximizing your LinkedIn profile to be more professional and effective." }
-                            ].map((article, index) => (
-                                <div key={index} className="bg-white rounded-lg shadow-lg p-4 flex">
-                                    <img src="https://placehold.co/150x100" alt={article.title} className="rounded-lg mb-4" />
+                    <div className="grid grid-cols-1 gap-4">
+                        {articles.length > 0 ? (
+                            articles.map((article) => (
+                                <div key={article.id} className="bg-white rounded-lg shadow-lg p-4 flex">
+                                    <img src={article.author_image_url} alt={article.title} className="w-[150px] h-[100px] rounded-lg object-cover mb-4" />
                                     <div className="ml-4">
                                         <div className="flex items-center text-gray-500 text-sm mb-2">
                                             <i className="far fa-calendar-alt mr-2"></i>
@@ -89,14 +130,22 @@ const Career = () => {
                                             <span>{article.category}</span>
                                         </div>
                                         <h4 className="text-lg font-semibold text-gray-800">
-                                            <Link to="/dashboard/workshop/article" className="hover:text-blue-600">{article.title}</Link>
+                                            <Link to={`/dashboard/workshop/article/${article.id}`} className="hover:text-blue-600">{article.title}</Link>
                                         </h4>
                                         <p className="text-gray-600 mt-2">{article.description}</p>
+
+                                        {/* Author Section */}
+                                        <div className="mt-4">
+                                            {/* Author Name */}
+                                            <span className="text-gray-600 font-semibold">{article.author_name}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    </section>
+                            ))
+                        ) : (
+                            <p className="text-center text-gray-600">No articles available.</p>
+                        )}
+                    </div>
                 </section>
             </main>
         </div>

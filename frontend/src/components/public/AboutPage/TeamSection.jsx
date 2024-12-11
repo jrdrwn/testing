@@ -2,16 +2,16 @@ import React from "react";
 
 // Data anggota tim
 const teamMembers = [
-  { name: "Della Anissa Putri Widodo", role: "Product Manager", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Audry Maharani", role: "Quality Assurance", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Gilang Nur Hidayat", role: "UI/UX Designer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Ridhaka Gina Amalia", role: "UI/UX Designer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Achmad Zainun Qurthubi", role: "Front-End Developer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Desta Rizky Andhika", role: "Front-End Developer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "M. Denny Tri Lisandi", role: "Back-End Developer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Faqih Rofiqi", role: "Back-End Developer", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "Calvin Alexander", role: "Data Scientist", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
-  { name: "M. Andrian Bhakti Maulana", role: "Data Scientist", img: "https://placehold.co/100x100", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Della Anissa Putri Widodo", role: "Product Manager", img: "/ourteam/della.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Audry Maharani", role: "Quality Assurance", img: "ourteam/audry.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Gilang Nur Hidayat", role: "UI/UX Designer", img: "ourteam/gilang.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Ridhaka Gina Amalia", role: "UI/UX Designer", img: "ourteam/gina.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Achmad Zainun Qurthubi", role: "Front-End Developer", img: "ourteam/zai.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Desta Rizky Andhika", role: "Front-End Developer", img: "ourteam/desta.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "M. Denny Tri Lisandi", role: "Back-End Developer", img: "ourteam/denny.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Faqih Rofiqi", role: "Back-End Developer", img: "ourteam/faqih.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "Calvin Alexander", role: "Data Scientist", img: "ourteam/calvin.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
+  { name: "M. Andrian Bhakti Maulana", role: "Data Scientist", img: "ourteam/andrian.png", social: ["facebook", "twitter", "instagram", "linkedin"] },
 ];
 
 // Komponen untuk ikon sosial media

@@ -355,3 +355,54 @@ CREATE TABLE refunds (
     PRIMARY KEY (refund_id),
     FOREIGN KEY (order_id) REFERENCES courseorders (order_id)
 );
+
+CREATE TABLE `stripe_transactions` (
+  id int NOT NULL,
+  user_id int NOT NULL,
+  name varchar(255) DEFAULT NULL,
+  phone varchar(255) DEFAULT NULL,
+  session_id varchar(255) NOT NULL,
+  amount int NOT NULL,
+  quantity int DEFAULT NULL,
+  status varchar(255) NOT NULL,
+  created_at datetime DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime DEFAULT CURRENT_TIMESTAMP,
+  deleted_at datetime DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+
+CREATE TABLE videocontents (
+  id INT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  url VARCHAR(255) NOT NULL,
+  tags JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE articles (
+  id INT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  author_name VARCHAR(255) NOT NULL,
+  author_image_url VARCHAR(255) NOT NULL,
+  date TIMESTAMP NOT NULL,
+  category VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE article_authors (
+  id INT PRIMARY KEY,
+  author_name VARCHAR(255) NOT NULL,
+  author_image_url VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  article_id INT NOT NULL,
+  description_new TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
+);

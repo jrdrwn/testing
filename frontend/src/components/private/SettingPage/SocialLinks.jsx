@@ -1,15 +1,52 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import LayoutWithSidebar from "./LayoutWithSidebar";
 
 const SocialLinks = () => {
-  const socialMedia = [
-    { icon: 'fab fa-linkedin', color: 'bg-blue-700', link: 'https://linkedin.com/' },
-    { icon: 'fab fa-youtube', color: 'bg-red-600', link: 'https://youtube.com/' },
-    { icon: 'fab fa-instagram', color: 'bg-pink-500', link: 'https://instagram.com/' },
-    { icon: 'fab fa-facebook', color: 'bg-blue-600', link: 'https://facebook.com/' },
-    { icon: 'fab fa-line', color: 'bg-green-500', link: 'https://line.me/' },
-    { icon: 'fab fa-x-twitter', color: 'bg-gray-700', link: 'https://twitter.com/' },
-  ];
+  const [socialMedia, setSocialMedia] = useState([
+    { icon: "fab fa-linkedin", color: "bg-blue-700", key: "linkedin_url", link: "" },
+    { icon: "fab fa-youtube", color: "bg-red-600", key: "youtube_url", link: "" },
+    { icon: "fab fa-instagram", color: "bg-pink-500", key: "instagram_url", link: "" },
+    { icon: "fab fa-facebook", color: "bg-blue-600", key: "facebook_url", link: "" },
+    { icon: "fab fa-line", color: "bg-green-500", key: "line_url", link: "" },
+    { icon: "fab fa-x-twitter", color: "bg-gray-700", key: "twitter_url", link: "" },
+  ]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchSocialMediaData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("https://localhost:5000/api/auth/socialmedia", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Sesuaikan token jika diperlukan
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch social media data");
+      }
+      const data = await response.json();
+  
+      setSocialMedia((prevSocialMedia) =>
+        prevSocialMedia.map((item) => ({
+          ...item,
+          link: data[item.key] || "",
+        }))
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSocialMediaData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <LayoutWithSidebar>
@@ -38,7 +75,7 @@ const SocialLinks = () => {
             ))}
           </div>
           <div className="mt-6">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">Save change</button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded">Save Changes</button>
           </div>
         </div>
       </div>

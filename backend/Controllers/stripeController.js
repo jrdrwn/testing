@@ -31,7 +31,7 @@ const sendEmail = (to, subject, text, html) => {
 // Create Checkout Session
 const createCheckoutSession = async (req, res) => {
   try {
-    const { email, subscriptionType, quality, phone } = req.body;
+    const { email, subscriptionType, quantity, phone } = req.body;
 
     // Cek apakah pengguna ada di database
     const user = await User.findOne({ where: { email } });
@@ -67,12 +67,12 @@ const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: 'subscription',
-      success_url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}/?success=true&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}/dashboard/home?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}?canceled=true`,
       metadata: {
         email,         // Menyimpan email pengguna
         phone,         // Menyimpan nomor telepon
-        quality,       // Menyimpan informasi kualitas
+        quantity,       // Menyimpan informasi kualitas
         name: user.name, // Menyimpan nama pengguna
       },
     });
@@ -84,7 +84,7 @@ const createCheckoutSession = async (req, res) => {
       phone,         
       session_id: session.id,
       amount: prices.data[0].unit_amount,
-      quality,       
+      quantity,       
       status: 'Success',
     });
 
@@ -96,8 +96,8 @@ const createCheckoutSession = async (req, res) => {
     // Kirim email
     await sendEmail(user.email, subject, text, html);
 
-    // Redirect pengguna ke Stripe Checkout
-    res.status(200).json({ url: session.url });
+    // Redirect pengguna ke /dashboard/home
+    res.status(200).json({ url: `${process.env.APP_URL}:${process.env.HTTPS_PORT}/dashboard/home?success=true&session_id=${session.id}` });
   } catch (err) {
     console.error('Error creating checkout session: ', err);
     res.status(500).send('Internal Server Error');

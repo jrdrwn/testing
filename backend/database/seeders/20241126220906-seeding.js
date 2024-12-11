@@ -828,6 +828,177 @@ module.exports = {
       updated_at: new Date('2024-11-06T10:00:00Z'),
     },
   ]);
+  await queryInterface.bulkInsert('stripe_transactions', [
+    {
+      id:1,
+      user_id: 3,
+      name: 'Sarah Student',
+      phone: '+628938938938',
+      session_id: 'cs_test_b1c4f9b5-6e7c-4d2b-8e2d-6b5a3e3f8b8d',
+      amount: 500000,
+      quantity: 2,
+      status: 'Success',
+      created_at: new Date('2024-11-01T10:00:00Z'),
+      updated_at: new Date('2024-11-01T10:00:00Z'),
+      deleted_at: null,
+    },
+    {
+      id:2,
+      user_id: 4,
+      name: 'Mike Mentor',
+      phone: '+628938938938',
+      session_id: 'cs_test_1a2b3c4d-5e6f-7a8b-9c0d1e2f3a4b',
+      amount: 300000,
+      quantity: 1,
+      status: 'Success',
+      created_at: new Date('2024-11-02T11:00:00Z'),
+      updated_at: new Date('2024-11-02T11:00:00Z'),
+      deleted_at: null,
+    },
+    {
+      id:3,
+      user_id: 5,
+      name: 'Clara Counselor',
+      phone: '+628938938938',
+      session_id: 'cs_test_5a6b7c8d-9e0f-1a2b-3c4d5e6f7a8b',
+      amount: 400000,
+      quantity: 1,
+      status: 'Failed',
+      created_at: new Date('2024-11-03T12:00:00Z'),
+      updated_at: new Date('2024-11-03T12:00:00Z'),
+      deleted_at: null,
+    }
+  ]);
+  await queryInterface.bulkInsert('videocontents', [
+    {
+      id: 1,
+      title: "Crafting a Resume That Stands Out",
+      description: "Learn how to craft a resume that stands out from the crowd and attracts the attention of recruiters.",
+      url: "https://www.example.com/crafting-resume",
+      tags: JSON.stringify(["resume", "career", "job search"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  },
+  {
+      id: 2,
+      title: "Digital Portfolio Best Practices",
+      description: "Tips and best practices for creating a digital portfolio that showcases your work effectively.",
+      url: "https://www.example.com/digital-portfolio",
+      tags: JSON.stringify(["portfolio", "UI/UX", "design"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  },
+  {
+      id: 3,
+      title: "LinkedIn Profile Hacks",
+      description: "Maximize the potential of your LinkedIn profile to get noticed by recruiters and hiring managers.",
+      url: "https://www.example.com/linkedin-profile",
+      tags: JSON.stringify(["linkedin", "career", "networking"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  },
+  {
+      id: 4,
+      title: "Elevate Your Personal Brand",
+      description: "Learn how to elevate your personal brand to gain more visibility and attract career opportunities.",
+      url: "https://www.example.com/personal-brand",
+      tags: JSON.stringify(["branding", "career", "personal development"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  },
+  {
+      id: 5,
+      title: "Acing Behavioral Interviews",
+      description: "Master the art of answering behavioral interview questions to impress employers.",
+      url: "https://www.example.com/behavioral-interviews",
+      tags: JSON.stringify(["interview", "career", "job tips"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  },
+  {
+      id: 6,
+      title: "Ace Your Next Job Interview",
+      description: "Get prepared to ace your next job interview with tips and strategies from industry experts.",
+      url: "https://www.example.com/job-interview-tips",
+      tags: JSON.stringify(["interview", "career", "job search"]),
+      created_at: new Date(),
+      updated_at: new Date()
+  }
+]);
+
+await queryInterface.bulkInsert('articles', [
+  { 
+    id: 1,
+    title: "How to Create a Winning Resume", 
+    date: new Date('2024-11-21'), 
+    category: "Resume Writing", 
+    description: "Tips and steps to create a resume that catches the recruiter's attention.", 
+    author_name: "John Doe",  // Tambahkan author_name
+    author_image_url: "https://www.hipwee.com/wp-content/uploads/2015/04/business-855-750x565.png",  // Tambahkan author_image_url
+    created_at: new Date(), 
+    updated_at: new Date() 
+  },
+
+  { 
+    id: 2,
+    title: "Interview Preparation 101", 
+    date: new Date('2024-11-20'), 
+    category: "Interview Preparation", 
+    description: "Simulations and job interview guides to boost confidence.", 
+    author_name: "Jane Smith",  // Tambahkan author_name
+    author_image_url: "https://media.licdn.com/dms/image/v2/C4E12AQEmuCIP3RulUg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1560004190905?e=2147483647&v=beta&t=ggdfWVXNL6dFFbmoMWgWDZe8GyqQoZTxWOZUO9YJqWI",  // Tambahkan author_image_url
+    created_at: new Date(), 
+    updated_at: new Date() 
+  },
+
+  { 
+    id: 3,
+    title: "Mastering LinkedIn Optimization", 
+    date: new Date('2024-11-19'), 
+    category: "Personal Branding", 
+    description: "Guide to maximizing your LinkedIn profile to be more professional and effective.", 
+    author_name: "Emily Brown",  // Tambahkan author_name
+    author_image_url: "https://media.licdn.com/dms/image/v2/D4D12AQEXfCs0v3rvjQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1730043613906?e=2147483647&v=beta&t=NUn7FaOYerg1YezczkAM9S1DsgrnpLtXaHlHpz2lp-E",  // Tambahkan author_image_url
+    created_at: new Date(), 
+    updated_at: new Date() 
+  }
+]);
+
+await queryInterface.bulkInsert('article_authors', [
+  {
+    id: 1,
+    author_name: "John Doe",  // Nama penulis
+    author_image_url: "https://www.hipwee.com/wp-content/uploads/2015/04/business-855-750x565.png",  // Gambar penulis
+    title: "How to Create a Winning Resume", 
+    article_id: 1,  // ID artikel yang terkait
+    description_new: "John Doe is a renowned resume writing expert who has helped countless job seekers secure their dream roles. With over 10 years of experience, John specializes in crafting resumes that not only highlight achievements but also resonate with hiring managers. He is known for his attention to detail and his ability to tailor resumes for specific industries and job roles.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+
+  {
+    id: 2,
+    author_name: "Jane Smith",  // Nama penulis
+    author_image_url: "https://media.licdn.com/dms/image/v2/C4E12AQEmuCIP3RulUg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1560004190905?e=2147483647&v=beta&t=ggdfWVXNL6dFFbmoMWgWDZe8GyqQoZTxWOZUO9YJqWI",  // Gambar penulis
+    title: "Interview Preparation 101", 
+    article_id: 2,  // ID artikel yang terkait
+    description_new: "Jane Smith has spent over 15 years helping professionals prepare for job interviews. With a background in human resources, Jane offers insights into common interview questions, tips for answering them confidently, and strategies to help job seekers make a lasting impression. She is passionate about helping people boost their interview skills and secure job offers.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  },
+
+  {
+    id: 3,
+    author_name: "Emily Brown",  // Nama penulis
+    author_image_url: "https://media.licdn.com/dms/image/v2/D4D12AQEXfCs0v3rvjQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1730043613906?e=2147483647&v=beta&t=NUn7FaOYerg1YezczkAM9S1DsgrnpLtXaHlHpz2lp-E",  // Gambar penulis
+    title: "Mastering LinkedIn Optimization", 
+    article_id: 3,  // ID artikel yang terkait
+    description_new: "Emily Brown is a personal branding strategist who specializes in LinkedIn optimization. With a keen understanding of how recruiters search for candidates, Emily helps professionals create LinkedIn profiles that stand out. She advises on profile pictures, headline writing, and crafting compelling summaries to attract the attention of hiring managers and recruiters.",  // Deskripsi panjang
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+]);
+
   },
   
   down: async (queryInterface, Sequelize) => {
