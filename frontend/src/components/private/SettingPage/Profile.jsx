@@ -81,8 +81,7 @@ const Profile = () => {
 
   return (
     <LayoutWithSidebar>
-      {/* Profile Content */}
-      <div>
+      <div className="p-4 md:p-6">
         <h2 className="text-blue-600 text-xl font-semibold mb-2 flex items-center">
           <i className="fas fa-user mr-2"></i> Profile
         </h2>
@@ -90,16 +89,15 @@ const Profile = () => {
           Make changes to your account here. Click save when you're done.
         </p>
 
-        {/* Profile Image & Info */}
-        <div className="flex items-center mb-6">
+        <div className="flex flex-col md:flex-row items-center mb-6">
           <img
             src={profile.image_url}
             alt="Profile"
-            className="rounded-full w-24 h-24 mr-4"
+            className="rounded-full w-24 h-24 mr-4 mb-4 md:mb-0"
           />
-          <div>
+          <div className="w-full md:w-auto">
             <div className="flex items-center mb-2">
-              <div className="bg-gray-200 rounded-full h-2 w-48 mr-2">
+              <div className="bg-gray-200 rounded-full h-2 w-full md:w-48 mr-2">
                 <div
                   className="bg-blue-600 h-2 rounded-full"
                   style={{ width: "80%" }}
@@ -120,9 +118,6 @@ const Profile = () => {
             {isEditing ? "Save" : "Edit"}
           </button>
         </div>
-        <p className="text-gray-600 text-sm mb-6">
-          Your Profile image should be no more than 2MB in size.
-        </p>
 
         {/* Profile Form */}
         <form onSubmit={handleSubmit}>

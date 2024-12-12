@@ -17,7 +17,7 @@ const Payment = () => {
   // State for pop-up
   const [popupMessage, setPopupMessage] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
-
+  const [redirectUrl, setRedirectUrl] = useState('');
 
   const navigate = useNavigate();
 
@@ -49,8 +49,8 @@ const Payment = () => {
         quantity,
       });
       if (response.status === 200) {
-        window.location.href = response.data.url;
-        setPopupMessage('Subscription successful!');
+        setPopupMessage('Subscription successful! Click Okay to proceed.');
+        setRedirectUrl(response.data.url); // Simpan URL redirect
       } else {
         setPopupMessage('An error occurred. Please try again.');
       }
@@ -60,10 +60,12 @@ const Payment = () => {
     }
     setPopupVisible(true);
   };
-  
 
   const handleClosePopup = () => {
     setPopupVisible(false);
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Redirect setelah user mengklik "Okay"
+    }
   };
 
   const getPrice = () => {
