@@ -211,10 +211,10 @@ router.get("/api/videos", videocareerController.getAllVideos);
 router.get("/api/videos/:id", videocareerController.getVideoById);
 
 
-// Fetch all materials
-router.get('/api/materials', getMaterials);
-// Fetch a specific material by material_id
-router.get('/api/materials/:material_id', getMaterialById);
+// // Fetch all materials
+// router.get('/api/materials', getMaterials);
+// // Fetch a specific material by material_id
+// router.get('/api/materials/:material_id', getMaterialById);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);

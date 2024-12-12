@@ -46,7 +46,7 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
       <Route path="/dashboard/mycourses/learningviewdetail/:course_id" element={<LearningViewQuizPage />} />
       <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
-      <Route path="/dashboard/mycourses/learningsectionvideo/:material_id" element={<LearningSectionVideocomponent />} />
+      <Route path="/dashboard/mycourses/learningsectionvideo/:course_id" element={<LearningSectionVideocomponent />} />
       <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
       <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
       <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />

@@ -4,9 +4,9 @@ import Logo from "/logo/logo.png";
 
 const LearningViewDetail = () => {
   const location = useLocation();
-  const { course_id } = useParams(); // Ambil course_id dari URL jika menggunakan dynamic route
-  const { courseTitle } = location.state || {};
-  // Cek jika course_id tidak ditemukan
+  const { course_id } = useParams(); // Dapatkan course_id dari URL
+  const course = location.state?.course; // Akses objek course dari state
+
   if (!course_id) {
     return <div className="text-red-500">Course ID is missing in the URL.</div>;
   }
@@ -68,7 +68,7 @@ const LearningViewDetail = () => {
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="text-sm text-gray-500">
-            Home &gt; My Courses &gt; {courseTitle} &gt; Module 1 &gt; Quiz
+            Home &gt; My Courses &gt; {course?.course_title} &gt; Module 1 &gt; Quiz
           </div>
           <nav className="flex space-x-4">
             <a href="#" className="text-gray-500 hover:text-gray-700">
