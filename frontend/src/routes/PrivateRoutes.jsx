@@ -1,27 +1,26 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import DashboardPage from '../pages/private/DashboardPage';
 import DetailContent from '../pages/private/DetailContent';
-import ProfilePage from '../pages/private/settings/ProfilePage';
-import NotificationsPage from '../pages/private/settings/NotificationsPage';
-import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
-import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
-import Inprogress from '../pages/private/mycourses/Inprogress';
-import Completed from '../pages/private/mycourses/completed';
-import Certificate from '../pages/private/mycourses/certificate';
-import Career from '../pages/private/career/career';
 import Articles from '../pages/private/career/article';
 import ArticleContents from '../pages/private/career/articlecontent';
-import LearningOverviewComponent from '../pages/private/career/learningOverview';
-import LearningStartQuizPage from '../pages/private/mycourses/learningstartquiz';
-import LearningQuizPage from '../pages/private/mycourses/learningquiz';
-import LearningafterQuizPage from '../pages/private/mycourses/learningafterquiz';
-import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail';
+import Career from '../pages/private/career/career';
 import LearningComentComponent from '../pages/private/career/learningComent';
+import LearningOverviewComponent from '../pages/private/career/learningOverview';
+import Inprogress from '../pages/private/mycourses/Inprogress';
+import InprogressNone from '../pages/private/mycourses/Inprogressnone';
+import Certificate from '../pages/private/mycourses/certificate';
+import Completed from '../pages/private/mycourses/completed';
+import CompletedNone from '../pages/private/mycourses/completednone';
 import LearningSectionComentcomponent from '../pages/private/mycourses/learningSectionComent';
 import LearningSectionVideocomponent from '../pages/private/mycourses/learningSectionVideo';
-import InprogressNone from '../pages/private/mycourses/Inprogressnone';
-import CompletedNone from '../pages/private/mycourses/completednone';
+import LearningafterQuizPage from '../pages/private/mycourses/learningafterquiz';
+import LearningQuizPage from '../pages/private/mycourses/learningquiz';
+import LearningStartQuizPage from '../pages/private/mycourses/learningstartquiz';
+import LearningViewQuizPage from '../pages/private/mycourses/learningviewdetail';
+import NotificationsPage from '../pages/private/settings/NotificationsPage';
+import ProfilePage from '../pages/private/settings/ProfilePage';
+import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
+import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
 
 const PrivateRoutes = () => {
   return (
@@ -45,7 +44,7 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
       <Route path="/dashboard/mycourses/learningviewdetail/:course_id" element={<LearningViewQuizPage />} />
       <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
-      <Route path="/dashboard/mycourses/learningsectionvideo" element={<LearningSectionVideocomponent />} />
+      <Route path="/dashboard/mycourses/learningsectionvideo/:material_id" element={<LearningSectionVideocomponent />} />
       <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
       <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
     </Routes>

@@ -14,7 +14,7 @@ const careerController = require('../Controllers/careerController');
 const videocareerController = require('../Controllers/videocareerController'); 
 const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
 const articledetailController = require("../Controllers/articledetailController");
-const {getMaterials, getMaterialById}= require('../Controllers/materialController');
+const { getMaterials, getMaterialById } = require('../Controllers/materialController');
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -206,9 +206,14 @@ router.post('/api/auth/verify-reset-code', emailController.verifyResetCode);
 router.get('/api/auth/videoContents', careerController.getVideos);
 // Route to get all video contents with related video information
 router.get("/api/videos", videocareerController.getAllVideos);
-
 // Route to get a single video content by ID with related video information
 router.get("/api/videos/:id", videocareerController.getVideoById);
+
+
+// Fetch all materials
+router.get('/api/materials', getMaterials);
+// Fetch a specific material by material_id
+router.get('/api/materials/:material_id', getMaterialById);
 
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
