@@ -1,7 +1,5 @@
 "use strict";
 
-const course = require("./course");
-
 module.exports = (sequelize, DataTypes) => {
   const Material = sequelize.define(
     "Material",
@@ -48,9 +46,18 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "materials",
       timestamps: true,
-      paranoid: true,
+      paranoid: false,
     }
   );
+
+  // Mendefinisikan relasi antara Material dan Course
+  Material.associate = function (models) {
+    // Material belongs to Course
+    Material.belongsTo(models.Course, {
+      foreignKey: "course_id",
+      as: "course", // Nama alias untuk relasi
+    });
+  };
 
   return Material;
 };
