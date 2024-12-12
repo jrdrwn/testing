@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 import { FaExclamationCircle, FaComment } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
 const LearningComent = () => {

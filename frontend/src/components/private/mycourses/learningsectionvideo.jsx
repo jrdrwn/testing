@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 
 const LearningSectionVideo = () => {
   const [isModuleOpen, setIsModuleOpen] = useState(Array(6).fill(false)); 
