@@ -26,6 +26,29 @@ const getAllCourses = async (req, res) => {
   }
 };
 
+const getAllCoursesTrend = async (req, res) => {
+  try {
+    // Menggunakan query SQL kustom
+    const courses = await db.sequelize.query("SELECT * FROM courses where is_trending = '1'", {
+      type: Sequelize.QueryTypes.SELECT, // Menentukan jenis query sebagai SELECT
+    });
+
+    // Mengecek apakah ada kursus
+    if (!courses || courses.length === 0) {
+      return res.status(404).json({ message: 'No courses found.' });
+    }
+
+    // Mengembalikan daftar kursus
+    return res.status(200).json({
+      message: 'Courses retrieved successfully.',
+      courses,
+    });
+  } catch (error) {
+    console.error('Error retrieving courses:', error);
+    return res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
 const addCourse = async (req, res) => {
   try {
     const { title, description, category_id, price } = req.body;
@@ -69,6 +92,7 @@ const getMyCourses = async (req, res) => {
 
     const query = `
       SELECT 
+      c.course_id,
         c.title AS course_title,
         c.description,
         c.rating,
@@ -148,5 +172,5 @@ const getMyCoursesComplete = async (req, res) => {
 };
 
 module.exports = {
-    getAllCourses, addCourse, getMyCourses, getMyCoursesComplete, authenticateToken
+    getAllCourses, addCourse, getMyCourses, getMyCoursesComplete, authenticateToken, getAllCoursesTrend
     };

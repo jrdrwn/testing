@@ -66,7 +66,6 @@ const Career = () => {
                     </div>
                 </section>
 
-                {/* Video Content Section */}
 {/* Video Content Section */}
 <section className="mb-8">
     <div className="flex justify-between items-center mb-4">
@@ -86,7 +85,9 @@ const Career = () => {
                         alt={video.title} 
                         className="rounded-lg mb-4 object-cover h-40 w-full" 
                     />
-                    <h4 className="text-lg font-semibold text-blue-800 mb-2">{video.title}</h4>
+                    <Link to={`/dashboard/workshop/learningoverview/${video.id}`} className="hover:text-blue-600">
+                            {video.title}
+                        </Link>
                     <p className="text-gray-600 mb-2">{video.description}</p>
                     <div className="flex justify-between items-center mt-auto">
                         {/* Speaker & Date Info */}

@@ -1,6 +1,7 @@
 'use strict';
 
 const { console } = require('node:inspector/promises');
+const { title } = require('process');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -444,6 +445,7 @@ module.exports = {
       {
         
         course_id: 1,
+        title: 'Course Syllabus',
         type: 'video',
         content: 'https://example.com/videos/introduction.mp4',
         created_at: new Date('2024-11-01T08:00:00Z'),
@@ -453,6 +455,7 @@ module.exports = {
       {
           
           course_id: 2,
+          title: 'Course Syllabus',
           type: 'text',
           content: 'https://example.com/docs/course-outline.pdf',
           created_at: new Date('2024-11-02T08:00:00Z'),
@@ -462,6 +465,7 @@ module.exports = {
         {
           
           course_id: 3,
+          title: 'Course Syllabus',
           type: 'quiz',
           content: 'https://example.com/articles/getting-started.html',
           created_at: new Date('2024-11-03T08:00:00Z'),
@@ -471,6 +475,7 @@ module.exports = {
         {
           
           course_id: 2,
+          title: 'Course Syllabus',
           type: 'video',
           content: 'https://example.com/quizzes/chapter1-quiz.html',
           created_at: new Date('2024-11-04T08:00:00Z'),
@@ -480,6 +485,7 @@ module.exports = {
         {
           
           course_id: 3,
+          title: 'Course Syllabus',
           type: 'video',
           content: 'https://example.com/videos/chapter2-overview.mp4',
           created_at: new Date('2024-11-05T08:00:00Z'),
@@ -869,7 +875,7 @@ module.exports = {
       deleted_at: null,
     }
   ]);
-  await queryInterface.bulkInsert('videocontents', [
+  await queryInterface.bulkInsert('VideoContents', [
     {
       id: 1,
       title: "Crafting a Resume That Stands Out",
@@ -944,7 +950,7 @@ module.exports = {
   }
 ]);
 
-await queryInterface.bulkInsert('articles', [
+await queryInterface.bulkInsert('Articles', [
   { 
     id: 1,
     title: "How to Create a Winning Resume", 
@@ -1016,7 +1022,51 @@ await queryInterface.bulkInsert('article_authors', [
     updated_at: new Date()
   }
 ]);
+await queryInterface.bulkInsert('userprofiles', [
+  {
+    user_id: 3,
+    username: 'sarahstudent',
+    Image_url:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    date_of_birth: '2002-09-20',
+    gender:'male',
+    phone_number: '8938938938',
+    city: 'Jakarta',
+    education:'S1 Teknik Informatika',
+    company:'PT. ABC',
+    role:'student',
+    bio:'A passionate learner with a love for technology and coding.',
+    linkedin_url:'https://www.linkedin.com/in/sarahstudent',
+    youtube_url:'https://www.youtube.com/sarahstudent',
+    instagram_url:'https://www.instagram.com/sarahstudent',
+    facebook_url:'https://facebook.com/sarahstudent',
+    line_url:'https://line.me/ti/p/sarahstudent',
+    twitter_url:'https://twitter.com/sarahstudent',
+    created_at: new Date(),
+    updated_at: new Date()
 
+  },
+  {
+    user_id: 4,
+    username: 'mikementor',
+    Image_url:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+    date_of_birth:'1990-05-15',
+    gender:'male',
+    phone_number:'8938938938',
+    city:'Bandung',
+    education:'S2 Computer Science',
+    company:'PT. XYZ',
+    role:'mentor',
+    bio:'An experienced mentor with a passion for guiding aspiring developers.',
+    linkedin_url:'https://www.linkedin.com/in/mikementor',
+    youtube_url:'https://www.youtube.com/mikementor',
+    instagram_url:'https://www.instagram.com/mikementor',
+    facebook_url:'https://facebook.com/mikementor',
+    line_url:'https://line.me/ti/p/mikementor',
+    twitter_url:'https://twitter.com/mikementor',
+    created_at: new Date(),
+    updated_at: new Date()
+  }
+]);
   },
   
   down: async (queryInterface, Sequelize) => {
