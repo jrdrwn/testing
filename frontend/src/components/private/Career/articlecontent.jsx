@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const ArticleContent = () => {
@@ -42,6 +42,12 @@ const ArticleContent = () => {
     return (
         <div className="bg-gray-50">
             <main className="container mx-auto px-4 py-8">
+            <Link 
+            to="/dashboard/workshop" 
+            className="inline-flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] mb-6">
+            <i className="fas fa-arrow-left mr-2"></i>Workshop
+            </Link>
+
                 {/* Latest Article Section */}
                 {latestArticle && (
                     <section className="mb-8">
