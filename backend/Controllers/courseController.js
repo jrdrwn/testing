@@ -69,6 +69,7 @@ const getMyCourses = async (req, res) => {
 
     const query = `
       SELECT 
+      c.course_id,
         c.title AS course_title,
         c.description,
         c.rating,
