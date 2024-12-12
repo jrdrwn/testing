@@ -115,9 +115,7 @@ const InProgress = () => {
                 </div>
               </div>
             ))
-          ) : (
-            // Pesan jika tidak ada kursus
-            <div className="text-gray-500">No courses found for this user.</div>
+          ) : (navigate("/dashboard/mycourses/Inprogressnone")
           )}
         </div>
       </main>
