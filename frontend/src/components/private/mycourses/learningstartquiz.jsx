@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Impor useNavigate
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 
 const Learningstartquiz = () => {
   const [isModuleOpen, setIsModuleOpen] = useState(Array(6).fill(false)); // Array untuk menyimpan status terbuka/tutup untuk setiap modul

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Menambahkan useNavigate
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 
 const Learningquiz = () => {
   const [isModuleOpen, setIsModuleOpen] = useState(Array(6).fill(false)); 

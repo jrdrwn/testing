@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // Import useState
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 
 const LearningaSectionComent = () => {
   const [isModuleOpen, setIsModuleOpen] = useState(Array(6).fill(false)); // Array for tracking the open/close state for each module
