@@ -282,6 +282,7 @@ CREATE TABLE invoices (
 CREATE TABLE materials (
     material_id int NOT NULL AUTO_INCREMENT,
     course_id int DEFAULT NULL, -- Mengacu ke kursus
+    title varchar(255) NOT NULL, -- Judul materi
     type enum('video', 'text', 'quiz') NOT NULL, -- Jenis materi
     content text, -- Konten materi
     created_at datetime DEFAULT CURRENT_TIMESTAMP,
@@ -374,13 +375,16 @@ CREATE TABLE `stripe_transactions` (
 
 
 CREATE TABLE videocontents (
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   url VARCHAR(255) NOT NULL,
   tags JSON NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  thumbnail_url VARCHAR(255) NULL, 
+  date DATETIME NULL,
+  duration VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE articles (
@@ -394,6 +398,7 @@ CREATE TABLE articles (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 CREATE TABLE article_authors (
   id INT PRIMARY KEY,
