@@ -56,8 +56,8 @@ const Payment = () => {
         quantity,
       });
       if (response.status === 200) {
-        setPopupMessage("Subscription successful! Click Okay to proceed.");
-        setRedirectUrl(response.data.url); // Simpan URL redirect
+        setPopupMessage("Subscription successful!");
+        setRedirectUrl(response.data.url);
       } else {
         setPopupMessage("An error occurred. Please try again.");
       }
