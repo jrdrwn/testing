@@ -875,7 +875,7 @@ module.exports = {
       deleted_at: null,
     }
   ]);
-  await queryInterface.bulkInsert('videocontents', [
+  await queryInterface.bulkInsert('VideoContents', [
     {
       id: 1,
       title: "Crafting a Resume That Stands Out",
@@ -950,7 +950,7 @@ module.exports = {
   }
 ]);
 
-await queryInterface.bulkInsert('articles', [
+await queryInterface.bulkInsert('Articles', [
   { 
     id: 1,
     title: "How to Create a Winning Resume", 

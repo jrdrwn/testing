@@ -14,6 +14,7 @@ const careerController = require('../Controllers/careerController');
 const videocareerController = require('../Controllers/videocareerController'); 
 const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
 const articledetailController = require("../Controllers/articledetailController");
+const {getMaterials, getMaterialById}= require('../Controllers/materialController');
 const router = express.Router();
 
 router.post('/register', (req, res, next) => {
@@ -58,6 +59,12 @@ router.put('/profile/social', authenticate, completeSocialMedia);
 router.get('/socialmedia', authenticate, getSocialMedia);
 
 router.put('profile', updateUserProfile);
+
+router.get('/materials', getMaterials);
+router.get('/materials/:id', getMaterialById);
+// router.post('/materials', materialController.createMaterial);
+// router.put('/materials/:id', materialController.updateMaterial);
+// router.delete('/materials/:id', materialController.deleteMaterial);
 
 /* // update profile
 router.put('/profile', (req, res, next) => {
@@ -203,7 +210,6 @@ router.get("/api/videos", videocareerController.getAllVideos);
 // Route to get a single video content by ID with related video information
 router.get("/api/videos/:id", videocareerController.getVideoById);
 
-
 // Route to get articles
 router.get('/api/articles', careerController.getArticles);
 // Route for articlecontent
@@ -212,6 +218,5 @@ router.get('/api/articlecontent', careerController.getArticleContents);
 router.get("/api/article-authors", articledetailController.getAllAuthors);
 // Route untuk mendapatkan satu data artikel author berdasarkan ID beserta artikel terkait
 router.get("/api/article-authors/:id", articledetailController.getAuthorById);
-
 
 module.exports = router;

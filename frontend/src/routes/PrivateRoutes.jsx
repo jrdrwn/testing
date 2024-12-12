@@ -23,7 +23,6 @@ import LearningSectionVideocomponent from '../pages/private/mycourses/learningSe
 import InprogressNone from '../pages/private/mycourses/Inprogressnone';
 import CompletedNone from '../pages/private/mycourses/completednone';
 
-
 const PrivateRoutes = () => {
   return (
     <Routes>
@@ -44,7 +43,7 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/mycourses/learningstartquiz" element={<LearningStartQuizPage />} />
       <Route path="/dashboard/mycourses/learningquiz" element={<LearningQuizPage />} />
       <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
-      <Route path="/dashboard/mycourses/learningviewdetail" element={<LearningViewQuizPage />} />
+      <Route path="/dashboard/mycourses/learningviewdetail/:course_id" element={<LearningViewQuizPage />} />
       <Route path="/dashboard/mycourses/learningsectioncoment" element={<LearningSectionComentcomponent />} />
       <Route path="/dashboard/mycourses/learningsectionvideo" element={<LearningSectionVideocomponent />} />
       <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
