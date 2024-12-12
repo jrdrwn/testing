@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Logo from '../../../assets/logo/logo.png'; // Ganti dengan logo yang sesuai
+import Logo from '/logo/logo.png';
+
 
 const LearningSectionVideo = () => {
   const { material_id } = useParams(); // Ambil courseId dari URL params

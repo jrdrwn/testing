@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaComment, FaCopy, FaExclamationCircle, FaFacebookF, FaGooglePlusG, FaHeart, FaLinkedinIn, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom'; // Import useParams to get the dynamic id from the URL
-import Logo from '../../../assets/logo/logo.png';
+import Logo from '/logo/logo.png';
 
 const LearningOverview = () => {
   const [videos, setVideos] = useState([]); // Videos state

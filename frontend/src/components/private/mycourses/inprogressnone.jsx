@@ -16,7 +16,8 @@ const InProgressNone = () => {
         </div>
         <div className="bg-white border rounded-lg p-8 text-center">
           <img
-            src="https://placehold.co/200x200"
+          src="https://img.freepik.com/free-vector/virtual-gym-concept-illustrated_23-2148534100.jpg"
+
             alt="Illustration of a person using a laptop"
             className="mx-auto mb-4"
           />

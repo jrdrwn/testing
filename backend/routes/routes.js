@@ -3,7 +3,7 @@ const passport = require('passport'); // Add this line
 const { register, login, logout } = require('../Controllers/authController');
 const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
-const { getAllCourses } = require('../Controllers/courseController');
+const { getAllCourses, getAllCoursesTrend } = require('../Controllers/courseController');
 const stripeController = require('../Controllers/stripeController');
 const emailController = require('../Controllers/emailController');
 const upload = require('../middleware/multerConfig');
@@ -39,6 +39,7 @@ router.get('/courses', (req,res,next)=>{
   next();
 }, getAllCourses);
 
+router.get('/courses/trend', getAllCoursesTrend);
 // addCourse
 router.post('/courses', upload.single('image'), addCourse);
 

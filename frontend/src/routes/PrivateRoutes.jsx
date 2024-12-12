@@ -22,6 +22,8 @@ import ProfilePage from '../pages/private/settings/ProfilePage';
 import SocialLinksPage from '../pages/private/settings/SocialLinksPage';
 import SubscriptionPage from '../pages/private/settings/SubscriptionPage';
 
+import Community from '../pages/private/community/CommunityPage'
+
 const PrivateRoutes = () => {
   return (
     <Routes>
@@ -47,6 +49,11 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/mycourses/learningsectionvideo/:material_id" element={<LearningSectionVideocomponent />} />
       <Route path="/dashboard/mycourses/Inprogressnone" element={<InprogressNone />} />
       <Route path="/dashboard/mycourses/Completednone" element={<CompletedNone />} />
+      <Route path="/dashboard/workshop/learningstartquiz" element={<LearningStartQuizPage />} />
+      <Route path="/dashboard/workshop/learningquiz" element={<LearningQuizPage />} />
+      <Route path="/dashboard/workshop/learningafterquiz" element={<LearningafterQuizPage />} />
+      <Route path="/dashboard/workshop/learningviewdetail" element={<LearningViewQuizPage />} />
+      <Route path="/dashboard/community" element={<Community />} />
     </Routes>
   );
 };
