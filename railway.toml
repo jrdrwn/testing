@@ -1,5 +1,2 @@
 [build]
-command = "cd backend && npm install"
-
-[deploy]
-start = "cd backend && npm start"
+baseDirectory = "backend"
