@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom"; 
 import Img from '../../../assets/public/imgsectionv3.svg';
 
 const SectionV3 = () => {
@@ -26,13 +27,17 @@ const SectionV3 = () => {
                                 </li>
                             </ul>
                             <div className="mt-6 flex space-x-4">
+                                <Link to="/login"> 
                                 <button className="bg-blue-700 text-white px-4 py-2 rounded-md flex items-center">
                                     Get started
                                     <i className="fas fa-arrow-right ml-2"></i>
                                 </button>
+                                </Link>
+                                <Link to="/about">
                                 <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-md">
                                     Learn more
                                 </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

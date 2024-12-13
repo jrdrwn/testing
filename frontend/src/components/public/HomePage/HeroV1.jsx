@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; 
 import Img from '../../../assets/public/imgHeroV1.svg';
 
 const HeroV1 = () => {
@@ -8,18 +9,22 @@ const HeroV1 = () => {
         {/* Teks Hero */}
         <div className="text-center lg:text-left max-w-lg mb-8 lg:mb-0">
           <h1 className="text-[48px] font-bold text-blue-900 mb-4">
-          Enhance Your Skills, Build Your Dream Career
+            Enhance Your Skills, Build Your Dream Career
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-          An interactive learning program platform connecting students with industry skills, mentorship, and career opportunities
+            An interactive learning program platform connecting students with industry skills, mentorship, and career opportunities
           </p>
           <div className="flex justify-center lg:justify-start gap-4">
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
-              Get Started
-            </button>
-            <button className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300">
-              Learn More
-            </button>
+            <Link to="/login"> 
+              <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+                Get Started
+              </button>
+            </Link>
+            <Link to="/about"> 
+              <button className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg shadow hover:bg-gray-300">
+                Learn More
+              </button>
+            </Link>
           </div>
         </div>
 

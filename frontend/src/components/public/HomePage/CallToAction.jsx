@@ -12,7 +12,7 @@ const CallToAction = () => {
       <div className="text-center md:text-left p-4 md:p-8">
         <h1 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">
           Ready to Start Your Learning Journey?
-        </h1>sa
+        </h1>
         <p className="text-gray-600 mb-4 text-sm md:text-base">
           Join thousands of students who have already built their future with PINTURA.
         </p>
