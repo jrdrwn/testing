@@ -1,2 +1,5 @@
 [build]
-base = "backend"  # Arahkan Railway untuk menggunakan folder backend
+command = "cd backend && npm install"
+
+[deploy]
+start = "cd backend && npm start"
