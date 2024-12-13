@@ -10,6 +10,10 @@ const Navbar = () => {
   const notificationRef = useRef(null);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [profile, setProfile] = useState({
+    image_url: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", // default image
+    username: ""
+  });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,6 +47,37 @@ const Navbar = () => {
       setIsAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("https://localhost:5000/api/auth/profile", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Gagal mendapatkan data profil");
+        }
+
+        const data = await response.json();
+        setProfile({
+          image_url: data.image_url || profile.image_url, // Gunakan default jika tidak ada
+          username: data.username || ""
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchProfile();
+    }
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -106,8 +141,8 @@ const Navbar = () => {
             {/* User Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <img
-                src="https://placehold.co/40x40"
-                alt="User profile picture"
+                src={profile.image_url}
+                alt={`Foto profil ${profile.username}`}
                 className="w-10 h-10 rounded-full cursor-pointer"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               />
