@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Article = () => {
     const { id } = useParams(); // Retrieve the dynamic ID from the URL
@@ -37,6 +37,9 @@ const Article = () => {
 
     return (
         <div>
+            <Link to="/dashboard/workshop/articlecontent" className="flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] w-20 mb-6">
+            <i className="fas fa-arrow-left mr-2"></i>Back
+          </Link>
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white shadow-lg rounded-lg p-6">
                     <img src={article.author_image_url} alt={article.title} className="w-full h-64 object-cover rounded-lg mb-6" />

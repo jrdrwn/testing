@@ -1,6 +1,6 @@
 const cors = require('cors');
 
-const allowedOrigins = ['https://localhost:3000', 'https://localhost:5000', 'http://localhost:5173', 'https://yourdomain.com'];
+const allowedOrigins = ['https://localhost:3000', 'https://localhost:5000', 'http://localhost:5173', 'https://pintura-3a16b.web.app'];
 
 const corsMiddleware = cors({
   origin: (origin, callback) => {

@@ -1,7 +1,7 @@
 import Navbar from "../../../components/private/shared/Navbar";
-import Sidebar from "../../../components/private/community/SideBar";
+import Sidebar from "../../../components/private/community/Sidebar";
 import Content from "../../../components/private/community/Content";
-import SideAccount from "../../../components/private/community/Sideaccount";
+import SideAccount from "../../../components/private/community/SideAccount";
 import Footer from "../../../components/public/shared/Footer";
 
 import React from "react";
