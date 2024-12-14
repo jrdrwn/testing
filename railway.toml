@@ -1,2 +1,2 @@
 [build]
-base = "backend"  # Arahkan Railway untuk menggunakan folder backend
+baseDirectory = "backend"
