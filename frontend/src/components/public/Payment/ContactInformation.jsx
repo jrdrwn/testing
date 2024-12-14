@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 const ContactInformation = ({ email, setEmail, phone, setPhone, countries, selectedCountry, setSelectedCountry }) => {
   return (
@@ -6,10 +5,11 @@ const ContactInformation = ({ email, setEmail, phone, setPhone, countries, selec
       <label className="block text-sm font-medium mb-1">Contact Information</label>
       <input
         type="email"
-        className="w-full border border-gray-300 p-2 rounded mb-2"
-        placeholder="email@example.com"
+        className="w-full border border-gray-300 p-2 rounded mb-2 bg-gray-200 text-gray-500 cursor-not-allowed"
+        placeholder="pintura@gmail.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        readOnly
         required
       />
       <div className="flex mb-2">
