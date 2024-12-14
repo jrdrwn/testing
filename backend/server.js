@@ -8,7 +8,6 @@ const { constants } = require("crypto"); // Menggunakan 'constants' untuk SSL/TL
 const app = require("./app.js"); // Mengimpor aplikasi Express
 const { User } = require("./database/models"); // Import User model
 const authenticateToken = require("./middleware/tokenAuthentication"); // Import token authentication middleware
-const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import Google OAuth strategy
 const bcrypt = require("bcrypt"); // Import bcrypt untuk enkripsi password
 const emailController = require("./Controllers/emailController"); // Import emailController
 
@@ -32,7 +31,7 @@ app.use(passport.session()); // Inisialisasi sesi passport
 app.use(authenticateToken);
 
 // Validasi variabel lingkungan penting
-const requiredEnvVars = ["APP_URL", "HTTPS_PORT", "SSL_KEY_PATH", "SSL_CERT_PATH", "JWT_SECRET", "GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"];
+const requiredEnvVars = ["APP_URL", "HTTPS_PORT", "SSL_KEY_PATH", "SSL_CERT_PATH", "JWT_SECRET",];
 const missingVars = requiredEnvVars.filter((key) => !process.env[key]);
 
 if (missingVars.length > 0) {
@@ -52,57 +51,6 @@ const sslOptions = {
     secureOptions: constants.SSL_OP_NO_TLSv1 | constants.SSL_OP_NO_TLSv1_1, // Menonaktifkan TLSv1 dan TLSv1.1
 };
 
-// Passport configuration
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: `${process.env.APP_URL}:${process.env.HTTPS_PORT}/auth/google/callback`,
-        },
-        async (token, tokenSecret, profile, done) => {
-            try {
-                console.log("Google profile received:", profile); // Log profil Google
-
-                // Cek apakah pengguna sudah ada berdasarkan googleId
-                let user = await User.findOne({ where: { google_id: profile.id } });
-
-                if (user) {
-                    // Jika pengguna sudah ada berdasarkan googleId, login pengguna
-                    console.log("Existing user found with Google ID:", user);
-                    return done(null, user);
-                } else {
-                    // Jika pengguna belum ada, cek berdasarkan email
-                    user = await User.findOne({ where: { email: profile.emails[0].value } });
-
-                    if (user) {
-                        // Jika pengguna ditemukan berdasarkan email, login pengguna
-                        console.log("Existing user found with email:", user);
-                        return done(null, user);
-                    } else {
-                        // Jika tidak ada pengguna, buat pengguna baru
-                        console.log("No user found. Creating a new user...");
-                        user = await User.create({
-                            google_id: profile.id,
-                            name: profile.displayName,
-                            email: profile.emails[0].value,
-                            password: "", // Kosongkan password atau atur sesuai kebutuhan
-                            created_at: new Date(),
-                            updated_at: new Date(),
-                            deleted_at: null,
-                        });
-
-                        console.log("New user created:", user);
-                        return done(null, user); // Redirect ke callback dan login user baru
-                    }
-                }
-            } catch (error) {
-                console.error("Error in Google OAuth strategy:", error);
-                return done(error, null); // Jika terjadi error, kirim ke done
-            }
-        }
-    )
-);
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -117,29 +65,6 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-// Route for Google OAuth registration
-app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
-
-app.get("/auth/google/callback", (req, res, next) => {
-    passport.authenticate("google", (err, user, info) => {
-        if (err) {
-            console.error("Authentication error:", err); // Debug error
-            return res.status(500).json({ message: "Authentication failed", error: err });
-        }
-        if (!user) {
-            console.error("No user found. Redirecting to home...");
-            return res.redirect("/"); // Redirect ke home jika user tidak ditemukan
-        }
-        req.login(user, (err) => {
-            if (err) {
-                console.error("Error during login:", err); // Debug login error
-                return res.status(500).json({ message: "Login failed", error: err });
-            }
-            console.log("User successfully logged in:", user); // Debug sukses login
-            return res.redirect("/dashboard"); // Redirect ke dashboard setelah login
-        });
-    })(req, res, next);
-});
 
 // Route for user registration
 app.post("/api/auth/register", async (req, res) => {
@@ -193,19 +118,10 @@ app.post("/api/auth/register", async (req, res) => {
     }
 });
 
-/* async function createTransaction(userId, sessionId, amount, status) {
-  try {
-    const transaction = await StripeTransaction.create({
-      user_id: userId,
-      session_id: sessionId,
-      amount: amount,
-      status: status,
-    });
-    console.log('Transaction created:', transaction);
-  } catch (error) {
-    console.error('Error creating transaction:', error);
-  }
-}  */
+
+
+
+
 
 // Middleware to handle 404 errors
 app.use((req, res, next) => {

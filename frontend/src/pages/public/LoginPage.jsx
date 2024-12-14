@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Img from '../../assets/public/imgloginpage.svg'
-import icon from '../../assets/public/icongoogle.svg'
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -75,9 +75,6 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'https://localhost:5000/api/auth/google-register';
-  };
 
   return (
     <div className="bg-white flex items-center justify-center min-h-screen font-poppins">
@@ -176,22 +173,7 @@ const LoginPage = () => {
                 <span className="px-2 bg-white text-gray-500">Or</span>
               </div>
             </div>
-            <div>
-              <button
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                type="button"
-                onClick={handleGoogleLogin}
-              >
-                <img
-                  alt="Google logo"
-                  className="mr-2"
-                  height="20"
-                  src={icon}
-                  width="20"
-                />
-                Sign In With Google
-              </button>
-            </div>
+      
             <p className="mt-2 text-center text-sm text-gray-600">
               Don't have an account?{' '}
               <Link className="font-medium text-blue-600 hover:text-blue-500" to="/register">

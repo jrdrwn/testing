@@ -1,7 +1,5 @@
 const express = require('express');
-const passport = require('passport'); // Add this line
 const { register, login, logout } = require('../Controllers/authController');
-const googleController = require('../Controllers/googleController');
 const { console } = require('node:inspector/promises');
 const { getAllCourses, getAllCoursesTrend } = require('../Controllers/courseController');
 const stripeController = require('../Controllers/stripeController');
@@ -174,14 +172,7 @@ router.post('/api/create-portal-session', stripeController.createPortalSession);
 // Route to get all Stripe transactions
 router.get('/api/stripe-transactions', getAllStripeTransactions);
 
-// Define routes for Google OAuth
-router.get('/google-register', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Rute untuk autentikasi Google
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// Rute untuk menangani callback Google
-router.get('/auth/google/callback', googleController.googleAuthCallback);
 
 // Handle SSL errors
 router.use((err, req, res, next) => {

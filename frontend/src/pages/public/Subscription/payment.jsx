@@ -76,7 +76,7 @@ const Payment = () => {
   };
 
   const getPrice = () => {
-    const basePrice = subscriptionType === "monthly" ? 49.0 : 485.01;
+    const basePrice = subscriptionType === "monthly" ? 2.0 : 9.0;
     return basePrice * (quantity || 1);
   };
 
@@ -120,8 +120,8 @@ const Payment = () => {
             value={subscriptionType}
             onChange={(e) => setSubscriptionType(e.target.value)}
           >
-            <option value="monthly">Monthly - US$53.09</option>
-            <option value="yearly">Yearly - US$485.01</option>
+            <option value="monthly">Monthly - US$2.0</option>
+            <option value="yearly">Yearly - US$9.0</option>
           </select>
         </div>
 

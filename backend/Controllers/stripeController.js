@@ -42,8 +42,8 @@ const createCheckoutSession = async (req, res) => {
 
     // Tentukan produk berdasarkan tipe langganan
     const productId = subscriptionType === 'yearly' 
-      ? 'prod_RL83RXttwmGLU6'  // ID produk tahunan
-      : 'prod_RL82TAeERAKwnN';  // ID produk bulanan
+      ? 'prod_ROX34uKpDGdDGH'  // ID produk tahunan
+      : 'prod_ROX4qnS1HVBKGV';  // ID produk bulanan
 
     // Ambil harga terkait produk yang dipilih
     const prices = await stripe.prices.list({
