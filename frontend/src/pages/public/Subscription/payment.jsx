@@ -26,23 +26,57 @@ const Payment = () => {
 
   const navigate = useNavigate();
 
+ const decodeToken = (token) => {
+    try {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => `%${("00" + c.charCodeAt(0).toString(16)).slice(-2)}`)
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
-    fetch('/countries.json')
+    // Ambil email dari token di localStorage
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = decodeToken(token);
+      if (decodedToken && decodedToken.email) {
+        setEmail(decodedToken.email);
+      } else {
+        console.error("Invalid token or missing email");
+        navigate("/login");
+      }
+    } else {
+      console.error("No token found");
+      navigate("/login");
+    }
+
+    // Ambil daftar negara
+    fetch("/countries.json")
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to load countries');
+          throw new Error("Failed to load countries");
         }
         return response.json();
       })
       .then((data) => {
         setCountries(data);
-        const indonesia = data.find((country) => country.name === 'Indonesia');
-        setSelectedCountry(indonesia?.code || '+62');
+        const indonesia = data.find((country) => country.name === "Indonesia");
+        setSelectedCountry(indonesia?.code || "+62");
       })
       .catch((error) => {
-        console.error('Error loading countries:', error);
+        console.error("Error loading countries:", error);
       });
-  }, []);
+  }, [navigate]);
+
   
   
 

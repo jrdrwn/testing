@@ -37,7 +37,7 @@ const Article = () => {
 
     return (
         <div>
-            <Link to="/dashboard/workshop/articlecontent" className="flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] w-20 mb-6">
+            <Link to="/dashboard/workshop" className="flex items-center bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300 px-4 py-2 text-[14px] w-20 mb-6">
             <i className="fas fa-arrow-left mr-2"></i>Back
           </Link>
             <div className="container mx-auto px-4 py-8">
