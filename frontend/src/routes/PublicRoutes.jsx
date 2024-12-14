@@ -8,7 +8,6 @@ import PaymentPage from '../pages/public/Subscription/payment';
 import LoginPage from '../pages/public/LoginPage';
 import RegisterPage from '../pages/public/RegisterPage';
 import ForgotPasswordPage from '../pages/public/ForgotPasswordPage';
-import GoogleCallback from '../pages/public/GoogleCallback';
 import AktivationPage from '../pages/public/Aktivationpage';
 import ChangePasswordPage from '../pages/public/ChangePasswordPage';
 import VerificationCodePage from '../pages/public/VerificationCodePage';
@@ -26,7 +25,6 @@ const PublicRoutes = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-      <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route path="/Aktivationpage" element={<AktivationPage />} />
       <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
       <Route path="/VerificationPage" element={<VerificationCodePage />} />

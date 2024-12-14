@@ -34,7 +34,7 @@ const PricingSection = () => {
           />
           <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
         </label>
-        <span className="text-gray-600 ml-2">Annually</span>
+        <span className="text-gray-600 ml-2">Yearly</span>
       </div>
 
       {/* Pricing Cards */}
@@ -45,12 +45,12 @@ const PricingSection = () => {
           <p className="text-4xl font-bold text-gray-800 mb-2">
             {isAnnual ? (
               <>
-                <span className="line-through text-gray-400">100</span>0 USD{' '}
+                <span className="line-through text-gray-400">5</span>0 USD{' '}
                 <span className="text-sm font-normal">/year</span>
               </>
             ) : (
               <>
-                <span className="line-through text-gray-400">10</span>0 USD{' '}
+                <span className="line-through text-gray-400">1</span>0 USD{' '}
                 <span className="text-sm font-normal">/month</span>
               </>
             )}
@@ -79,12 +79,12 @@ const PricingSection = () => {
           <p className="text-4xl font-bold mb-2">
             {isAnnual ? (
               <>
-                <span className="line-through text-gray-300">1188</span>99 USD{' '}
+                <span className="line-through text-gray-300">20</span>9 USD{' '}
                 <span className="text-sm font-normal">/year</span>
               </>
             ) : (
               <>
-                <span className="line-through text-gray-300">594</span>9 USD{' '}
+                <span className="line-through text-gray-300">8</span>2 USD{' '}
                 <span className="text-sm font-normal">/month</span>
               </>
             )}
