@@ -15,7 +15,7 @@ const CardsV9 = () => {
     {
       icon: "fas fa-user",
       title: "Personalized Learning Experience",
-      description: "Get personalized course recommendations for you",
+      description: "Get personalized course recommendations for you.",
     },
     {
       icon: "fas fa-book",
@@ -40,33 +40,35 @@ const CardsV9 = () => {
   ];
 
   return (
-    <div className="container mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold text-center text-blue-900 mb-8">
-        Unlock Your Best Learning Experience
-      </h1>
-      {/* Baris pertama dengan 3 card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cardsData.slice(0, 3).map((card, index) => (
-          <Card
-            key={index}
-            icon={card.icon}
-            title={card.title}
-            description={card.description}
-          />
-        ))}
+    <section className="bg-white py-16 mt-8 font-poppins">
+      <div className="container mx-auto px-6 lg:px-16">
+        <h1 className="text-3xl font-bold text-center text-blue-900 mb-12">
+          Unlock Your Best Learning Experience
+        </h1>
+        {/* Baris pertama dengan 3 card */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {cardsData.slice(0, 3).map((card, index) => (
+            <Card
+              key={index}
+              icon={card.icon}
+              title={card.title}
+              description={card.description}
+            />
+          ))}
+        </div>
+        {/* Baris kedua dengan 2 card di tengah */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center mt-8">
+          {cardsData.slice(3).map((card, index) => (
+            <Card
+              key={index + 3} // Menambahkan offset untuk memastikan key unik
+              icon={card.icon}
+              title={card.title}
+              description={card.description}
+            />
+          ))}
+        </div>
       </div>
-      {/* Baris kedua dengan 2 card di tengah */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center mt-6">
-        {cardsData.slice(3).map((card, index) => (
-          <Card
-            key={index + 3} // Menambahkan offset untuk memastikan key unik
-            icon={card.icon}
-            title={card.title}
-            description={card.description}
-          />
-        ))}
-      </div>
-    </div>
+    </section>
   );
 };
 
