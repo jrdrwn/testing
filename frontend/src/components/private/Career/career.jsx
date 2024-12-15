@@ -83,7 +83,7 @@ const handlePageChange = (page) => {
                     <h2 className="text-2xl font-semibold text-blue-600">Highlight Event</h2>
                     <p className="text-gray-600">Don't miss out on this exclusive opportunity to elevate your career and gain insights from top speakers — secure your spot now!</p>
                     <div className="mt-4 flex justify-center">
-                        <img src="https://placehold.co/800x300" alt="Highlight Event" className="rounded-lg shadow-lg" />
+                        <img src="/career/highlightcareer.png" alt="Highlight Event" className="rounded-lg shadow-lg" />
                     </div>
                 </section>
 
