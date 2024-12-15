@@ -8,7 +8,7 @@ const HeroV1 = () => {
       <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between px-6 lg:px-16">
         {/* Teks Hero */}
         <div className="text-center lg:text-left max-w-lg mb-8 lg:mb-0">
-          <h1 className="text-[48px] font-bold text-blue-900 mb-4">
+          <h1 className="text-[48px] font-bold text-blue-800 mb-4">
             Enhance Your Skills, Build Your Dream Career
           </h1>
           <p className="text-lg text-gray-600 mb-8">
@@ -16,7 +16,7 @@ const HeroV1 = () => {
           </p>
           <div className="flex justify-center lg:justify-start gap-4">
             <Link to="/login"> 
-              <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+              <button className="px-6 py-3 bg-blue-800 text-white rounded-lg shadow hover:bg-blue-900">
                 Get Started
               </button>
             </Link>
