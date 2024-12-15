@@ -7,6 +7,27 @@ const Career = () => {
     const [loading, setLoading] = useState(true); // Added loading state
     const [error, setError] = useState(null); // Added error state for error handling
 
+    const ITEMS_PER_PAGE = 3; // Jumlah item per halaman
+
+// State untuk halaman saat ini
+const [currentPage, setCurrentPage] = useState(1);
+
+// Hitung total halaman
+const totalPages = Math.ceil(videos.length / ITEMS_PER_PAGE);
+
+// Potong data berdasarkan halaman saat ini
+const paginatedVideos = videos.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE, 
+    currentPage * ITEMS_PER_PAGE
+);
+
+// Fungsi untuk mengubah halaman
+const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+        setCurrentPage(page);
+    }
+};
+
     // Fetching data for VideoContents and Articles
     useEffect(() => {
         const fetchData = async () => {
@@ -76,8 +97,8 @@ const Career = () => {
         </button>
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {videos.length > 0 ? (
-            videos.map((video) => (
+        {paginatedVideos.length > 0 ? (
+            paginatedVideos.map((video) => (
                 <div key={video.id} className="bg-white rounded-lg shadow-lg p-4 flex flex-col">
                     {/* Thumbnail */}
                     <img 
@@ -115,13 +136,33 @@ const Career = () => {
     {/* Pagination */}
     <div className="flex justify-center mt-6">
         <nav className="inline-flex space-x-2">
-            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">Previous</a>
-            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">1</a>
-            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">2</a>
-            <a href="#" className="px-4 py-2 border border-gray-300 rounded-full text-gray-600 hover:bg-gray-100">Next</a>
+            <button 
+                onClick={() => handlePageChange(currentPage - 1)} 
+                className={`px-4 py-2 border border-gray-300 rounded-full ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100'}`}
+                disabled={currentPage === 1}
+            >
+                Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+                <button 
+                    key={i} 
+                    onClick={() => handlePageChange(i + 1)}
+                    className={`px-4 py-2 border border-gray-300 rounded-full ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-100'}`}
+                >
+                    {i + 1}
+                </button>
+            ))}
+            <button 
+                onClick={() => handlePageChange(currentPage + 1)} 
+                className={`px-4 py-2 border border-gray-300 rounded-full ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100'}`}
+                disabled={currentPage === totalPages}
+            >
+                Next
+            </button>
         </nav>
     </div>
 </section>
+
 
 
 
