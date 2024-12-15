@@ -4,7 +4,6 @@ import DetailContent from '../pages/private/DetailContent';
 import Articles from '../pages/private/career/article';
 import ArticleContents from '../pages/private/career/articlecontent';
 import Career from '../pages/private/career/career';
-import LearningComentComponent from '../pages/private/career/learningComent';
 import LearningOverviewComponent from '../pages/private/career/learningOverview';
 import Inprogress from '../pages/private/mycourses/Inprogress';
 import InprogressNone from '../pages/private/mycourses/Inprogressnone';
@@ -40,7 +39,6 @@ const PrivateRoutes = () => {
       <Route path="/dashboard/workshop/article/:id" element={<Articles />} />
       <Route path="/dashboard/workshop/articlecontent" element={<ArticleContents />} />
       <Route path="/dashboard/workshop/learningoverview/:id" element={<LearningOverviewComponent />} />
-      <Route path="/dashboard/workshop/learningcomment" element={<LearningComentComponent />} />
       <Route path="/dashboard/mycourses/learningstartquiz" element={<LearningStartQuizPage />} />
       <Route path="/dashboard/mycourses/learningquiz" element={<LearningQuizPage />} />
       <Route path="/dashboard/mycourses/learningafterquiz" element={<LearningafterQuizPage />} />
