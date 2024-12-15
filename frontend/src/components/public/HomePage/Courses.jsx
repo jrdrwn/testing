@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Courses = () => {
-    const [courses, setCourses] = useState([]); // Semua kursus dari API
+    const [categories, setCategories] = useState([]); // Semua kursus dari API
     const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
     const coursesPerPage = 6; // Jumlah kursus per halaman
 
@@ -9,15 +9,15 @@ const Courses = () => {
         fetch("https://localhost:5000/api/auth/courses") // Pastikan endpoint sesuai
             .then((res) => res.json())
             .then((data) => {
-                setCourses(data.courses); // Simpan semua data
+                setCategories(data.categories); // Simpan semua data
             })
-            .catch((error) => console.error("Error fetching courses:", error));
+
     }, []);
 
     // Hitung indeks awal dan akhir berdasarkan halaman saat ini
-    const indexOfLastCourse = currentPage * coursesPerPage;
-    const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
-    const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+    const indexOfLastCategories = currentPage * coursesPerPage;
+    const indexOfFirstCategories = indexOfLastCategories - coursesPerPage;
+    const currentCourses = categories.slice(indexOfFirstCategories, indexOfLastCategories);
 
     // Ganti halaman
     const handlePageChange = (pageNumber) => {
@@ -26,7 +26,7 @@ const Courses = () => {
 
     // Fungsi untuk tombol "Next" dan "Previous"
     const handleNext = () => {
-        if (currentPage < Math.ceil(courses.length / coursesPerPage)) {
+        if (currentPage < Math.ceil(categories.length / coursesPerPage)) {
             setCurrentPage(currentPage + 1);
         }
     };
@@ -57,7 +57,7 @@ const Courses = () => {
                                     className="w-full h-48 object-cover"
                                 />
                                 <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                                    {course.category}
+                                    {course.category_name}
                                 </span>
                             </div>
                             <div className="p-4">
@@ -85,7 +85,7 @@ const Courses = () => {
                     >
                         <i className="fas fa-chevron-left"></i> Previous
                     </button>
-                    {[...Array(Math.ceil(courses.length / coursesPerPage)).keys()].map(
+                    {[...Array(Math.ceil(categories.length / coursesPerPage)).keys()].map(
                         (page) => (
                             <button
                                 key={page + 1}
@@ -102,7 +102,7 @@ const Courses = () => {
                     )}
                     <button
                         onClick={handleNext}
-                        disabled={currentPage === Math.ceil(courses.length / coursesPerPage)}
+                        disabled={currentPage === Math.ceil(categories.length / coursesPerPage)}
                         className="px-4 py-2 border rounded-r-md disabled:opacity-50 hover:bg-gray-200"
                     >
                         Next <i className="fas fa-chevron-right"></i>

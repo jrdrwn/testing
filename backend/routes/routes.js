@@ -1,13 +1,13 @@
 const express = require('express');
 const { register, login, logout } = require('../Controllers/authController');
 const { console } = require('node:inspector/promises');
-const { getAllCourses, getAllCoursesTrend } = require('../Controllers/courseController');
+const {getAllCoursesTrend } = require('../Controllers/courseController');
 const stripeController = require('../Controllers/stripeController');
 const emailController = require('../Controllers/emailController');
 const upload = require('../middleware/multerConfig');
 const { addCourse } = require('../Controllers/courseController');
 const { getAllStripeTransactions } = require('../Controllers/stripeController');
-const { getMyCourses, getMyCoursesComplete, authenticateToken } = require('../Controllers/courseController');
+const { getMyCourses, getMyCoursesComplete, authenticateToken, getCategoryName } = require('../Controllers/courseController');
 const careerController = require('../Controllers/careerController'); 
 const videocareerController = require('../Controllers/videocareerController'); 
 const { authenticate,  completeProfile, getProfile, getSocialMedia, completeSocialMedia, updateUserProfile } = require('../Controllers/userprofileController');
@@ -31,12 +31,6 @@ router.post('/logout', (req, res, next) => {
   next();
 }, logout);
 
-// get all courses
-router.get('/courses', (req,res,next)=>{
-  console.log('get all courses')
-  next();
-}, getAllCourses);
-
 router.get('/courses/trend', getAllCoursesTrend);
 // addCourse
 router.post('/courses', upload.single('image'), addCourse);
@@ -58,6 +52,8 @@ router.put('/profile/social', authenticate, completeSocialMedia);
 router.get('/socialmedia', authenticate, getSocialMedia);
 
 router.put('profile', updateUserProfile);
+
+router.get('/courses' , getCategoryName);
 
 router.get('/materials', getMaterials);
 router.get('/materials/:id', getMaterialById);
@@ -172,8 +168,6 @@ router.post('/api/create-portal-session', stripeController.createPortalSession);
 // Route to get all Stripe transactions
 router.get('/api/stripe-transactions', getAllStripeTransactions);
 
-
-
 // Handle SSL errors
 router.use((err, req, res, next) => {
   if (err.code === 'ERR_SSL_PROTOCOL_ERROR') {
@@ -200,7 +194,6 @@ router.get('/api/auth/videoContents', careerController.getVideos);
 router.get("/api/videos", videocareerController.getAllVideos);
 // Route to get a single video content by ID with related video information
 router.get("/api/videos/:id", videocareerController.getVideoById);
-
 
 // // Fetch all materials
 // router.get('/api/materials', getMaterials);
